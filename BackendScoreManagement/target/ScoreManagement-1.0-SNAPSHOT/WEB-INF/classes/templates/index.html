@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <title>Score Management</title>
+    <meta charset="UTF-8">
+    <th:block th:replace="base :: resources"></th:block>
+</head>
+<body>
+<div th:replace="base :: header"></div>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Welcome to Score Management System</h1>
+        <a th:href="@{/user}" class="btn btn-success btn-lg">
+            <i class="fas fa-plus"></i> Thêm người dùng
+        </a>
+    </div>
+
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Id</th>
+            <th>Họ và Tên</th>
+            <th>Tên đăng nhập</th>
+            <th>Email</th>
+            <th>Số điện thoại</th>
+            <th>Giới tisnh</th>
+        </tr>
+        <tr th:each="t: ${teacher}">
+            <td>
+                <img th:src="${t.image}" width="200" class="rounded" />
+            </td>
+            <td th:text="${t.id}"></td>
+            <td th:text="${t.firstName + ' ' + t.lastName}"></td>
+            <td th:text="${t.username} ></td>
+            <td th:text="${t.email} ></td>
+            <td th:text="${t.phone} ></td>
+            <td th:text="${t.gender} ></td>
+
+            <td>
+                <a th:href="@{'/user/' + ${t.id}}"  class="btn btn-info">Cập nhật</a>
+                <button th:onclick="'deleteProduct(\'' + @{/api/user/} + ${t.id} + '\')'" class="btn btn-danger">Xóa</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div th:replace="base :: footer"></div>
+</body>
+</html>
