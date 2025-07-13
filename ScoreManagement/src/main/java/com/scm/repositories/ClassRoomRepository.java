@@ -1,11 +1,11 @@
 package com.scm.repositories;
 
 
-import com.scm.pojo.ClassRoom;
+import com.scm.pojo.Classroom;
 
 import java.util.List;
 
 public interface ClassRoomRepository {
-    List<ClassRoom> getListClassRoom();
-    ClassRoom getClassRoomById(Integer classroomId);
+    List<Classroom> getListClassRoom();
+    Classroom getClassRoomById(Integer classroomId);
 }

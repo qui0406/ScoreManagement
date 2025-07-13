@@ -12,11 +12,13 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\ResponseApi.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\StudentResponse.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\TeacherResponse.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\UserResponse.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\UserAuthDTO.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\exceptions\AppException.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\exceptions\ErrorCode.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\filters\JwtFilter.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\decorator\UserMapperDecorator.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\UserMapper.java
-E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\ClassRoom.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\Classroom.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\Faculty.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\Student.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\Teacher.java

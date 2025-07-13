@@ -5,7 +5,6 @@
 package com.scm.controllers;
 
 import com.scm.dto.responses.StudentResponse;
-import com.scm.dto.responses.UserResponse;
 import com.scm.mapper.UserMapper;
 import com.scm.pojo.Student;
 import com.scm.pojo.User;
@@ -20,7 +19,6 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -64,6 +62,9 @@ public class ApiUserController {
     public ResponseEntity<?> create(@Valid @RequestParam Map<String, String> params,
                                     @RequestParam(value = "avatar", required = false) MultipartFile avatar) {
         Student u = this.userDetailsService.register(params, avatar);
+        System.out.println("Student data: " + u);
+        System.out.println("ID: " + u.getId());
+        System.out.println("Email: " + u.getEmail());
         StudentResponse studentResponse = userMapper.toStudentResponse(u);
         return ResponseEntity.ok().body(studentResponse);
     }
@@ -73,8 +74,8 @@ public class ApiUserController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@RequestParam Map<String, String> params,
                                     @RequestParam(value = "avatar", required = false) MultipartFile avatar) {
-        User u = this.userDetailsService.register(params, avatar);
-        UserResponse userResponse = userMapper.toUserResponse(u);
+        Student u = this.userDetailsService.register(params, avatar);
+        StudentResponse userResponse = userMapper.toStudentResponse(u);
         return ResponseEntity.ok().body(userResponse);
     }
 

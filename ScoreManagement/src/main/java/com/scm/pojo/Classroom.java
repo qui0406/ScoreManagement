@@ -13,7 +13,7 @@ import java.io.Serializable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name= "class_room")
-public class ClassRoom implements Serializable {
+public class Classroom implements Serializable {
     @Id
     @Column(name="id", nullable=false, unique=true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

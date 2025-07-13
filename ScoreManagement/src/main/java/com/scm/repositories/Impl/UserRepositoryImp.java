@@ -4,12 +4,9 @@
  */
 package com.scm.repositories.Impl;
 
-import com.scm.pojo.ClassRoom;
 import com.scm.pojo.Student;
 import com.scm.pojo.User;
 import com.scm.repositories.UserRepository;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -21,7 +18,6 @@ import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,15 +37,16 @@ public class UserRepositoryImp implements UserRepository{
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public User getUserByUsername(String username) {
+    public Student getUserByUsername(String username) {
         try (Session s = factory.getObject().openSession()) {
             CriteriaBuilder builder = s.getCriteriaBuilder();
-            CriteriaQuery<User> query = builder.createQuery(User.class);
-            Root<User> root = query.from(User.class);
+            CriteriaQuery<Student> query = builder.createQuery(Student.class);
+            Root<Student> root = query.from(Student.class);
             query.select(root).where(builder.equal(root.get("username"), username));
             return s.createQuery(query).uniqueResult();
         }
     }
+
 
 
     @Override

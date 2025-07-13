@@ -6,9 +6,9 @@ package com.scm.services.Impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.scm.dto.responses.UserResponse;
+import com.scm.dto.responses.StudentResponse;
 import com.scm.mapper.UserMapper;
-import com.scm.pojo.ClassRoom;
+import com.scm.pojo.Classroom;
 import com.scm.pojo.Student;
 import com.scm.pojo.User;
 import com.scm.repositories.ClassRoomRepository;
@@ -21,14 +21,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import jakarta.ws.rs.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,11 +54,12 @@ public class UserServiceImpl implements UserService{
     private UserMapper userMapper;
 
 
+
     @Override
-    public UserResponse getProfile(Principal principal) {
+    public StudentResponse getProfile(Principal principal) {
         try{
-            User user = userRepo.getUserByUsername(principal.getName());
-            return userMapper.toUserResponse(user);
+            Student student = userRepo.getUserByUsername(principal.getName());
+            return userMapper.toStudentResponse(student);
         }
         catch(Exception e){
             return null;
@@ -127,7 +125,7 @@ public class UserServiceImpl implements UserService{
             }
         }
         Integer classroomId = Integer.parseInt(params.get("classroom"));
-        ClassRoom classRoom = classRoomRepo.getClassRoomById(classroomId);
+        Classroom classRoom = classRoomRepo.getClassRoomById(classroomId);
 
         if (classRoom == null) {
             throw new RuntimeException("Không tìm thấy lớp học với ID: " + classroomId);

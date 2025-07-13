@@ -14,14 +14,13 @@ import java.util.Date;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Student extends User {
-
     @Column(unique = true)
-    String mssv;
+    private String mssv;
 
     @Column(name = "school_year")
-    Date schoolYear;
+    private Date schoolYear;
 
     @ManyToOne
     @JoinColumn(name = "classroom_id", nullable = false)
-    ClassRoom classroom;
+    private Classroom classroom;
 }

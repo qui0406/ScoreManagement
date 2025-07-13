@@ -12,21 +12,20 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Teacher extends User {
-
     @Column(name = "msgv", unique = true)
-    String msgv;
+    private String msgv;
 
-    @Column(name="experience")
-    String experience;
+    @Column(name = "experience")
+    private String experience;
 
-    @Column(name= "position")
-    String position;
+    @Column(name = "position")
+    private String position;
 
     @ManyToOne
     @JoinColumn(name = "classroom_id", nullable = false)
-    ClassRoom classroom;
+    private Classroom classroom; // Đã sửa từ ClassRoom
 
     @ManyToOne
     @JoinColumn(name = "faculty_id", nullable = false)
-    Faculty faculty;
+    private Faculty faculty;
 }

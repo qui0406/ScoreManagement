@@ -1,17 +1,17 @@
-package com.scm.dto.responses;
+package com.scm.dto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
-import java.util.Date;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserResponse {
+public class UserAuthDTO {
     int id;
     String username;
     String firstName;
@@ -23,4 +23,5 @@ public class UserResponse {
     String address;
     String role;
     String avatar;
+    String token;
 }
