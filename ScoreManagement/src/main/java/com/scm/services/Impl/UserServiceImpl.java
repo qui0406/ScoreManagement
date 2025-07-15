@@ -8,7 +8,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.scm.dto.responses.UserResponse;
 import com.scm.mapper.UserMapper;
-import com.scm.pojo.ClassRoom;
+import com.scm.pojo.Classroom;
 import com.scm.pojo.Student;
 import com.scm.pojo.User;
 import com.scm.repositories.ClassRoomRepository;
@@ -21,14 +21,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import jakarta.ws.rs.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -111,11 +108,14 @@ public class UserServiceImpl implements UserService{
         Date schoolYear = null;
         try {
             String rawDate = params.get("schoolYear");
-            schoolYear = df.parse(rawDate);
+            if (rawDate != null && !rawDate.isBlank()) {
+                schoolYear = df.parse(rawDate);
+            }
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Invalid date format for schoolYear", e);
         }
         u.setSchoolYear(schoolYear);
+
         u.setPassword(this.passwordEncoder.encode(params.get("password")));
         u.setRole("ROLE_USER");
         if (!avatar.isEmpty()) {
@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService{
             }
         }
         Integer classroomId = Integer.parseInt(params.get("classroom"));
-        ClassRoom classRoom = classRoomRepo.getClassRoomById(classroomId);
+        Classroom classRoom = classRoomRepo.getClassRoomById(classroomId);
 
         if (classRoom == null) {
             throw new RuntimeException("Không tìm thấy lớp học với ID: " + classroomId);

@@ -1,6 +1,6 @@
 package com.scm.repositories.Impl;
 
-import com.scm.pojo.ClassRoom;
+import com.scm.pojo.Classroom;
 import com.scm.repositories.ClassRoomRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -20,21 +20,21 @@ public class ClassRoomRepositoryImpl implements ClassRoomRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<ClassRoom> getListClassRoom() {
+    public List<Classroom> getListClassRoom() {
         Session s = factory.getObject().getCurrentSession();
         CriteriaBuilder builder = s.getCriteriaBuilder();
-        CriteriaQuery<ClassRoom> criteria = builder.createQuery(ClassRoom.class);
-        Root<ClassRoom> root = criteria.from(ClassRoom.class);
+        CriteriaQuery<Classroom> criteria = builder.createQuery(Classroom.class);
+        Root<Classroom> root = criteria.from(Classroom.class);
         criteria.select(root);
         return s.createQuery(criteria).getResultList();
     }
 
     @Override
-    public ClassRoom getClassRoomById(Integer classroomId) {
+    public Classroom getClassRoomById(Integer classroomId) {
         Session s = factory.getObject().getCurrentSession();
         CriteriaBuilder builder = s.getCriteriaBuilder();
-        CriteriaQuery<ClassRoom> criteria = builder.createQuery(ClassRoom.class);
-        Root<ClassRoom> root = criteria.from(ClassRoom.class);
+        CriteriaQuery<Classroom> criteria = builder.createQuery(Classroom.class);
+        Root<Classroom> root = criteria.from(Classroom.class);
         criteria.select(root);
         criteria.where(builder.equal(root.get("id"), classroomId));
         return s.createQuery(criteria).getSingleResult();

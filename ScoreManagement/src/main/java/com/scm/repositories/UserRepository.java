@@ -4,7 +4,6 @@
  */
 package com.scm.repositories;
 
-import com.scm.pojo.ClassRoom;
 import com.scm.pojo.Student;
 import com.scm.pojo.User;
 

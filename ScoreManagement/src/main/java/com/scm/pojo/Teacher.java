@@ -24,7 +24,7 @@ public class Teacher extends User {
 
     @ManyToOne
     @JoinColumn(name = "classroom_id", nullable = false)
-    ClassRoom classroom;
+    Classroom classroom;
 
     @ManyToOne
     @JoinColumn(name = "faculty_id", nullable = false)

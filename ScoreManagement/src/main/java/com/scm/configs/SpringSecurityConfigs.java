@@ -43,7 +43,7 @@ public class SpringSecurityConfigs {
     private JwtFilter jwtFilter;
 
     private static final String[] PUBLIC_ENDPOINTS = {
-            "/api/auth/**", "/home"
+            "/api/auth/**", "/"
     };
 
     private static final String[] ADMIN_ENDPOINTS = {
@@ -70,23 +70,23 @@ public class SpringSecurityConfigs {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
             Exception {
         http.csrf(c -> c.disable()).authorizeHttpRequests(requests
-                        -> requests.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
-                        .requestMatchers("/login", "/logout").permitAll()
-                        .requestMatchers(ADMIN_ENDPOINTS).hasRole("ADMIN")
-                        .requestMatchers(TEACHER_ENDPOINTS).hasAnyRole("STAFF", "ADMIN")
-                        .anyRequest().authenticated())
-                .formLogin(form -> form.loginPage("/admin/login")
-                        .loginProcessingUrl("/admin/login")
-                        .defaultSuccessUrl("/admin/users", true)
-                        .failureUrl("/admin/login?error=true").permitAll())
-                .logout(logout ->
-                        logout.logoutSuccessUrl("/admin/login").permitAll());
+                -> requests.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
+                .requestMatchers("/login", "/logout").permitAll()
+                .requestMatchers(ADMIN_ENDPOINTS).hasRole("ADMIN")
+                .requestMatchers(TEACHER_ENDPOINTS).hasAnyRole("STAFF", "ADMIN")
+                .anyRequest().authenticated())
+        .formLogin(form -> form.loginPage("/admin/login")
+                .loginProcessingUrl("/admin/login")
+                .defaultSuccessUrl("/admin/users", true)
+                .failureUrl("/admin/login?error=true").permitAll())
+        .logout(logout ->
+                logout.logoutSuccessUrl("/admin/login").permitAll());
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
     
 
-
+//
 //    @Bean
 //    public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
 //        return (request, response, authentication) -> {

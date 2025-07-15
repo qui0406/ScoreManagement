@@ -1,4 +1,5 @@
 com\scm\configs\HibernateConfigs.class
+com\scm\dto\responses\TeacherResponse$TeacherResponseBuilder.class
 com\scm\pojo\Faculty.class
 com\scm\repositories\Impl\ClassRoomRepositoryImpl.class
 com\scm\controllers\admin\UserAdminController.class
@@ -6,6 +7,7 @@ com\scm\filters\JwtFilter.class
 com\scm\dto\requests\UserRequest.class
 com\scm\dto\requests\UserRequest$UserRequestBuilder.class
 com\scm\dto\ResponseApi.class
+com\scm\pojo\Classroom.class
 com\scm\pojo\Student.class
 com\scm\configs\SecurityWebApplicationInitializer.class
 com\scm\configs\CloudinaryConfig.class
@@ -14,7 +16,6 @@ com\scm\pojo\User.class
 com\scm\dto\responses\UserResponse.class
 com\scm\exceptions\ErrorCode.class
 com\scm\mapper\UserMapperImpl.class
-com\scm\pojo\ClassRoom.class
 com\scm\repositories\Impl\UserRepositoryImp.class
 com\scm\services\UserService.class
 com\scm\configs\DispatcherSerlvetInit.class
@@ -22,6 +23,7 @@ com\scm\repositories\ClassRoomRepository.class
 com\scm\repositories\UserRepository.class
 com\scm\utils\JwtUtils.class
 com\scm\mapper\UserMapper.class
+com\scm\mapper\UserMapperImpl_.class
 com\scm\configs\WebAppContextConfigs.class
 com\scm\controllers\ApiUserController$ApiUserControllerBuilder.class
 com\scm\services\Impl\ClassRoomServiceImpl.class
@@ -33,6 +35,8 @@ com\scm\services\Impl\UserServiceImpl.class
 com\scm\configs\SpringSecurityConfigs.class
 com\scm\dto\responses\StudentResponse.class
 com\scm\scoremanagement\resources\JakartaEE11Resource.class
+com\scm\mapper\decorator\UserMapperDecorator.class
 com\scm\dto\ResponseApi$ResponseApiBuilder.class
+com\scm\dto\responses\StudentResponse$StudentResponseBuilder.class
 com\scm\controllers\ApiUserController.class
 com\scm\dto\responses\TeacherResponse.class
