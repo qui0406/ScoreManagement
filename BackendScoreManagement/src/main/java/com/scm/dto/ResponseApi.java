@@ -9,5 +9,6 @@ package com.scm.dto;
  * @author QUI
  */
 public class ResponseApi {
-    
+
 }
+
