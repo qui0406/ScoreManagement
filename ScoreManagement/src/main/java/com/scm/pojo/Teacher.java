@@ -12,7 +12,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Teacher extends User {
-
     @Column(name = "msgv", unique = true)
     String msgv;
 
@@ -24,7 +23,7 @@ public class Teacher extends User {
 
     @ManyToOne
     @JoinColumn(name = "classroom_id", nullable = false)
-    ClassRoom classroom;
+    Classroom classroom;
 
     @ManyToOne
     @JoinColumn(name = "faculty_id", nullable = false)

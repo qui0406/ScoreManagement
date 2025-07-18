@@ -12,15 +12,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name= "class_room")
-public class ClassRoom implements Serializable {
+@Table(name= "classroom")
+public class Classroom implements Serializable {
     @Id
     @Column(name="id", nullable=false, unique=true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    Integer id;
 
     @Column(name = "name", nullable=false, unique=true)
     String name;
-
-
 }

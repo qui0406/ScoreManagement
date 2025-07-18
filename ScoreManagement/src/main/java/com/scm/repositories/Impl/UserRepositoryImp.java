@@ -4,12 +4,10 @@
  */
 package com.scm.repositories.Impl;
 
-import com.scm.pojo.ClassRoom;
 import com.scm.pojo.Student;
+import com.scm.pojo.Teacher;
 import com.scm.pojo.User;
 import com.scm.repositories.UserRepository;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -21,7 +19,6 @@ import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,11 +61,19 @@ public class UserRepositoryImp implements UserRepository{
 
 
     @Override
-    public Student register(Student student) {
+    public Student studentRegister(Student student) {
         Session session = factory.getObject().getCurrentSession();
         session.persist(student);
         session.refresh(student);
-        return  student;
+        return student;
+    }
+
+    @Override
+    public Teacher teacherRegister(Teacher teacher) {
+        Session session = factory.getObject().getCurrentSession();
+        session.persist(teacher);
+        session.refresh(teacher);
+        return teacher;
     }
 
     @Override

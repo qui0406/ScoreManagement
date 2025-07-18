@@ -23,5 +23,5 @@ public class Student extends User {
 
     @ManyToOne
     @JoinColumn(name = "classroom_id", nullable = false)
-    ClassRoom classroom;
+    Classroom classroom;
 }

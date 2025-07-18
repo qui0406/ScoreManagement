@@ -4,8 +4,8 @@
  */
 package com.scm.repositories;
 
-import com.scm.pojo.ClassRoom;
 import com.scm.pojo.Student;
+import com.scm.pojo.Teacher;
 import com.scm.pojo.User;
 
 import java.util.List;
@@ -17,7 +17,8 @@ import java.util.List;
  */
 public interface UserRepository {
     User getUserByUsername(String username);
-    Student register(Student student);
+    Student studentRegister(Student student);
+    Teacher teacherRegister(Teacher teacher);
     boolean authenticate(String username, String password);
     List<User> getAllUsers();
 }
