@@ -4,6 +4,8 @@
  */
 package com.scm.mapper;
 
+import com.scm.dto.requests.StudentRequest;
+import com.scm.dto.requests.TeacherRequest;
 import com.scm.dto.requests.UserRequest;
 import com.scm.dto.responses.StudentResponse;
 import com.scm.dto.responses.TeacherResponse;

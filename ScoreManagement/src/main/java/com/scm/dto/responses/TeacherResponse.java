@@ -5,8 +5,6 @@ import com.scm.pojo.Faculty;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
-
 @Builder
 @Getter
 @Setter

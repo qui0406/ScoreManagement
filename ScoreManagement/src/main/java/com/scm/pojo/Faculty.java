@@ -7,7 +7,7 @@ import lombok.experimental.FieldDefaults;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "department")
+@Table(name = "faculty")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class Faculty implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    Integer id;
 
     @Column(name="name", unique = true, nullable = false)
     String name;

@@ -5,6 +5,7 @@
 package com.scm.repositories.Impl;
 
 import com.scm.pojo.Student;
+import com.scm.pojo.Teacher;
 import com.scm.pojo.User;
 import com.scm.repositories.UserRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -60,11 +61,19 @@ public class UserRepositoryImp implements UserRepository{
 
 
     @Override
-    public Student register(Student student) {
+    public Student studentRegister(Student student) {
         Session session = factory.getObject().getCurrentSession();
         session.persist(student);
         session.refresh(student);
-        return  student;
+        return student;
+    }
+
+    @Override
+    public Teacher teacherRegister(Teacher teacher) {
+        Session session = factory.getObject().getCurrentSession();
+        session.persist(teacher);
+        session.refresh(teacher);
+        return teacher;
     }
 
     @Override

@@ -32,6 +32,7 @@ public abstract class UserMapperDecorator implements UserMapper {
 
     private UserResponse mapBasicUser(User user) {
         UserResponse res = new UserResponse();
+        res.setId(user.getId().toString());
         res.setUsername(user.getUsername());
         res.setFirstName(user.getFirstName());
         res.setLastName(user.getLastName());
@@ -49,6 +50,7 @@ public abstract class UserMapperDecorator implements UserMapper {
     @Override
     public TeacherResponse toTeacherResponse(Teacher teacher) {
         TeacherResponse res = delegate.toTeacherResponse(teacher);
+        res.setId(teacher.getId().toString());
         res.setUsername(teacher.getUsername());
         res.setFirstName(teacher.getFirstName());
         res.setLastName(teacher.getLastName());

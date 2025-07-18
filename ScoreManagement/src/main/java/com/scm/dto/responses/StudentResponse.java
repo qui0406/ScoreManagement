@@ -15,7 +15,6 @@ import java.util.Date;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class StudentResponse extends UserResponse{
-    String id;
     String mssv;
     Date schoolYear;
     Classroom classroom;

@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -28,7 +29,7 @@ public abstract class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private String id;
+    private Integer id;
 
     @Column(name="first_name")
     private String firstName;
@@ -74,5 +75,4 @@ public abstract class User implements Serializable {
     @Size(max = 255)
     @Column(name = "avatar")
     private String avatar;
-
 }

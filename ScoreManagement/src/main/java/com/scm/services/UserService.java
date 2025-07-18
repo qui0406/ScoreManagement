@@ -5,8 +5,10 @@
 package com.scm.services;
 
 import com.scm.dto.responses.StudentResponse;
+import com.scm.dto.responses.TeacherResponse;
 import com.scm.dto.responses.UserResponse;
 import com.scm.pojo.Student;
+import com.scm.pojo.Teacher;
 import com.scm.pojo.User;
 
 import java.security.Principal;
@@ -24,7 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService extends UserDetailsService{
     User getUserByUsername(String username);
-    Student register(Map<String, String> params, MultipartFile avatar);
+    Student registerStudent(Map<String, String> params, MultipartFile avatar);
+    Teacher registerTeacher(Map<String, String> params, MultipartFile avatar);
     boolean authenticate(String username, String password);
     List<User> getAllUsers();
     UserResponse getProfile(Principal principal);

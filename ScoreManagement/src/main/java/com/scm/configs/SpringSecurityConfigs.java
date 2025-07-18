@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -47,11 +49,11 @@ public class SpringSecurityConfigs {
     };
 
     private static final String[] ADMIN_ENDPOINTS = {
-            "/admin/**"
+            "/admin/**",
     };
 
     private static final String[] TEACHER_ENDPOINTS = {
-            "/teacher/**"
+        "/api/secure/teacher/**"
     };
 
     @Bean
@@ -63,7 +65,7 @@ public class SpringSecurityConfigs {
     public HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
         return new HandlerMappingIntrospector();
     }
-    
+
 
 
     @Bean
@@ -72,8 +74,7 @@ public class SpringSecurityConfigs {
         http.csrf(c -> c.disable()).authorizeHttpRequests(requests
                 -> requests.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                 .requestMatchers("/login", "/logout").permitAll()
-                .requestMatchers(ADMIN_ENDPOINTS).hasRole("ADMIN")
-                .requestMatchers(TEACHER_ENDPOINTS).hasAnyRole("STAFF", "ADMIN")
+                .requestMatchers(TEACHER_ENDPOINTS).hasAnyRole("TEACHER", "ADMIN")
                 .anyRequest().authenticated())
         .formLogin(form -> form.loginPage("/admin/login")
                 .loginProcessingUrl("/admin/login")
@@ -84,22 +85,4 @@ public class SpringSecurityConfigs {
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-    
-
-//
-//    @Bean
-//    public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
-//        return (request, response, authentication) -> {
-//            boolean isAdmin = authentication.getAuthorities().stream()
-//                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-//            if (isAdmin) {
-//                response.sendRedirect("/admin/user"); // hoặc "/users"
-//            } else {
-//                request.getSession().invalidate(); // hủy session
-//                response.sendRedirect("/login?error=access_denied"); // redirect lại login
-//            }
-//        };
-//    }
-
-
 }

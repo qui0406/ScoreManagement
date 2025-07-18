@@ -1,8 +1,9 @@
-package com.scm.services.Impl;
+package com.scm.repositories.Impl;
 
 import com.scm.pojo.Classroom;
-import com.scm.repositories.ClassRoomRepository;
-import com.scm.services.ClassRoomService;
+import com.scm.pojo.ScoreType;
+import com.scm.pojo.Teacher;
+import com.scm.repositories.TeacherRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -12,10 +13,15 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Repository
 @Transactional
-public class ClassRoomServiceImpl implements ClassRoomService {
+public class TeacherRepositoryImpl implements TeacherRepository {
+    @Autowired
+    private LocalSessionFactoryBean factory;
 
+    @Override
+    public Teacher findTeacherById(Integer id) {
+        Session s = factory.getObject().getCurrentSession();
+        return s.get(Teacher.class, id);
+    }
 }

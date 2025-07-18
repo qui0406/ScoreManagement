@@ -12,7 +12,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Teacher extends User {
-
     @Column(name = "msgv", unique = true)
     String msgv;
 
