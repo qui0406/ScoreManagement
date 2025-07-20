@@ -4,6 +4,8 @@
  */
 package com.scm.dto.requests;
 
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvBindByPosition;
 import lombok.*;
 import java.math.BigDecimal;
 
@@ -16,6 +18,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScoreRequest {
+    private Integer id;
     private BigDecimal score;
     private Integer studentId;
     private Integer classSubjectId;

@@ -27,13 +27,13 @@ public class ScoreTypeRepositoryImpl implements ScoreTypeRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<ScoreType> getGradeTypesByClassSubject(Integer classSubjectId) {
+    public List<ScoreType> getScoreTypesByClassSubject(Integer classSubjectId) {
 
         return null;
     }
 
     @Override
-    public List<ScoreType> getDefaultGradeTypes() {
+    public List<ScoreType> getDefaultScoreTypes() {
         Session s = this.factory.getObject().getCurrentSession();
         String hql = "FROM ScoreType gt WHERE gt.scoreTypeName IN ('Điểm giữa kỳ', 'Điểm cuối kỳ') ORDER BY gt.id";
         Query query = s.createQuery(hql, ScoreType.class);

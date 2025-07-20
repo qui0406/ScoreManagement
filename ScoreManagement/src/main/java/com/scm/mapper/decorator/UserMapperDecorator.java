@@ -72,6 +72,7 @@ public abstract class UserMapperDecorator implements UserMapper {
     @Override
     public StudentResponse toStudentResponse(Student student) {
         StudentResponse res = delegate.toStudentResponse(student);
+        res.setId(student.getId().toString());
         res.setUsername(student.getUsername());
         res.setFirstName(student.getFirstName());
         res.setLastName(student.getLastName());

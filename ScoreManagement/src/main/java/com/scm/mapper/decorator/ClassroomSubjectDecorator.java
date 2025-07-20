@@ -36,23 +36,34 @@ public class ClassroomSubjectDecorator implements ClassroomSubjectMapper {
     @Autowired
     private ClassroomMapper classroomMapper;
 
+    @Autowired
+    private StudentRepository studentRepo;
+
+    @Autowired
+    private SubjectRepository subjectRepo;
+
+
 
     @Override
     public ClassroomSubject toClassroomSubject(ClassroomSubjectRequest dto) {
         ClassroomSubject cs = new ClassroomSubject();
+
         cs.setSemester(dto.getSemester());
 
         var teacher = teacherRepo.findTeacherById(dto.getTeacherId());
         var classId = classRepo.findClassRoomById(dto.getClassroomId());
-        var subject = classSubjectRepo.findClassroomSubjectById(dto.getSubjectId());
+        var subject = subjectRepo.findSubjectById(dto.getSubjectId());
+        var student = studentRepo.findStudentById(dto.getStudentId());
 
-        if (teacher == null || classId == null || subject == null) {
+
+        if (teacher == null || classId == null || subject == null || student == null) {
             throw new IllegalArgumentException("One or more related entities not found");
         }
 
+        cs.setStudent(student);
         cs.setTeacher(teacher);
         cs.setClassroom(classId);
-        cs.setSubject(subject.getSubject());
+        cs.setSubject(subject);
         return cs;
     }
 

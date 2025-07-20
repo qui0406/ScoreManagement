@@ -12,8 +12,8 @@ import java.util.List;
  * @author admin
  */
 public interface ScoreTypeRepository {
-    List<ScoreType> getGradeTypesByClassSubject(Integer classSubjectId);
-    List<ScoreType> getDefaultGradeTypes();
+    List<ScoreType> getScoreTypesByClassSubject(Integer classSubjectId);
+    List<ScoreType> getDefaultScoreTypes();
     ScoreType findScoreTypeById(Integer id);
     void addOrUpdateGradeType(ScoreType scoreType);
     void deleteGradeType(Integer id);

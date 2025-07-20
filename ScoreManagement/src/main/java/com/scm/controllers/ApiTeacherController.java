@@ -4,23 +4,32 @@
  */
 package com.scm.controllers;
 
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
+import com.scm.dto.requests.CSVScoreRequest;
 import com.scm.dto.requests.ScoreRequest;
 import com.scm.dto.requests.ScoreTypeRequest;
 import com.scm.dto.responses.*;
+import com.scm.exceptions.AppException;
+import com.scm.helpers.CSVHelper;
 import com.scm.mapper.UserMapper;
 import com.scm.pojo.User;
 import com.scm.services.*;
 
+import java.io.InputStreamReader;
 import java.security.Principal;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -76,18 +85,63 @@ public class ApiTeacherController {
     }
 
     @PostMapping("/scores")
-    public ResponseEntity<String> addOrUpdateGrade(@RequestBody ScoreRequest scoreRequest, Principal principal) {
+    public ResponseEntity<String> addOrUpdateScore(@RequestBody ScoreRequest scoreRequest, Principal principal) {
         try {
             String teacherName = principal.getName();
             User teacher = userDetailsService.getUserByUsername(teacherName);
             this.scoreService.addOrUpdateScore(scoreRequest, teacher.getId().toString());
-            return new ResponseEntity<>("Nhập điểm thành công!", HttpStatus.OK);
+            return ResponseEntity.ok("value: Successfully");
+        } catch (AppException e) {
+            return ResponseEntity.badRequest().body("value:" + e.getErrorCode().getMessage());
         } catch (Exception e) {
-            return new ResponseEntity<>("Lỗi khi nhập điểm: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("value: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/class-subject/{classSubjectId}/grades")
+    @PostMapping(path = "/upload-scores", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> uploadScores(@RequestParam(value = "file") MultipartFile file, Principal principal) {
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body("File is empty");
+        }
+
+        log.info("Principal: {}", principal);
+        SecurityContext context = SecurityContextHolder.getContext();
+        log.info("SecurityContext: {}", context.getAuthentication());
+        try {
+            String username = principal.getName();
+            log.info("Username: {}", username);
+            User teacher = userDetailsService.getUserByUsername(username);
+            log.info("Teacher: {}", teacher);
+            InputStreamReader reader = new InputStreamReader(file.getInputStream());
+            log.info("InputStreamReader: {}", reader);
+            CsvToBean<CSVScoreRequest> csvToBean = new CsvToBeanBuilder<CSVScoreRequest>(reader)
+                    .withType(CSVScoreRequest.class)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .withThrowExceptions(true)
+                    .build();
+            log.info("CsvToBean created: {}", csvToBean);
+            List<CSVScoreRequest> scores = csvToBean.parse();
+            log.info("Parsed scores: {}", scores);
+            if (csvToBean.getCapturedExceptions().size() > 0) {
+                log.error("CSV parsing errors: {}", csvToBean.getCapturedExceptions());
+                throw new Exception("Invalid CSV format: " + csvToBean.getCapturedExceptions().get(0).getMessage());
+            }
+            scores.forEach(score -> score.setTeacherId(teacher.getId()));
+            log.info("Calling scoreService.importScores...");
+            scoreService.importScores(scores);
+            log.info("Scores imported successfully");
+            return ResponseEntity.ok("Scores uploaded successfully.");
+        } catch (Exception e) {
+            log.error("Error processing file: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error processing file: " + e.getMessage());
+        }
+    }
+
+
+
+    @GetMapping("/class-subject/{classSubjectId}/scores")
     public ResponseEntity<List<ScoreResponse>> getGradesByClassSubject(@PathVariable(value="classSubjectId") Integer classSubjectId) {
         try {
             List<ScoreResponse> grades = this.scoreService.getScoresByClassSubjectId(classSubjectId);
@@ -98,7 +152,6 @@ public class ApiTeacherController {
     }
 
 
-    // danh sách lớp môn giảng viên đang dạy
     @GetMapping("/my-classes")
     public ResponseEntity<List<ClassroomSubjectResponse>> getMyClassroomSubjects(Principal principal) {
         try {
@@ -110,6 +163,19 @@ public class ApiTeacherController {
             return new ResponseEntity<>(classroomSubjects, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/score/close-score/{classroomId}")
+    public boolean closeScore(@PathVariable(value="classroomId") Integer classroomId, Principal principal) {
+        try {
+            String teacherName = principal.getName();
+            User teacher = userDetailsService.getUserByUsername(teacherName);
+            this.scoreService.updateCloseScore(teacher.getId(), classroomId);
+            return true;
+        }catch (AppException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

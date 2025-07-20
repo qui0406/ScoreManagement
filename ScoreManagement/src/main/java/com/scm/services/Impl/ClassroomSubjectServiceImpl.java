@@ -4,7 +4,10 @@
  */
 package com.scm.services.Impl;
 
+import com.scm.dto.requests.ClassroomSubjectRequest;
 import com.scm.dto.responses.ClassroomSubjectResponse;
+import com.scm.exceptions.AppException;
+import com.scm.exceptions.ErrorCode;
 import com.scm.mapper.ClassroomSubjectMapper;
 import com.scm.pojo.ClassroomSubject;
 import com.scm.repositories.ClassroomSubjectRepository;
@@ -67,5 +70,28 @@ public class ClassroomSubjectServiceImpl implements ClassroomSubjectService {
         response.setTotalStudents(this.classroomSubjectRepo.countStudentsInClassSubject(cs.getId()));
         response.setCountScoreType(this.classroomSubjectRepo.countScoreTypesInClassSubject(cs.getId()));
         return response;
+    }
+
+    @Override
+    public ClassroomSubjectResponse create(ClassroomSubjectRequest classroomSubjectRequest, String id) {
+        ClassroomSubjectRequest csr = classroomSubjectRequest;
+        csr.setStudentId(Integer.parseInt(id));
+        ClassroomSubject cs = classroomSubjectMapper.toClassroomSubject(csr);
+        if (cs == null) {
+            log.info("nullllllllllll");
+            throw new AppException(ErrorCode.INVALID_DATA);
+        }
+        boolean check = classroomSubjectRepo.existClassSubjectRegister(cs);
+        if (check) {
+            log.info("classroom subject register fail");
+            throw new AppException(ErrorCode.EXIST_CLASS);
+        }
+        ClassroomSubject saved = classroomSubjectRepo.create(cs);
+        return classroomSubjectMapper.toClassroomSubjectResponse(saved);
+    }
+
+    @Override
+    public void delete(String classSubjectId, String userId) {
+        this.classroomSubjectRepo.delete(Integer.parseInt(classSubjectId), userId);
     }
 }

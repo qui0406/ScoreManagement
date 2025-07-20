@@ -4,10 +4,14 @@
  */
 package com.scm.services;
 
+import com.scm.dto.requests.CSVScoreRequest;
 import com.scm.dto.requests.ScoreRequest;
 import com.scm.dto.responses.ScoreResponse;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -16,4 +20,8 @@ import java.util.List;
 public interface ScoreService {
     void addOrUpdateScore(ScoreRequest scoreRequest, String teacherId);
     List<ScoreResponse> getScoresByClassSubjectId(Integer classSubjectId);
+
+    void updateCloseScore(Integer teacherId,  Integer classroomId);
+
+    void importScores(List<CSVScoreRequest> scores);
 }

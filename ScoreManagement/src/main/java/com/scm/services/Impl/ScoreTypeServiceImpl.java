@@ -28,9 +28,9 @@ public class ScoreTypeServiceImpl implements ScoreTypeService {
     @Override
     public List<ScoreTypeResponse> getScoreTypesByClassSubject(Integer classSubjectId) {
         // Đảm bảo có tối thiểu điểm giữa kỳ và cuối kỳ
-        this.ensureMinimumGradeTypes(classSubjectId);
+        this.ensureMinimumScoreTypes(classSubjectId);
 
-        List<ScoreType> scoreTypes = this.gradeTypeRepo.getGradeTypesByClassSubject(classSubjectId);
+        List<ScoreType> scoreTypes = this.gradeTypeRepo.getScoreTypesByClassSubject(classSubjectId);
         List<ScoreTypeResponse> responses = new ArrayList<>();
 
         for (ScoreType scoreType : scoreTypes) {
@@ -68,7 +68,7 @@ public class ScoreTypeServiceImpl implements ScoreTypeService {
     }
 
     @Override
-    public void ensureMinimumGradeTypes(Integer classSubjectId) {
+    public void ensureMinimumScoreTypes(Integer classSubjectId) {
         // Kiểm tra xem đã có đủ loại điểm tối thiểu (giữa kỳ + cuối kỳ) chưa
         // Logic này sẽ được triển khai khi cần thiết
         // Có thể tự động tạo điểm giữa kỳ và cuối kỳ nếu chưa có

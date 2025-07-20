@@ -16,4 +16,9 @@ public interface ClassroomSubjectRepository {
     int countStudentsInClassSubject(Integer classSubjectId);
     int countScoreTypesInClassSubject(Integer classSubjectId);
     ClassroomSubject findClassroomSubjectById(Integer classSubjectId);
+
+    ClassroomSubject create(ClassroomSubject classroomSubject);
+    void delete(Integer classSubjectId, String userId);
+
+    boolean existClassSubjectRegister(ClassroomSubject classroomSubject);
 }

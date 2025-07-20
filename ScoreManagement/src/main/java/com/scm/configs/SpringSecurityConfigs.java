@@ -56,6 +56,10 @@ public class SpringSecurityConfigs {
         "/api/secure/teacher/**"
     };
 
+    private static final String[] USER_ENDPOINTS = {
+            "/api/secure/user/**"
+    };
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -66,6 +70,10 @@ public class SpringSecurityConfigs {
         return new HandlerMappingIntrospector();
     }
 
+    @Bean
+    public StandardServletMultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
+    }
 
 
     @Bean
@@ -75,6 +83,8 @@ public class SpringSecurityConfigs {
                 -> requests.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                 .requestMatchers("/login", "/logout").permitAll()
                 .requestMatchers(TEACHER_ENDPOINTS).hasAnyRole("TEACHER", "ADMIN")
+                .requestMatchers(USER_ENDPOINTS).hasAnyRole("USER", "TEACHER", "ADMIN")
+
                 .anyRequest().authenticated())
         .formLogin(form -> form.loginPage("/admin/login")
                 .loginProcessingUrl("/admin/login")

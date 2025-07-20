@@ -14,4 +14,5 @@ public class ClassroomSubjectRequest {
     private Integer subjectId;
     private String semester;
     private Integer teacherId;
+    private Integer studentId;
 }
