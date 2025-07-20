@@ -6,17 +6,11 @@ import org.springframework.http.HttpStatusCode;
 
 @Getter
 public enum ErrorCode {
-    UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
-    INVALID_KEY(1001, "Uncategorized error", HttpStatus.BAD_REQUEST),
-    USER_EXISTED(1002, "User existed", HttpStatus.BAD_REQUEST),
-    USERNAME_INVALID(1003, "Username must be at least {min} characters", HttpStatus.BAD_REQUEST),
-    INVALID_PASSWORD(1004, "Password must be at least {min} characters", HttpStatus.BAD_REQUEST),
-    USER_NOT_EXISTED(1005, "User not existed", HttpStatus.NOT_FOUND),
-    UNAUTHENTICATED(1006, "Unauthenticated", HttpStatus.UNAUTHORIZED),
-    UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN),
-    INVALID_DOB(1008, "Your age must be at least {min}", HttpStatus.BAD_REQUEST),
-    INVALID_EMAIL(1009, "Invalid email address", HttpStatus.BAD_REQUEST),
-    EMAIL_IS_REQUIRED(1009, "Email is required", HttpStatus.BAD_REQUEST),
+    ONLY_1_COLLUM(1001, "Chi duoc nhap 1 cot diem", HttpStatus.BAD_REQUEST),
+    OVER_5_TEST(1002, "Nhap qua 5 cot diem", HttpStatus.BAD_REQUEST),
+    INVALID_DATA(1003, "Loi truyen du lieu", HttpStatus.BAD_REQUEST),
+    EXIST_CLASS(1004, "Ban da dang ky lop nay roi", HttpStatus.BAD_REQUEST),
+    UNAUTHORIZE(1005, "Ban khong co quyen",  HttpStatus.UNAUTHORIZED),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

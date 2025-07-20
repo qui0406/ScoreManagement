@@ -31,4 +31,8 @@ public class  ClassroomSubject {
     @Size(max = 20)
     @Column(name = "semester", length = 20)
     private String semester;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id",  nullable = false)
+    private Student student;
 }

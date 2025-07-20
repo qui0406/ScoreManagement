@@ -4,6 +4,7 @@
  */
 package com.scm.services;
 
+import com.scm.dto.requests.ClassroomSubjectRequest;
 import com.scm.dto.responses.ClassroomSubjectResponse;
 import java.util.List;
 
@@ -14,4 +15,6 @@ import java.util.List;
 public interface ClassroomSubjectService {
     List<ClassroomSubjectResponse> getClassroomSubjectsByTeacherId(String teacherId);
     ClassroomSubjectResponse getClassroomSubjectDetails(Integer classSubjectId);
+    ClassroomSubjectResponse create(ClassroomSubjectRequest classroomSubjectRequest, String id);
+    void delete(String classSubjectId, String userId);
 }

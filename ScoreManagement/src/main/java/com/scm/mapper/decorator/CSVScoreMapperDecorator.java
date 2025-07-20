@@ -1,29 +1,19 @@
 package com.scm.mapper.decorator;
 
-import com.scm.dto.requests.ScoreRequest;
-import com.scm.dto.responses.ScoreResponse;
+import com.scm.dto.requests.CSVScoreRequest;
+import com.scm.mapper.CSVScoreMapper;
 import com.scm.mapper.ScoreMapper;
-import com.scm.mapper.UserMapper;
 import com.scm.pojo.Score;
 import com.scm.repositories.ClassroomSubjectRepository;
 import com.scm.repositories.ScoreTypeRepository;
 import com.scm.repositories.StudentRepository;
 import com.scm.repositories.TeacherRepository;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-
-@RequiredArgsConstructor
 @Component
-@Slf4j
-public class ScoreMapperDecorator implements ScoreMapper {
+public class CSVScoreMapperDecorator implements CSVScoreMapper {
     @Autowired
     @Qualifier("delegate")
     private ScoreMapper delegate;
@@ -35,11 +25,9 @@ public class ScoreMapperDecorator implements ScoreMapper {
     private ScoreTypeRepository scoreTypeRepo;
     @Autowired
     private TeacherRepository teacherRepo;
-
     @Override
-    public Score toGrade(ScoreRequest dto) {
+    public Score toScore(CSVScoreRequest dto) {
         Score score = new Score();
-        score.setId(dto.getId());
         score.setScore(dto.getScore());
 
         var student = studentRepo.findStudentById(dto.getStudentId());
@@ -57,10 +45,5 @@ public class ScoreMapperDecorator implements ScoreMapper {
         score.setScoreType(scoreType);
         score.setTeacher(teacher);
         return score;
-    }
-
-    @Override
-    public ScoreResponse toScoreResponse(Score dto) {
-        return delegate.toScoreResponse(dto);
     }
 }

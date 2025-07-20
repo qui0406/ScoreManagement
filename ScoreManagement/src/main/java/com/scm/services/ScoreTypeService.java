@@ -17,5 +17,5 @@ public interface ScoreTypeService {
     void addGradeTypeToClassSubject(ScoreTypeRequest scoreTypeRequest, Integer classSubjectId);
     void deleteGradeType(Integer id);
     boolean canAddMoreGradeTypes(Integer classSubjectId);
-    void ensureMinimumGradeTypes(Integer classSubjectId);
+    void ensureMinimumScoreTypes(Integer classSubjectId);
 }

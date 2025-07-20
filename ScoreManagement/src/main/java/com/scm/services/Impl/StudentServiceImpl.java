@@ -5,9 +5,12 @@
 package com.scm.services.Impl;
 
 import com.scm.dto.responses.StudentResponse;
+import com.scm.mapper.UserMapper;
 import com.scm.pojo.Student;
 import com.scm.repositories.StudentRepository;
 import com.scm.services.StudentService;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,26 +25,21 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private StudentRepository studentRepo;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
     public List<StudentResponse> getStudentsByClassSubjectId(Integer classSubjectId) {
         List<Student> students = this.studentRepo.getStudentsByClassSubjectId(classSubjectId);
-        return students.stream()
-                .map(this::convertToStudentResponse)
-                .collect(Collectors.toList());
+
+        List<StudentResponse> studentResponses = new ArrayList<>();
+
+        for (Student student : students) {
+            StudentResponse response = userMapper.toStudentResponse(student);
+            studentResponses.add(response);
+        }
+        return studentResponses;
     }
 
-    private StudentResponse convertToStudentResponse(Student student) {
-        StudentResponse response = new StudentResponse();
-//        response.setId(student.getId());
-        response.setMssv(student.getMssv());
 
-//        // Chỉ lấy thông tin firstName, lastName và email từ User entity
-//        if (student.getUser() != null) {
-//            response.setFirstName(student.getUser().getFirstName());
-//            response.setLastName(student.getUser().getLastName());
-//            response.setEmail(student.getUser().getEmail());
-//        }
-
-        return response;
-    }
 }
