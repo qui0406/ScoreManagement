@@ -27,4 +27,6 @@ public interface ScoreRepository {
 
     void saveAll(Set<Score> scores);
     void save(Score score);
+
+    List<Score> findScoreByStudentIdAndClassSubjectId(Integer studentId, Integer classSubjectId);
 }
