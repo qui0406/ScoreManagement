@@ -1,12 +1,17 @@
 package com.scm.controllers;
 
 import com.scm.dto.requests.ClassroomSubjectRequest;
+import com.scm.dto.requests.ScoreTableRequest;
 import com.scm.dto.responses.ClassroomSubjectResponse;
 import com.scm.dto.responses.RegisterSubjectResponse;
+import com.scm.dto.responses.ScoreResponse;
+import com.scm.dto.responses.ScoreTableResponse;
 import com.scm.exceptions.AppException;
 import com.scm.mapper.ClassroomSubjectMapper;
+import com.scm.mapper.ScoreTableMapper;
 import com.scm.pojo.User;
 import com.scm.services.ClassroomSubjectService;
+import com.scm.services.ScoreTableService;
 import com.scm.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/secure/user")
@@ -26,6 +33,12 @@ public class ApiSubjectController {
 
     @Autowired
     private ClassroomSubjectMapper classroomSubjectMapper;
+
+    @Autowired
+    private ScoreTableService scoreTableService;
+
+    @Autowired
+    private ScoreTableMapper scoreTableMapper;
 
     @PostMapping("/create")
     public ResponseEntity<?> registerSubject(@RequestBody ClassroomSubjectRequest request, Principal principal) {
@@ -52,6 +65,18 @@ public class ApiSubjectController {
         catch(AppException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping("/score-table")
+    public ResponseEntity<List<ScoreTableResponse>> getScoreTable(@RequestBody ScoreTableRequest scoreTableRequest, Principal principal) {
+        String username = principal.getName();
+        User student = userDetailsService.getUserByUsername(username);
+        if(!student.getId().toString().equals(scoreTableRequest.getStudentId())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        List<ScoreTableResponse> responses= this.scoreTableService.getScoreSubjectByStudentId(scoreTableRequest);
+        return ResponseEntity.ok(responses);
+
     }
 
 }
