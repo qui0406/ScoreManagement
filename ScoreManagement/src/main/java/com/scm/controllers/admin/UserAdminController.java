@@ -23,6 +23,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
+@CrossOrigin
 public class UserAdminController {
     @Autowired
     private UserService userDetailsService;
@@ -35,7 +36,6 @@ public class UserAdminController {
         model.addAttribute("users", this.userDetailsService.getAllUsers());
         return "admin/users";
     }
-
 
 
     @GetMapping("/login")
