@@ -11,6 +11,7 @@ import com.scm.dto.requests.ScoreRequest;
 import com.scm.dto.requests.ScoreTypeRequest;
 import com.scm.dto.responses.*;
 import com.scm.exceptions.AppException;
+import com.scm.exceptions.ErrorCode;
 import com.scm.helpers.CSVHelper;
 import com.scm.mapper.UserMapper;
 import com.scm.pojo.User;
@@ -59,6 +60,9 @@ public class ApiTeacherController {
     private ClassroomSubjectService classroomSubjectService;
 
     @Autowired
+    private ScoreTableService scoreTableService;
+
+    @Autowired
     private UserMapper  userMapper;
 
     @PreAuthorize("hasRole('TEACHER')")
@@ -84,7 +88,7 @@ public class ApiTeacherController {
         }
     }
 
-    @PostMapping("/scores")
+    @PostMapping("/add-scores")
     public ResponseEntity<String> addOrUpdateScore(@RequestBody ScoreRequest scoreRequest, Principal principal) {
         try {
             String teacherName = principal.getName();
@@ -97,6 +101,20 @@ public class ApiTeacherController {
             return new ResponseEntity<>("value: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/export-list-score/{classroomId}")
+    public ResponseEntity<List<ScoreTableResponse>> getExportListScore(@PathVariable(value="classroomId") String classroomId
+            ,Principal principal) {
+        String teacherName = principal.getName();
+        User teacher = userDetailsService.getUserByUsername(teacherName);
+        try{
+            return ResponseEntity.ok(this.scoreTableService.getAllStudentsInClassSubject(classroomId, teacher.getId().toString()));
+        }
+        catch (AppException ex){
+            return null;
+        }
+    }
+
 
     @PostMapping(path = "/upload-scores", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)

@@ -21,7 +21,7 @@ public class ScoreTableRepositoryImpl implements ScoreTableRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Score> getScoreSubjectByStudentId(String id,  String classroomSubjectId, String teacherId) {
+    public Score getScoreSubjectByStudentId(String id,  String classroomSubjectId, String teacherId) {
         Session session = factory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Score> query = builder.createQuery(Score.class);
@@ -33,7 +33,27 @@ public class ScoreTableRepositoryImpl implements ScoreTableRepository {
             builder.equal(root.get("teacher").get("id"), teacherId)
         ).orderBy(builder.asc(root.get("scoreType").get("id")));
 
-        List<Score> scores = session.createQuery(query).getResultList();
-        return scores;
+        List<Score> results = session.createQuery(query).getResultList();
+
+        if (results.isEmpty()) {
+            return null;
+        }
+        return results.get(0);
+    }
+
+    @Override
+    public List<Score> getAllStudentsInClass(String classroomSubjectId, String teacherId) {
+        Session session = factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Score> query = builder.createQuery(Score.class);
+        Root<Score> root = query.from(Score.class);
+
+        query.select(root).where(
+                builder.equal(root.get("classSubject").get("id"), classroomSubjectId),
+                builder.equal(root.get("teacher").get("id"), teacherId)
+        ).orderBy(builder.asc(root.get("student").get("firstName")));
+
+        List<Score> results = session.createQuery(query).getResultList();
+        return results;
     }
 }

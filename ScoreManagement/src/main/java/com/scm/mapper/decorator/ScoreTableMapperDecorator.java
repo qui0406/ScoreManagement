@@ -32,8 +32,6 @@ public class ScoreTableMapperDecorator implements ScoreTableMapper {
     @Autowired
     private ClassroomSubjectRepository classSubjectRepo;
     @Autowired
-    private ScoreTypeRepository scoreTypeRepo;
-    @Autowired
     private TeacherRepository teacherRepo;
     @Autowired
     private ScoreRepository scoreRepo;
@@ -43,13 +41,10 @@ public class ScoreTableMapperDecorator implements ScoreTableMapper {
     public ScoreTableResponse toScoreTableResponse(Score score) {
         Student student = studentRepo.findStudentById(score.getStudent().getId());
         ClassroomSubject classSubject = classSubjectRepo.findClassroomSubjectById(score.getClassSubject().getId());
-        ScoreType scoreType = scoreTypeRepo.findScoreTypeById(score.getScoreType().getId());
         Teacher teacher = teacherRepo.findTeacherById(score.getTeacher().getId());
 
-        // Lấy tất cả điểm theo loại điểm cho cùng một student và classSubject
         List<Score> allScores = scoreRepo.findScoreByStudentIdAndClassSubjectId(student.getId(), classSubject.getId());
 
-        // Nhóm các điểm theo loại điểm (ScoreType)
         Map<Integer, ScoreByTypeDTO> scoresMap = new HashMap<>();
 
         for (Score sc : allScores) {
@@ -59,36 +54,24 @@ public class ScoreTableMapperDecorator implements ScoreTableMapper {
                     sc.getScoreType().getScoreTypeName(),
                     new ArrayList<>()
             ));
-
             dto.getScores().add(sc.getScore());
             scoresMap.put(typeId, dto);
         }
-
-        // Build response
         ScoreTableResponse response = new ScoreTableResponse();
 
-        response.setStudent(new StudentDTO(
-                student.getMssv(),
-                student.getFirstName() + " " + student.getLastName()
-        ));
+        response.setStudent(new StudentDTO(student.getMssv(),
+                student.getFirstName() + " " + student.getLastName()));
 
-        response.setSubject(new SubjectDTO(
-                classSubject.getSubject().getId(),
-                classSubject.getSubject().getSubjectName()
-        ));
+        response.setSubject(new SubjectDTO(classSubject.getSubject().getId(),
+                classSubject.getSubject().getSubjectName()));
 
-        response.setClassroom(new ClassroomDTO(
-                classSubject.getClassroom().getId(),
-                classSubject.getClassroom().getName()
-        ));
+        response.setClassroom(new ClassroomDTO(classSubject.getClassroom().getId(),
+                classSubject.getClassroom().getName()));
 
-        response.setTeacher(new TeacherDTO(
-                teacher.getMsgv(),
-                teacher.getFirstName() + " " + teacher.getLastName()
-        ));
+        response.setTeacher(new TeacherDTO(teacher.getMsgv(),
+                teacher.getFirstName() + " " + teacher.getLastName()));
 
         response.setScores(new ArrayList<>(scoresMap.values()));
-        log.info(response.getStudent().getName());
         return response;
     }
 

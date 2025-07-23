@@ -68,15 +68,14 @@ public class ApiSubjectController {
     }
 
     @PostMapping("/score-table")
-    public ResponseEntity<List<ScoreTableResponse>> getScoreTable(@RequestBody ScoreTableRequest scoreTableRequest, Principal principal) {
+    public ResponseEntity<ScoreTableResponse> getScoreTable(@RequestBody ScoreTableRequest scoreTableRequest, Principal principal) {
         String username = principal.getName();
         User student = userDetailsService.getUserByUsername(username);
         if(!student.getId().toString().equals(scoreTableRequest.getStudentId())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        List<ScoreTableResponse> responses= this.scoreTableService.getScoreSubjectByStudentId(scoreTableRequest);
+        ScoreTableResponse responses= this.scoreTableService.getScoreSubjectByStudentId(scoreTableRequest);
         return ResponseEntity.ok(responses);
-
     }
 
 }
