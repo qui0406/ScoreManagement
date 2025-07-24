@@ -1,7 +1,6 @@
 package com.scm.pojo;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,5 +20,5 @@ public class StudentEnrollment {
 
     @ManyToOne
     @JoinColumn(name = "class_subject_id", nullable = false)
-    private ClassroomSubject classSubject;
+    private ClassSubject classSubject;
 }

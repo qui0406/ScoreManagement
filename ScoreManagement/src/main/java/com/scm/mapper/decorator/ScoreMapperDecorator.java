@@ -55,7 +55,6 @@ public class ScoreMapperDecorator implements ScoreMapper {
         score.setStudent(student);
         score.setClassSubject(classSubject);
         score.setScoreType(scoreType);
-        score.setTeacher(teacher);
         return score;
     }
 

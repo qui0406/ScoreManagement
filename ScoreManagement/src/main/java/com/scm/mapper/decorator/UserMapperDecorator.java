@@ -44,7 +44,6 @@ public abstract class UserMapperDecorator implements UserMapper {
         res.setRole(user.getRole());
         res.setAvatar(user.getAvatar());
         return res;
-
     }
 
     @Override

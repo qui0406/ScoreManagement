@@ -9,10 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClassroomSubjectRequest {
-    private Integer classroomId;
-    private Integer subjectId;
-    private Integer semesterId;
-    private Integer teacherId;
-    private Integer studentId;
+public class ScoreStudentRequest {
+    private String studentId;
+    private String teacherId;
+    private String classSubjectId;
+    private String semesterId;
 }

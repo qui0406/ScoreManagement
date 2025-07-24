@@ -9,7 +9,7 @@ import com.scm.dto.responses.ClassroomSubjectResponse;
 import com.scm.exceptions.AppException;
 import com.scm.exceptions.ErrorCode;
 import com.scm.mapper.ClassroomSubjectMapper;
-import com.scm.pojo.ClassroomSubject;
+import com.scm.pojo.ClassSubject;
 import com.scm.repositories.ClassroomSubjectRepository;
 import com.scm.services.ClassroomSubjectService;
 import java.util.ArrayList;
@@ -17,8 +17,6 @@ import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,20 +33,20 @@ public class ClassroomSubjectServiceImpl implements ClassroomSubjectService {
 
     @Override
     public List<ClassroomSubjectResponse> getClassroomSubjectsByTeacherId(String teacherId) {
-        List<ClassroomSubject> classroomSubjects = this.classroomSubjectRepo
+        List<ClassSubject> classSubjects = this.classroomSubjectRepo
                 .getClassroomSubjectsByTeacherId(teacherId);
 
-        if (!classroomSubjects.isEmpty() && classroomSubjects.get(0).getSubject() != null) {
-            log.info("subject service :{}", classroomSubjects.get(0).getSubject().getSubjectName());
+        if (!classSubjects.isEmpty() && classSubjects.get(0).getSubject() != null) {
+            log.info("subject service :{}", classSubjects.get(0).getSubject().getSubjectName());
         } else {
             log.warn("Subject is null for first classroom subject");
         }
-        log.info(classroomSubjects.toArray().toString());
+        log.info(classSubjects.toArray().toString());
 
-        log.info("subject service :{}", classroomSubjects.get(0).getSubject().getSubjectName().toString());
+        log.info("subject service :{}", classSubjects.get(0).getSubject().getSubjectName().toString());
         List<ClassroomSubjectResponse> responses = new ArrayList<>();
-        log.info(classroomSubjects.toString());
-        for (ClassroomSubject cs : classroomSubjects) {
+        log.info(classSubjects.toString());
+        for (ClassSubject cs : classSubjects) {
             ClassroomSubjectResponse response = classroomSubjectMapper
                     .toClassroomSubjectResponse(cs);
             responses.add(response);
@@ -59,7 +57,7 @@ public class ClassroomSubjectServiceImpl implements ClassroomSubjectService {
 
     @Override
     public ClassroomSubjectResponse getClassroomSubjectDetails(Integer classSubjectId) {
-        ClassroomSubject cs = this.classroomSubjectRepo.findClassroomSubjectById(classSubjectId);
+        ClassSubject cs = this.classroomSubjectRepo.findClassroomSubjectById(classSubjectId);
 
         if (cs == null) {
             return null;
@@ -76,7 +74,7 @@ public class ClassroomSubjectServiceImpl implements ClassroomSubjectService {
     public ClassroomSubjectResponse create(ClassroomSubjectRequest classroomSubjectRequest, String id) {
         ClassroomSubjectRequest csr = classroomSubjectRequest;
         csr.setStudentId(Integer.parseInt(id));
-        ClassroomSubject cs = classroomSubjectMapper.toClassroomSubject(csr);
+        ClassSubject cs = classroomSubjectMapper.toClassroomSubject(csr);
         if (cs == null) {
             log.info("nullllllllllll");
             throw new AppException(ErrorCode.INVALID_DATA);
@@ -86,7 +84,7 @@ public class ClassroomSubjectServiceImpl implements ClassroomSubjectService {
             log.info("classroom subject register fail");
             throw new AppException(ErrorCode.EXIST_CLASS);
         }
-        ClassroomSubject saved = classroomSubjectRepo.create(cs);
+        ClassSubject saved = classroomSubjectRepo.create(cs);
         return classroomSubjectMapper.toClassroomSubjectResponse(saved);
     }
 

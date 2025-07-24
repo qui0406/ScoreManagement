@@ -6,8 +6,7 @@ package com.scm.repositories.Impl;
 
 import com.scm.exceptions.AppException;
 import com.scm.exceptions.ErrorCode;
-import com.scm.pojo.ClassroomSubject;
-import com.scm.pojo.ScoreType;
+import com.scm.pojo.ClassSubject;
 import com.scm.pojo.StudentEnrollment;
 import com.scm.pojo.Score;
 import com.scm.repositories.ClassroomSubjectRepository;
@@ -37,11 +36,11 @@ public class ClassroomSubjectRepositoryImpl implements ClassroomSubjectRepositor
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<ClassroomSubject> getClassroomSubjectsByTeacherId(String teacherId) {
+    public List<ClassSubject> getClassroomSubjectsByTeacherId(String teacherId) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<ClassroomSubject> q = b.createQuery(ClassroomSubject.class);
-        Root<ClassroomSubject> root = q.from(ClassroomSubject.class);
+        CriteriaQuery<ClassSubject> q = b.createQuery(ClassSubject.class);
+        Root<ClassSubject> root = q.from(ClassSubject.class);
 
         q.select(root);
         q.where(b.equal(root.get("teacher").get("id"), teacherId));
@@ -85,31 +84,31 @@ public class ClassroomSubjectRepositoryImpl implements ClassroomSubjectRepositor
     }
 
     @Override
-    public ClassroomSubject findClassroomSubjectById(Integer classSubjectId) {
+    public ClassSubject findClassroomSubjectById(Integer classSubjectId) {
         Session s = this.factory.getObject().getCurrentSession();
-        return s.get(ClassroomSubject.class, classSubjectId);
+        return s.get(ClassSubject.class, classSubjectId);
     }
 
     @Override
-    public ClassroomSubject create(ClassroomSubject classroomSubject) {
+    public ClassSubject create(ClassSubject classSubject) {
         Session s = this.factory.getObject().getCurrentSession();
-        return s.merge(classroomSubject);
+        return s.merge(classSubject);
     }
 
 
     @Override
-    public boolean existClassSubjectRegister(ClassroomSubject classroomSubject) {
+    public boolean existClassSubjectRegister(ClassSubject classSubject) {
         Session session = factory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
-        Root<ClassroomSubject> root = query.from(ClassroomSubject.class);
+        Root<ClassSubject> root = query.from(ClassSubject.class);
 
         query.select(builder.count(root));
         query.where(
-            builder.equal(root.get("classroom").get("id"), classroomSubject.getClassroom().getId()),
-            builder.equal(root.get("subject").get("id"), classroomSubject.getSubject().getId()),
-            builder.equal(root.get("semester"), classroomSubject.getSemester()),
-            builder.equal(root.get("teacher").get("id"), classroomSubject.getTeacher().getId())
+            builder.equal(root.get("classroom").get("id"), classSubject.getClassroom().getId()),
+            builder.equal(root.get("subject").get("id"), classSubject.getSubject().getId()),
+            builder.equal(root.get("semester"), classSubject.getSemester()),
+            builder.equal(root.get("teacher").get("id"), classSubject.getTeacher().getId())
         );
 
         Long count = session.createQuery(query).getSingleResult();
@@ -121,16 +120,48 @@ public class ClassroomSubjectRepositoryImpl implements ClassroomSubjectRepositor
         Session session = factory.getObject().getCurrentSession();
 
 
-        ClassroomSubject cs = findClassroomSubjectById(classSubjectId);
+        ClassSubject cs = findClassroomSubjectById(classSubjectId);
         log.info("Delete ClassroomSubject by id " + classSubjectId);
         if (cs == null) {
             throw new AppException(ErrorCode.INVALID_DATA);
         }
-        if (!cs.getStudent().getId().toString().equals(userId)) {
-            log.info("khong co quyen xoa");
-            throw new AppException(ErrorCode.UNAUTHORIZE);
-        }
+
         log.info("loio");
         session.remove(cs);
+    }
+
+    @Override
+    public ClassSubject getScoreSubjectByStudentId(String id, String classroomSubjectId, String teacherId, String semesterId) {
+        Session session = factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<ClassSubject> query = builder.createQuery(ClassSubject.class);
+        Root<ClassSubject> root = query.from(ClassSubject.class);
+
+        query.select(root).where(
+                builder.equal(root.get("student").get("id"), id),
+                builder.equal(root.get("id"), classroomSubjectId),
+                builder.equal(root.get("teacher").get("id"), teacherId),
+                builder.equal(root.get("semester").get("id"), semesterId)
+        );
+
+        ClassSubject result = session.createQuery(query).getSingleResult();
+        return result;
+    }
+
+    @Override
+    public List<ClassSubject> getAllStudentsInClass(String classroomSubjectId, String teacherId, String semesterId) {
+        Session session = factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<ClassSubject> query = builder.createQuery(ClassSubject.class);
+        Root<ClassSubject> root = query.from(ClassSubject.class);
+
+        query.select(root).where(
+                builder.equal(root.get("id"), classroomSubjectId),
+                builder.equal(root.get("teacher").get("id"), teacherId),
+                builder.equal(root.get("semester").get("id"), semesterId)
+        );
+
+        List<ClassSubject> responses = session.createQuery(query).getResultList();
+        return responses;
     }
 }

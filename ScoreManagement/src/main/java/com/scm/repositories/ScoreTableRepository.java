@@ -5,7 +5,5 @@ import com.scm.pojo.Score;
 import java.util.List;
 
 public interface ScoreTableRepository {
-    Score getScoreSubjectByStudentId(String id, String classroomSubjectId, String teacherId);
-
     List<Score> getAllStudentsInClass(String classroomSubjectId, String teacherId);
 }
