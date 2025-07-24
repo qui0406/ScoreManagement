@@ -43,7 +43,6 @@ public class CSVScoreMapperDecorator implements CSVScoreMapper {
         score.setStudent(student);
         score.setClassSubject(classSubject);
         score.setScoreType(scoreType);
-        score.setTeacher(teacher);
         return score;
     }
 }

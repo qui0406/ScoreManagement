@@ -14,7 +14,6 @@ import java.util.Date;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Student extends User {
-
     @Column(unique = true)
     String mssv;
 

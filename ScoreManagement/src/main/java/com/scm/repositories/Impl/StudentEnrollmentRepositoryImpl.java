@@ -2,11 +2,9 @@ package com.scm.repositories.Impl;
 
 import com.scm.pojo.ClassSubject;
 import com.scm.pojo.StudentEnrollment;
-import com.scm.pojo.Subject;
-import com.scm.repositories.SubjectRepository;
+import com.scm.repositories.StudentEnrollmentRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,31 +16,22 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class SubjectRepositoryImpl implements SubjectRepository {
+public class StudentEnrollmentRepositoryImpl implements StudentEnrollmentRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
-
     @Override
-    public Subject findSubjectById(Integer id) {
-        Session s = this.factory.getObject().getCurrentSession();
-        return s.get(Subject.class, id);
-    }
-
-    @Override
-    public List<Subject> getAllSubjectsByStudentId(String studentId) {
+    public List<StudentEnrollment> findAllByClassSubjectId(String studentId) {
         Session session = factory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Subject> query = builder.createQuery(Subject.class);
-
+        CriteriaQuery<StudentEnrollment> query = builder.createQuery(StudentEnrollment.class);
         Root<StudentEnrollment> root = query.from(StudentEnrollment.class);
-        Join<StudentEnrollment, ClassSubject> classSubjectJoin = root.join("classSubject");
-        Join<ClassSubject, Subject> subjectJoin = classSubjectJoin.join("subject");
 
-        query.select(subjectJoin).where(
+        query.select(root).where(
                 builder.equal(root.get("student").get("id"), studentId)
         );
 
-        List<Subject> subjects = session.createQuery(query).getResultList();
-        return subjects;
+        List<StudentEnrollment> results = session.createQuery(query).getResultList();
+        return results;
     }
+
 }

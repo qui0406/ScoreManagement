@@ -1,6 +1,5 @@
 package com.scm.repositories.Impl;
 
-import com.scm.pojo.ClassroomSubject;
 import com.scm.pojo.Score;
 import com.scm.repositories.ScoreTableRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -13,33 +12,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @Transactional
 public class ScoreTableRepositoryImpl implements ScoreTableRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
-
-    @Override
-    public Score getScoreSubjectByStudentId(String id,  String classroomSubjectId, String teacherId) {
-        Session session = factory.getObject().getCurrentSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Score> query = builder.createQuery(Score.class);
-        Root<Score> root = query.from(Score.class);
-
-        query.select(root).where(
-            builder.equal(root.get("student").get("id"), id),
-            builder.equal(root.get("classSubject").get("id"), classroomSubjectId),
-            builder.equal(root.get("teacher").get("id"), teacherId)
-        ).orderBy(builder.asc(root.get("scoreType").get("id")));
-
-        List<Score> results = session.createQuery(query).getResultList();
-
-        if (results.isEmpty()) {
-            return null;
-        }
-        return results.get(0);
-    }
 
     @Override
     public List<Score> getAllStudentsInClass(String classroomSubjectId, String teacherId) {
@@ -53,7 +32,8 @@ public class ScoreTableRepositoryImpl implements ScoreTableRepository {
                 builder.equal(root.get("teacher").get("id"), teacherId)
         ).orderBy(builder.asc(root.get("student").get("firstName")));
 
-        List<Score> results = session.createQuery(query).getResultList();
+        List<Score> results = session.createQuery(query).getResultList().stream().distinct().collect(Collectors.toList());
         return results;
     }
+
 }

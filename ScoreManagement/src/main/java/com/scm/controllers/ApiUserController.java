@@ -11,6 +11,7 @@ import com.scm.mapper.UserMapper;
 import com.scm.pojo.Student;
 import com.scm.pojo.Teacher;
 import com.scm.pojo.User;
+import com.scm.services.ScoreStudentService;
 import com.scm.services.UserService;
 
 import java.security.Principal;
@@ -44,6 +45,8 @@ public class ApiUserController {
     UserService userDetailsService;
 
     UserMapper userMapper;
+
+    ScoreStudentService scoreStudentService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Student u) {
@@ -103,5 +106,7 @@ public class ApiUserController {
         }
         return ResponseEntity.ok(this.userDetailsService.getProfile(principal));
     }
+
+
 
 }

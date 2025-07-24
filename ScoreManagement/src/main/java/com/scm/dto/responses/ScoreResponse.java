@@ -4,7 +4,7 @@
  */
 package com.scm.dto.responses;
 
-import com.scm.pojo.ClassroomSubject;
+import com.scm.pojo.ClassSubject;
 import com.scm.pojo.ScoreType;
 import com.scm.pojo.Student;
 import com.scm.pojo.Teacher;
@@ -25,5 +25,5 @@ public class ScoreResponse {
     private Student student;
     private ScoreType scoreType;
     private Teacher teacher;
-    private ClassroomSubject classroomSubject;
+    private ClassSubject classSubject;
 }

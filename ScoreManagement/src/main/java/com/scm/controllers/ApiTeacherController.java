@@ -7,12 +7,11 @@ package com.scm.controllers;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.scm.dto.requests.CSVScoreRequest;
+import com.scm.dto.requests.ListScoreStudentRequest;
 import com.scm.dto.requests.ScoreRequest;
 import com.scm.dto.requests.ScoreTypeRequest;
 import com.scm.dto.responses.*;
 import com.scm.exceptions.AppException;
-import com.scm.exceptions.ErrorCode;
-import com.scm.helpers.CSVHelper;
 import com.scm.mapper.UserMapper;
 import com.scm.pojo.User;
 import com.scm.services.*;
@@ -20,6 +19,7 @@ import com.scm.services.*;
 import java.io.InputStreamReader;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +60,7 @@ public class ApiTeacherController {
     private ClassroomSubjectService classroomSubjectService;
 
     @Autowired
-    private ScoreTableService scoreTableService;
+    private ScoreStudentService scoreStudentService;
 
     @Autowired
     private UserMapper  userMapper;
@@ -102,13 +102,56 @@ public class ApiTeacherController {
         }
     }
 
-    @GetMapping("/export-list-score/{classroomId}")
-    public ResponseEntity<List<ScoreTableResponse>> getExportListScore(@PathVariable(value="classroomId") String classroomId
+    @PostMapping("/add-list-score")
+    public ResponseEntity<?> addListScore(@RequestBody ListScoreStudentRequest listScoreStudentRequest, Principal principal) {
+        try{
+            String teacherName = principal.getName();
+            User teacher = userDetailsService.getUserByUsername(teacherName);
+            this.scoreService.addListScore(listScoreStudentRequest, teacher.getId().toString());
+            return ResponseEntity.ok("value: Successfully");
+        }
+        catch (AppException e) {
+            return ResponseEntity.badRequest().body("value:" + e.getErrorCode().getMessage());
+        }
+    }
+
+    @PostMapping("/add-list-score-all-student")
+    public ResponseEntity<?> addListScoreAllStudents(@RequestBody List<ListScoreStudentRequest> requests, Principal principal) {
+        try{
+            String teacherName = principal.getName();
+            User teacher = userDetailsService.getUserByUsername(teacherName);
+            this.scoreService.addListScoreAllStudents(requests, teacher.getId().toString());
+            return ResponseEntity.ok("value: Successfully");
+        }
+        catch (AppException e) {
+            return ResponseEntity.badRequest().body("value:" + e.getErrorCode().getMessage());
+        }
+    }
+
+
+
+    @GetMapping("/export-list-score/{classSubjectId}")
+    public ResponseEntity<List<ScoreStudentResponse>> getExportListScore(@PathVariable(value="classSubjectId") String classSubjectId
+            , Principal principal) {
+        String teacherName = principal.getName();
+        User teacher = userDetailsService.getUserByUsername(teacherName);
+        try{
+            return ResponseEntity.ok(this.scoreStudentService.getScoreByClassSubject(classSubjectId));
+        }
+        catch (AppException ex){
+            return null;
+        }
+    }
+
+    @GetMapping("/find-export-list-score/{classSubjectId}")
+    public ResponseEntity<List<ScoreStudentResponse>> findExportListScore(
+            @RequestParam Map <String, String> params,
+            @PathVariable(value="classSubjectId") String classSubjectId
             ,Principal principal) {
         String teacherName = principal.getName();
         User teacher = userDetailsService.getUserByUsername(teacherName);
         try{
-            return ResponseEntity.ok(this.scoreTableService.getAllStudentsInClassSubject(classroomId, teacher.getId().toString()));
+            return ResponseEntity.ok(this.scoreStudentService.findScoreByStudentId(params, classSubjectId));
         }
         catch (AppException ex){
             return null;

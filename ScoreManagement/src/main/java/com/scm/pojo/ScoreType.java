@@ -13,11 +13,11 @@ import lombok.Setter;
 public class ScoreType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "score_type_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
     @Size(max = 50)
     @NotNull
-    @Column(name = "score_type_name", nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 50)
     private String scoreTypeName;
 }

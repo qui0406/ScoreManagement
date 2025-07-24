@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 public class Score {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "score_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
     @ManyToOne
@@ -21,17 +21,12 @@ public class Score {
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id", nullable = false)
-    private Teacher teacher;
-
-    @ManyToOne
     @JoinColumn(name = "class_subject_id", nullable = false)
-    private ClassroomSubject classSubject;
+    private ClassSubject classSubject;
 
     @ManyToOne
     @JoinColumn(name = "score_type_id", nullable = false)
     private ScoreType scoreType;
-
 
     @Column(name = "score", nullable = false, precision = 5, scale = 2)
     private BigDecimal score;

@@ -4,13 +4,16 @@
  */
 package com.scm.services;
 
+import com.scm.dto.ScoreByTypeDTO;
 import com.scm.dto.requests.CSVScoreRequest;
+import com.scm.dto.requests.ListScoreStudentRequest;
 import com.scm.dto.requests.ScoreRequest;
 import com.scm.dto.responses.ScoreResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -24,4 +27,9 @@ public interface ScoreService {
     void updateCloseScore(Integer teacherId,  Integer classroomId);
 
     void importScores(List<CSVScoreRequest> scores);
+
+    Map<Integer, ScoreByTypeDTO> getGroupedScores(String studentId, String classSubjectId);
+    void addListScore(ListScoreStudentRequest request, String teacherId);
+
+    void addListScoreAllStudents(List<ListScoreStudentRequest> request, String teacherId);
 }

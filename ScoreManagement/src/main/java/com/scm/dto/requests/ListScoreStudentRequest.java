@@ -6,13 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScoreTableRequest {
+public class ListScoreStudentRequest {
     private String studentId;
-    private String teacherId;
     private String classSubjectId;
+    private Map<Integer, BigDecimal> scores;
 }

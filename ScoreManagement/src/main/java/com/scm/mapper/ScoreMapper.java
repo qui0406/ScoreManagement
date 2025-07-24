@@ -1,15 +1,11 @@
 package com.scm.mapper;
 
 import com.scm.dto.requests.ScoreRequest;
-import com.scm.dto.responses.ClassroomSubjectResponse;
 import com.scm.dto.responses.ScoreResponse;
 import com.scm.mapper.decorator.ScoreMapperDecorator;
-import com.scm.mapper.decorator.UserMapperDecorator;
-import com.scm.pojo.ClassroomSubject;
 import com.scm.pojo.Score;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")

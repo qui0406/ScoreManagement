@@ -13,11 +13,15 @@ import lombok.Setter;
 public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "subject_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
     @Size(max = 100)
     @NotNull
-    @Column(name = "subject_name", nullable = false, length = 100)
+    @Column(name = "name", nullable = false, length = 100)
     private String subjectName;
+
+    @ManyToOne(fetch =  FetchType.LAZY)
+    @JoinColumn(name="faculty_id", nullable = false)
+    private Faculty faculty;
 }
