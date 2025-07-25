@@ -12,7 +12,7 @@ import lombok.Setter;
 public class ClassroomSubjectRequest {
     private Integer classroomId;
     private Integer subjectId;
-    private String semester;
+    private Integer semesterId;
     private Integer teacherId;
     private Integer studentId;
 }

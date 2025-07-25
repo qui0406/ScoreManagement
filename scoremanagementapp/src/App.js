@@ -5,6 +5,8 @@ import Home from "./components/Home";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Register from "./components/Register";
 import Login from "./components/Login";
+import StudentList from "./components/Teacher/StudentList";
+import AddScore from "./components/Teacher/AddScore";
 import { MyDispatchContext, MyUserContext } from "./configs/MyContexts";
 import { useReducer } from "react";
 import MyUserReducer from "./reducers/MyUserReducer";
@@ -20,6 +22,8 @@ const App = () => {
           <Routes>
             <Route path="/register" element={<Register />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/studentlist" element={<StudentList />} />
+            <Route path="/addscore" element={<AddScore />} />
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Navigate to="/login" />} />
           </Routes>

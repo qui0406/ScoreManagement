@@ -36,7 +36,6 @@ public class ClassroomServiceImpl implements ClassroomService {
             response.setName(classroom.getName());
             responses.add(response);
         }
-
         return responses;
     }
 

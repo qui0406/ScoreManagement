@@ -8,7 +8,9 @@ import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.HeaderColumnNameMappingStrategy;
+import com.scm.dto.ScoreByTypeDTO;
 import com.scm.dto.requests.CSVScoreRequest;
+import com.scm.dto.requests.ListScoreStudentRequest;
 import com.scm.dto.requests.ScoreRequest;
 import com.scm.dto.responses.ScoreResponse;
 import com.scm.exceptions.AppException;
@@ -24,9 +26,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
@@ -48,7 +49,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class ScoreServiceImpl implements ScoreService {
     @Autowired
-    private ScoreRepository gradeRepo;
+    private ScoreRepository scoreRepo;
 
     @Autowired
     private ScoreRepository scoreRepository;
@@ -57,7 +58,7 @@ public class ScoreServiceImpl implements ScoreService {
     private ScoreMapper scoreMapper;
 
     @Autowired
-    private CSVScoreMapper  csvScoreMapper;
+    private CSVScoreMapper csvScoreMapper;
 
 
     private final int SCORE_TYPE_MIDDLE_TEST = 1;
@@ -72,7 +73,7 @@ public class ScoreServiceImpl implements ScoreService {
         Integer classSubjectId = scoreRequest.getClassSubjectId();
         Integer scoreId = scoreRequest.getId();
 
-        boolean isUpdate = scoreId != null;  // <- sửa chỗ này
+        boolean isUpdate = scoreId != null;
 
         if (!isUpdate) {
             if (scoreTypeId == SCORE_TYPE_MIDDLE_TEST || scoreTypeId == SCORE_TYPE_FINAL_TEST) {
@@ -96,7 +97,7 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     public List<ScoreResponse> getScoresByClassSubjectId(Integer classSubjectId) {
-        List<Score> grades = this.gradeRepo.getScoresByClassSubjectId(classSubjectId);
+        List<Score> grades = this.scoreRepo.getScoresByClassSubjectId(classSubjectId);
         List<ScoreResponse> responses = new ArrayList<>();
 
         for (Score grade : grades) {
@@ -108,21 +109,87 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public void updateCloseScore(Integer teacherId, Integer classroomId) {
-        this.scoreRepository.closeScore(teacherId, classroomId);
+    public void updateCloseScore(Integer teacherId, Integer classSubjectId) {
+        this.scoreRepository.closeScore(teacherId, classSubjectId);
+    }
+
+//    @Override
+//    @Transactional
+//    public void importScores(List<CSVScoreRequest> scores) {
+//        for (CSVScoreRequest dto : scores) {
+//            // Validate score
+//            if (dto.getScore() == null || dto.getScore().doubleValue() < 0 || dto.getScore().doubleValue() > 10) {
+//                throw new IllegalArgumentException("Invalid score value for studentId: " + dto.getStudentId());
+//            }
+//            Score score = csvScoreMapper.toScore(dto);
+//
+//            scoreRepository.save(score);
+//        }
+//    }
+
+    @Override
+    public Map<Integer, ScoreByTypeDTO> getGroupedScores(String studentId, String classSubjectId) {
+        List<Score> allScores = scoreRepo.findScoreByStudentIdAndClassSubjectId(
+                Integer.parseInt(studentId),
+                Integer.parseInt(classSubjectId)
+        );
+
+        Map<Integer, ScoreByTypeDTO> scoresMap = new HashMap<>();
+        for (Score sc : allScores) {
+            int typeId = sc.getScoreType().getId();
+            float scoreValue = sc.getScore().floatValue();
+
+            ScoreByTypeDTO dto = scoresMap.getOrDefault(typeId, new ScoreByTypeDTO(
+                    typeId,
+                    sc.getScoreType().getScoreTypeName(),
+                    new ArrayList<>()
+            ));
+
+            // CHẶN giá trị bị lặp (nếu cùng điểm đã tồn tại)
+            if (!dto.getScores().contains(scoreValue)) {
+                dto.getScores().add(BigDecimal.valueOf(scoreValue));
+            }
+
+            scoresMap.put(typeId, dto);
+        }
+
+        return scoresMap;
     }
 
     @Override
-    @Transactional
-    public void importScores(List<CSVScoreRequest> scores) {
-        for (CSVScoreRequest dto : scores) {
-            // Validate score
-            if (dto.getScore() == null || dto.getScore().doubleValue() < 0 || dto.getScore().doubleValue() > 10) {
-                throw new IllegalArgumentException("Invalid score value for studentId: " + dto.getStudentId());
-            }
-            Score score = csvScoreMapper.toScore(dto);
+    public void addListScore(ListScoreStudentRequest request, String teacherId) {
+        Map<Integer, BigDecimal> scoreMap = request.getScores();
 
-            scoreRepository.save(score);
+        for (Map.Entry<Integer, BigDecimal> entry : scoreMap.entrySet()) {
+            Integer type = entry.getKey();
+            BigDecimal value = entry.getValue();
+
+            ScoreRequest scoreRequest = new ScoreRequest();
+            scoreRequest.setScore(value);
+            scoreRequest.setStudentId(Integer.parseInt(request.getStudentId()));
+            scoreRequest.setClassSubjectId(Integer.parseInt(request.getClassSubjectId()));
+            scoreRequest.setTeacherId(Integer.parseInt(teacherId));
+            scoreRequest.setScoreTypeId(type);
+            this.scoreRepository.addOrUpdateScore(scoreMapper.toGrade(scoreRequest), teacherId);
+        }
+    }
+
+    @Override
+    public void addListScoreAllStudents(List<ListScoreStudentRequest> requests, String teacherId) {
+        if (requests == null || requests.isEmpty()) {
+           // throw new AppException(ErrorCode.INVALID_REQUEST, "Danh sách sinh viên rỗng");
+        }
+        for (ListScoreStudentRequest request : requests) {
+            log.info("Student ID: " + request.getStudentId());
+            log.info("ClassSubject ID: " + request.getClassSubjectId());
+            for (Map.Entry<Integer, BigDecimal> entry : request.getScores().entrySet()) {
+                log.info("Score Type: " + entry.getKey() + ", Score: " + entry.getValue());
+            }
+        }
+
+
+        for (ListScoreStudentRequest studentRequest : requests) {
+            this.addListScore(studentRequest, teacherId);
         }
     }
 }

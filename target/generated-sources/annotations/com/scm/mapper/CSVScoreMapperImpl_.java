@@ -1,30 +1,15 @@
 package com.scm.mapper;
 
-import com.scm.dto.requests.CSVScoreRequest;
-import com.scm.pojo.Score;
 import javax.annotation.processing.Generated;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-21T16:56:38+0700",
+    date = "2025-07-25T16:13:59+0700",
     comments = "version: 1.6.0.Beta1, compiler: javac, environment: Java 21.0.7 (Microsoft)"
 )
 @Component
 @Qualifier("delegate")
 public class CSVScoreMapperImpl_ implements CSVScoreMapper {
-
-    @Override
-    public Score toScore(CSVScoreRequest dto) {
-        if ( dto == null ) {
-            return null;
-        }
-
-        Score score = new Score();
-
-        score.setScore( dto.getScore() );
-
-        return score;
-    }
 }

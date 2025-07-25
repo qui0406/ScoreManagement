@@ -4,7 +4,7 @@ import com.scm.dto.requests.ScoreRequest;
 import com.scm.dto.responses.ScoreResponse;
 import com.scm.mapper.ScoreMapper;
 import com.scm.mapper.UserMapper;
-import com.scm.pojo.Score;
+import com.scm.pojo.*;
 import com.scm.repositories.ClassroomSubjectRepository;
 import com.scm.repositories.ScoreTypeRepository;
 import com.scm.repositories.StudentRepository;
@@ -18,6 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -42,21 +45,39 @@ public class ScoreMapperDecorator implements ScoreMapper {
         score.setId(dto.getId());
         score.setScore(dto.getScore());
 
-        var student = studentRepo.findStudentById(dto.getStudentId());
-        var classSubject = classSubjectRepo.findClassroomSubjectById(dto.getClassSubjectId());
-        var scoreType = scoreTypeRepo.findScoreTypeById(dto.getScoreTypeId());
-        var teacher = teacherRepo.findTeacherById(dto.getTeacherId());
-
-
-        if (student == null || classSubject == null || scoreType == null || teacher == null) {
-            throw new IllegalArgumentException("One or more related entities not found");
-        }
+        Student student = studentRepo.findStudentById(dto.getStudentId());
+        ClassSubject classSubject = classSubjectRepo.findClassroomSubjectById(dto.getClassSubjectId());
+        ScoreType scoreType = scoreTypeRepo.findScoreTypeById(dto.getScoreTypeId());
+        Teacher teacher = teacherRepo.findTeacherById(dto.getTeacherId());
 
         score.setStudent(student);
         score.setClassSubject(classSubject);
         score.setScoreType(scoreType);
-        score.setTeacher(teacher);
         return score;
+    }
+
+    @Override
+    public List<Score> toListScore(List<ScoreRequest> dto) {
+        List<Score> scores = new ArrayList<>();
+
+        for (ScoreRequest scoreRequest : dto) {
+            Score score = new Score();
+            score.setId(scoreRequest.getId());
+            score.setScore(scoreRequest.getScore());
+
+            Student student = studentRepo.findStudentById(scoreRequest.getStudentId());
+            ClassSubject classSubject = classSubjectRepo.findClassroomSubjectById(scoreRequest.getClassSubjectId());
+            ScoreType scoreType = scoreTypeRepo.findScoreTypeById(scoreRequest.getScoreTypeId());
+
+            score.setStudent(student);
+            score.setClassSubject(classSubject);
+            score.setScoreType(scoreType);
+            scores.add(score);
+        }
+
+        return scores;
+
+
     }
 
     @Override

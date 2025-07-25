@@ -4,7 +4,8 @@
  */
 package com.scm.repositories;
 
-import com.scm.pojo.ClassroomSubject;
+import com.scm.pojo.ClassSubject;
+
 import java.util.List;
 
 /**
@@ -12,13 +13,17 @@ import java.util.List;
  * @author admin
  */
 public interface ClassroomSubjectRepository {
-    List<ClassroomSubject> getClassroomSubjectsByTeacherId(String teacherId);
+    List<ClassSubject> getClassroomSubjectsByTeacherId(String teacherId);
     int countStudentsInClassSubject(Integer classSubjectId);
     int countScoreTypesInClassSubject(Integer classSubjectId);
-    ClassroomSubject findClassroomSubjectById(Integer classSubjectId);
+    ClassSubject findClassroomSubjectById(Integer classSubjectId);
 
-    ClassroomSubject create(ClassroomSubject classroomSubject);
+    ClassSubject create(ClassSubject classSubject);
     void delete(Integer classSubjectId, String userId);
 
-    boolean existClassSubjectRegister(ClassroomSubject classroomSubject);
+    boolean existClassSubjectRegister(ClassSubject classSubject);
+
+    ClassSubject getScoreSubjectByStudentId(String id, String classroomSubjectId, String teacherId, String semesterId);
+
+    List<ClassSubject> getAllStudentsInClass(String classroomSubjectId, String teacherId, String semesterId);
 }

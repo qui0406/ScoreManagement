@@ -14,7 +14,7 @@ import org.mapstruct.factory.Mappers;
 @DecoratedWith(CSVScoreMapperDecorator.class)
 public interface CSVScoreMapper {
 
-    Score toScore(CSVScoreRequest dto);
+//    Score toScore(CSVScoreRequest dto);
 
 }
 

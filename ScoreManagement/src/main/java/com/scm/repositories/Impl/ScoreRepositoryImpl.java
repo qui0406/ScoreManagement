@@ -173,4 +173,20 @@ public class ScoreRepositoryImpl implements ScoreRepository {
         Session session = factory.getObject().getCurrentSession();
         session.save(score);
     }
+
+    @Override
+    public List<Score> findScoreByStudentIdAndClassSubjectId(Integer studentId, Integer classSubjectId) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+
+        CriteriaQuery<Score> query = builder.createQuery(Score.class);
+        Root<Score> root = query.from(Score.class);
+        query.select(root).where(
+                builder.equal(root.get("student").get("id"), studentId),
+                builder.equal(root.get("classSubject").get("id"), classSubjectId)
+        );
+
+        List<Score> scores = session.createQuery(query).getResultList();
+        return scores;
+    }
 }

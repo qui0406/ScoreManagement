@@ -11,6 +11,7 @@ import com.scm.mapper.UserMapper;
 import com.scm.pojo.Student;
 import com.scm.pojo.Teacher;
 import com.scm.pojo.User;
+import com.scm.services.ScoreStudentService;
 import com.scm.services.UserService;
 
 import java.security.Principal;
@@ -39,13 +40,17 @@ import org.springframework.web.multipart.MultipartFile;
 @Builder
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@CrossOrigin(origins = "http://localhost:3000")
 public class ApiUserController {
 
     UserService userDetailsService;
 
     UserMapper userMapper;
 
+    ScoreStudentService scoreStudentService;
+
     @PostMapping("/login")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<?> login(@RequestBody Student u) {
         if (this.userDetailsService.authenticate(u.getUsername(), u.getPassword())) {
             try {
@@ -103,5 +108,7 @@ public class ApiUserController {
         }
         return ResponseEntity.ok(this.userDetailsService.getProfile(principal));
     }
+
+
 
 }

@@ -6,7 +6,9 @@ package com.scm.dto.responses;
 
 import com.scm.dto.ClassroomDTO;
 import com.scm.dto.SubjectDTO;
+import com.scm.mapper.SemesterMapper;
 import com.scm.pojo.Classroom;
+import com.scm.pojo.Semester;
 import com.scm.pojo.Subject;
 import lombok.*;
 
@@ -21,9 +23,17 @@ import lombok.*;
 public class ClassroomSubjectResponse {
     private Integer id;
     private SubjectDTO subject;
-    private String semester;
+    private SemesterDTO semester;
     private ClassroomDTO classroom;
 
     private Integer totalStudents;
     private Integer countScoreType;
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class SemesterDTO {
+        private String name;
+    }
 }

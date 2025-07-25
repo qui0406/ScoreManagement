@@ -1,9 +1,11 @@
 package com.scm.controllers.admin;
 
+import com.scm.dto.requests.SemesterRequest;
 import com.scm.dto.responses.TeacherResponse;
 import com.scm.mapper.UserMapper;
 import com.scm.pojo.Teacher;
 import com.scm.pojo.User;
+import com.scm.services.SemesterService;
 import com.scm.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class UserAdminController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private SemesterService semesterService;
+
     @GetMapping("/users")
     @PreAuthorize("hasRole('ADMIN')")
     public String getUserPage(Model model) {
@@ -53,5 +58,11 @@ public class UserAdminController {
         User user = this.userDetailsService.getUserByUsername(username);
         model.addAttribute("user", user);
         return "admin/account";
+    }
+
+    @PostMapping("/create-semester")
+    public String createSemester(@ModelAttribute(value="semester") SemesterRequest semesterRequest) {
+        this.semesterService.create(semesterRequest);
+        return "redirect:/admin/createSemester";
     }
 }

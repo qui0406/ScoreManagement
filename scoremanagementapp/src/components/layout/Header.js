@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import { Navbar, Container, Nav, NavDropdown, Form, Button } from "react-bootstrap";
 import { MyUserContext, MyDispatchContext } from "../../configs/MyContexts";
+import { Link } from "react-router-dom";
 
 const Header = () => {
     const user = useContext(MyUserContext);
-    const dispatch = useContext(MyDispatchContext); 
+    const dispatch = useContext(MyDispatchContext);
     return (
         <>
             <Navbar expand="lg" className="bg-body-tertiary">
@@ -29,6 +30,14 @@ const Header = () => {
                                     Something else here
                                 </NavDropdown.Item>
                             </NavDropdown>
+                            {user === null?<>
+                                <Link to="/login" className="nav-link">Đăng nhập</Link>
+                                <Link to="/register" className="nav-link">Đăng ký</Link>
+                            </>:
+                            <>
+                                <Link to ="/home" className="nav-link">Trang chủ</Link>
+                                <Button className="btn btn-danger" onClick={() => {dispatch({ type: "logout" });}}>Đăng xuất</Button>
+                            </>}
                             <Nav.Link href="#" disabled>
                                 Link
                             </Nav.Link>

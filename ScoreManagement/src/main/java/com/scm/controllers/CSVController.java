@@ -13,7 +13,4 @@ public class CSVController {
     @Autowired
     private ScoreService scoreService;
 
-
-
-
 }

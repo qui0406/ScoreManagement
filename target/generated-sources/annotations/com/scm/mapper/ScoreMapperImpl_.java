@@ -3,13 +3,15 @@ package com.scm.mapper;
 import com.scm.dto.requests.ScoreRequest;
 import com.scm.dto.responses.ScoreResponse;
 import com.scm.pojo.Score;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-21T16:56:38+0700",
+    date = "2025-07-25T16:13:58+0700",
     comments = "version: 1.6.0.Beta1, compiler: javac, environment: Java 21.0.7 (Microsoft)"
 )
 @Component
@@ -31,6 +33,20 @@ public class ScoreMapperImpl_ implements ScoreMapper {
     }
 
     @Override
+    public List<Score> toListScore(List<ScoreRequest> dto) {
+        if ( dto == null ) {
+            return null;
+        }
+
+        List<Score> list = new ArrayList<Score>( dto.size() );
+        for ( ScoreRequest scoreRequest : dto ) {
+            list.add( toGrade( scoreRequest ) );
+        }
+
+        return list;
+    }
+
+    @Override
     public ScoreResponse toScoreResponse(Score dto) {
         if ( dto == null ) {
             return null;
@@ -42,7 +58,7 @@ public class ScoreMapperImpl_ implements ScoreMapper {
         scoreResponse.setScore( dto.getScore() );
         scoreResponse.setStudent( dto.getStudent() );
         scoreResponse.setScoreType( dto.getScoreType() );
-        scoreResponse.setTeacher( dto.getTeacher() );
+        scoreResponse.setClassSubject( dto.getClassSubject() );
 
         return scoreResponse;
     }

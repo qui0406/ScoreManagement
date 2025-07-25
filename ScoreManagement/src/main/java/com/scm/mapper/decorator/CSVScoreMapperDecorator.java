@@ -25,25 +25,24 @@ public class CSVScoreMapperDecorator implements CSVScoreMapper {
     private ScoreTypeRepository scoreTypeRepo;
     @Autowired
     private TeacherRepository teacherRepo;
-    @Override
-    public Score toScore(CSVScoreRequest dto) {
-        Score score = new Score();
-        score.setScore(dto.getScore());
-
-        var student = studentRepo.findStudentById(dto.getStudentId());
-        var classSubject = classSubjectRepo.findClassroomSubjectById(dto.getClassSubjectId());
-        var scoreType = scoreTypeRepo.findScoreTypeById(dto.getScoreTypeId());
-        var teacher = teacherRepo.findTeacherById(dto.getTeacherId());
-
-
-        if (student == null || classSubject == null || scoreType == null || teacher == null) {
-            throw new IllegalArgumentException("One or more related entities not found");
-        }
-
-        score.setStudent(student);
-        score.setClassSubject(classSubject);
-        score.setScoreType(scoreType);
-        score.setTeacher(teacher);
-        return score;
-    }
+//    @Override
+//    public Score toScore(CSVScoreRequest dto) {
+//        Score score = new Score();
+//        score.setScore(dto.getScore());
+//
+//        var student = studentRepo.findStudentById(dto.getStudentId());
+//        var classSubject = classSubjectRepo.findClassroomSubjectById(dto.getClassSubjectId());
+//        var scoreType = scoreTypeRepo.findScoreTypeById(dto.getScoreTypeId());
+//        var teacher = teacherRepo.findTeacherById(dto.getTeacherId());
+//
+//
+//        if (student == null || classSubject == null || scoreType == null || teacher == null) {
+//            throw new IllegalArgumentException("One or more related entities not found");
+//        }
+//
+//        score.setStudent(student);
+//        score.setClassSubject(classSubject);
+//        score.setScoreType(scoreType);
+//        return score;
+//    }
 }

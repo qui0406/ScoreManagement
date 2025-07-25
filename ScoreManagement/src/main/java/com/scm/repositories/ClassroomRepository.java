@@ -5,6 +5,7 @@
 package com.scm.repositories;
 
 import com.scm.pojo.Classroom;
+import com.scm.pojo.Student;
 
 import java.util.List;
 
@@ -17,5 +18,7 @@ public interface ClassroomRepository {
     List<Classroom> getClassroomsByTeacherId(String teacherId);
     List<Classroom> getListClassRoom();
     Classroom findClassRoomById(Integer classroomId);
+
+    List<Student> getStudentsInClassroom(String classroomId);
 
 }
