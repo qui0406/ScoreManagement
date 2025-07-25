@@ -55,33 +55,6 @@ public class ScoreRepositoryImpl implements ScoreRepository {
         return query.getResultList();
     }
 
-    @Override
-    public Score getGradeByStudentAndClassSubjectAndType(Long studentId, Integer classSubjectId, Integer gradeTypeId) {
-        Session s = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Score> q = b.createQuery(Score.class);
-        Root<Score> root = q.from(Score.class);
-
-        q.select(root);
-        q.where(
-            b.and(
-                b.equal(root.get("student").get("id"), studentId),
-                b.equal(root.get("classSubject").get("id"), classSubjectId),
-                b.equal(root.get("gradeType").get("id"), gradeTypeId)
-            )
-        );
-
-        Query query = s.createQuery(q);
-        List<Score> grades = query.getResultList();
-        return grades.isEmpty() ? null : grades.get(0);
-    }
-
-    @Override
-    public Score findScoreById(Integer id) {
-        Session s = this.factory.getObject().getCurrentSession();
-        return s.get(Score.class, id);
-    }
-
 
     @Override
     public boolean checkTestExsit(Integer classSubjectId, Integer scoreTypeId, Integer studentId) {

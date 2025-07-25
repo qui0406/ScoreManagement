@@ -16,4 +16,5 @@ import java.util.List;
 public interface StudentRepository {
     List<Student> getStudentsByClassSubjectId(Integer classSubjectId);
     Student findStudentById(Integer id);
+    String findIdByUsername(String username);
 }

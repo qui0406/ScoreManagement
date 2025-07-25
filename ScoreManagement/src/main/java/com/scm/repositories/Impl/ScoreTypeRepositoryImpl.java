@@ -87,9 +87,5 @@ public class ScoreTypeRepositoryImpl implements ScoreTypeRepository {
         return 1;
     }
 
-    @Override
-    public void initializeDefaultGradeTypes(Integer classSubjectId) {
-        Session s = this.factory.getObject().getCurrentSession();
 
-    }
 }

@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface StudentService {
     List<StudentResponse> getStudentsByClassSubjectId(Integer classSubjectId);
+
+    String findIdByUsername(String username);
 }
