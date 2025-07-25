@@ -20,10 +20,8 @@ const Login = () => {
         setUser({ ...user, [field]: value });
     };
     const login = async (e) => {
-        console.log("Đăng nhập với thông tin:", user);
         e.preventDefault();
         try {
-            console.log("Đăng nhập với thông tin:", user);
             setLoading(true);
             let res = await Apis.post(endpoints['login'], { ...user });
             cookie.save('token', res.data.token);
