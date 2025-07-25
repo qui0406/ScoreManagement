@@ -1,3 +1,4 @@
+
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\CloudinaryConfig.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\DispatcherSerlvetInit.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\HibernateConfigs.java
@@ -135,3 +136,4 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\StudentService
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\TeacherService.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\UserService.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\utils\JwtUtils.java
+

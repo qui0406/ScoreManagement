@@ -1,3 +1,4 @@
+
 package com.scm.mapper;
 
 import com.scm.mapper.decorator.UserMapperDecorator;
@@ -14,3 +15,4 @@ import org.springframework.stereotype.Component;
 @Primary
 public class UserMapperImpl extends UserMapperDecorator {
 }
+

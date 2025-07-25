@@ -40,6 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Builder
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@CrossOrigin(origins = "http://localhost:3000")
 public class ApiUserController {
 
     UserService userDetailsService;
@@ -49,6 +50,7 @@ public class ApiUserController {
     ScoreStudentService scoreStudentService;
 
     @PostMapping("/login")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<?> login(@RequestBody Student u) {
         if (this.userDetailsService.authenticate(u.getUsername(), u.getPassword())) {
             try {
