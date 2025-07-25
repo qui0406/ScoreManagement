@@ -49,7 +49,7 @@ public class SpringSecurityConfigs {
     private JwtFilter jwtFilter;
 
     private static final String[] PUBLIC_ENDPOINTS = {
-            "/api/auth/**", "/"
+            "/api/auth/**", "/", "/login", "/logout"
     };
 
     private static final String[] ADMIN_ENDPOINTS = {
@@ -60,8 +60,12 @@ public class SpringSecurityConfigs {
         "/api/secure/teacher/**"
     };
 
+    private static final String[] TEACHER_SUPER_ENDPOINTS = {
+        "/api/secure/teacher-super/**"
+    };
+
     private static final String[] USER_ENDPOINTS = {
-            "/api/secure/user/**"
+        "/api/secure/user/**"
     };
 
     @Bean
@@ -86,17 +90,15 @@ public class SpringSecurityConfigs {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(c -> c.disable()).authorizeHttpRequests(requests
                 -> requests.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
-                .requestMatchers("/login", "/logout").permitAll()
                 .requestMatchers(TEACHER_ENDPOINTS).hasAnyRole("TEACHER", "ADMIN")
                 .requestMatchers(USER_ENDPOINTS).hasAnyRole("USER", "TEACHER", "ADMIN")
-
                 .anyRequest().authenticated())
-        .formLogin(form -> form.loginPage("/admin/login")
-                .loginProcessingUrl("/admin/login")
-                .defaultSuccessUrl("/admin/users", true)
-                .failureUrl("/admin/login?error=true").permitAll())
+        .formLogin(form -> form.loginPage("/login")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/users", true)
+                .failureUrl("/login?error=true").permitAll())
         .logout(logout ->
-                logout.logoutSuccessUrl("/admin/login").permitAll());
+                logout.logoutSuccessUrl("/login").permitAll());
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
@@ -104,10 +106,10 @@ public class SpringSecurityConfigs {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("http://localhost:3000"); // Allow the frontend application
-        config.addAllowedMethod("*"); // Allow all HTTP methods
-        config.addAllowedHeader("*"); // Allow all headers
-        config.setAllowCredentials(true); // Allow credentials (cookies, authorization headers)
+        config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
+        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);

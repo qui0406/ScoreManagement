@@ -34,4 +34,15 @@ public class StudentEnrollmentRepositoryImpl implements StudentEnrollmentReposit
         return results;
     }
 
+    @Override
+    public void create(StudentEnrollment studentEnrollment) {
+        Session session = factory.getObject().getCurrentSession();
+        session.persist(studentEnrollment);
+    }
+
+    @Override
+    public void delete(StudentEnrollment studentEnrollment) {
+        Session session = factory.getObject().getCurrentSession();
+        session.remove(studentEnrollment);
+    }
 }

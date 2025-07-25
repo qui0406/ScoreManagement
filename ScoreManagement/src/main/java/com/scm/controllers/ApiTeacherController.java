@@ -41,7 +41,6 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/api/secure/teacher")
-@CrossOrigin
 @Slf4j
 public class ApiTeacherController {
     @Autowired
@@ -66,7 +65,7 @@ public class ApiTeacherController {
     private ScoreStudentService scoreStudentService;
 
     @Autowired
-    private UserMapper  userMapper;
+    private TeacherService teacherService;
 
 
     @PreAuthorize("hasRole('TEACHER')")
@@ -74,8 +73,8 @@ public class ApiTeacherController {
     public ResponseEntity<List<ClassroomResponse>> getMyClassrooms(Principal principal) {
         try {
             String teacherName = principal.getName();
-            User teacher = userDetailsService.getUserByUsername(teacherName);
-            List<ClassroomResponse> classrooms = this.classroomService.getClassroomsByTeacherId(teacher.getId().toString());
+            String teacherId = teacherService.findIdByUsername(teacherName);
+            List<ClassroomResponse> classrooms = this.classroomService.getClassroomsByTeacherId(teacherId);
             return new ResponseEntity<>(classrooms, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -200,7 +199,6 @@ public class ApiTeacherController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @GetMapping("/my-classes")
     public ResponseEntity<List<ClassroomSubjectResponse>> getMyClassroomSubjects(Principal principal) {

@@ -6,11 +6,38 @@ import org.springframework.http.HttpStatusCode;
 
 @Getter
 public enum ErrorCode {
-    ONLY_1_COLLUM(1001, "Chi duoc nhap 1 cot diem", HttpStatus.BAD_REQUEST),
-    OVER_5_TEST(1002, "Nhap qua 5 cot diem", HttpStatus.BAD_REQUEST),
-    INVALID_DATA(1003, "Loi truyen du lieu", HttpStatus.BAD_REQUEST),
-    EXIST_CLASS(1004, "Ban da dang ky lop nay roi", HttpStatus.BAD_REQUEST),
-    UNAUTHORIZE(1005, "Ban khong co quyen",  HttpStatus.UNAUTHORIZED),
+    // ---DEFAULT
+    UNCATEGORIZED_EXCEPTION(9999, "Xay ra lỗi", HttpStatus.INTERNAL_SERVER_ERROR),
+
+    // --- INPUT VALIDATION ERRORS ---
+    ONLY_1_COLLUM(1001, "Chỉ được nhập 1 cột điểm", HttpStatus.BAD_REQUEST),
+    OVER_5_TEST(1002, "Nhập quá 5 cột điểm", HttpStatus.BAD_REQUEST),
+    INVALID_DATA(1003, "Lỗi truyền dữ liệu", HttpStatus.BAD_REQUEST),
+    MISSING_REQUIRED_FIELD(1004, "Thiếu trường bắt buộc", HttpStatus.BAD_REQUEST),
+    INVALID_ID_FORMAT(1005, "ID không đúng định dạng", HttpStatus.BAD_REQUEST),
+    EXIST_CLASS(1006, "Bạn đã đăng ký lớp này rồi", HttpStatus.BAD_REQUEST),
+    CLASS_FULL(1007, "Lớp học đã đủ số lượng", HttpStatus.BAD_REQUEST),
+    SCORE_ALREADY_SUBMITTED(1008, "Bạn đã nhập điểm trước đó", HttpStatus.CONFLICT),
+    SEMESTER_CLOSED(1009, "Học kỳ đã kết thúc, không thể chỉnh sửa", HttpStatus.BAD_REQUEST),
+    NOT_ENROLLED(1010, "Bạn chưa đăng ký môn học này", HttpStatus.BAD_REQUEST),
+    DUPLICATE_DATA(1011, "Dữ liệu đã tồn tại", HttpStatus.BAD_REQUEST),
+
+    // --- AUTHENTICATION & AUTHORIZATION ERRORS ---
+    UNAUTHORIZED(1101, "Bạn không có quyền", HttpStatus.UNAUTHORIZED),
+    AUTHENTICATION_FAILED(1102, "Đăng nhập thất bại", HttpStatus.UNAUTHORIZED),
+    ACCESS_DENIED(1103, "Truy cập bị từ chối", HttpStatus.FORBIDDEN),
+    TOKEN_EXPIRED(1104, "Token đã hết hạn", HttpStatus.UNAUTHORIZED),
+    INVALID_TOKEN(1105, "Token không hợp lệ", HttpStatus.UNAUTHORIZED),
+
+
+    // --- RESOURCE ERRORS ---
+    NOT_FOUND(1201, "Không tìm thấy dữ liệu", HttpStatus.NOT_FOUND),
+
+    // --- SERVER & SYSTEM ERRORS ---
+    INTERNAL_ERROR(1301, "Lỗi hệ thống", HttpStatus.INTERNAL_SERVER_ERROR),
+    DATABASE_ERROR(1302, "Lỗi truy vấn cơ sở dữ liệu", HttpStatus.INTERNAL_SERVER_ERROR),
+    SERVICE_UNAVAILABLE(1303, "Dịch vụ tạm thời không khả dụng", HttpStatus.SERVICE_UNAVAILABLE),
+    TIMEOUT(1304, "Yêu cầu quá thời gian xử lý", HttpStatus.REQUEST_TIMEOUT);
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

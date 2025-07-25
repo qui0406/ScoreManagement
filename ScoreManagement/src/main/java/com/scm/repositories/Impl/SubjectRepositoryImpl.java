@@ -1,13 +1,11 @@
 package com.scm.repositories.Impl;
 
 import com.scm.pojo.ClassSubject;
+import com.scm.pojo.Faculty;
 import com.scm.pojo.StudentEnrollment;
 import com.scm.pojo.Subject;
 import com.scm.repositories.SubjectRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -44,5 +42,40 @@ public class SubjectRepositoryImpl implements SubjectRepository {
 
         List<Subject> subjects = session.createQuery(query).getResultList();
         return subjects;
+    }
+
+    @Override
+    public List<Subject> getAllSubjectsInFacultySemester(String facultyId, String semesterId) {
+        Session session = factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Subject> query = builder.createQuery(Subject.class);
+
+        Root<Subject> root = query.from(Subject.class);
+        Join<Subject, Faculty> facultyJoin = root.join("faculty");
+
+        Subquery<ClassSubject> subquery = query.subquery(ClassSubject.class);
+        Root<ClassSubject> subject = subquery.from(ClassSubject.class);
+
+        Predicate subjectMatch = builder.equal(subject.get("subject"), root);
+        Predicate semesterMatch = builder.equal(subject.get("semester").get("id"), semesterId);
+        subquery.select(subject).where(builder.and(subjectMatch, semesterMatch));
+
+        Predicate facultyMatch = builder.equal(facultyJoin.get("id"), facultyId);
+        Predicate existsSubquery = builder.exists(subquery);
+
+        query.select(root).where(builder.and(facultyMatch, existsSubquery));
+        return session.createQuery(query).getResultList();
+    }
+
+    @Override
+    public void create(Subject subject) {
+        Session s = factory.getObject().getCurrentSession();
+        s.persist(subject);
+    }
+
+    @Override
+    public void delete(Subject subject) {
+        Session s = factory.getObject().getCurrentSession();
+        s.remove(subject);
     }
 }

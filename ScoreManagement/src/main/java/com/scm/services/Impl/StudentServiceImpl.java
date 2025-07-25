@@ -41,5 +41,8 @@ public class StudentServiceImpl implements StudentService {
         return studentResponses;
     }
 
-
+    @Override
+    public String findIdByUsername(String username) {
+        return this.studentRepo.findIdByUsername(username);
+    }
 }

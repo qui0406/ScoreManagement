@@ -25,10 +25,6 @@ public class ApiSubjectController {
     private ClassroomSubjectService classroomSubjectService;
 
     @Autowired
-    private ClassroomSubjectMapper classroomSubjectMapper;
-
-
-    @Autowired
     private ScoreStudentService scoreStudentService;
 
     @PostMapping("/create")
@@ -74,11 +70,4 @@ public class ApiSubjectController {
                                         @RequestParam(value="classSubjectId") String classSubjectId) {
         return ResponseEntity.ok(scoreStudentService.getScoreByStudent(studentId, classSubjectId));
     }
-
-//    @GetMapping("/get-all-subject")
-//    public ResponseEntity<?> getAllSubject(Principal principal) {
-//        return ResponseEntity.ok()
-//    }
-
-
 }

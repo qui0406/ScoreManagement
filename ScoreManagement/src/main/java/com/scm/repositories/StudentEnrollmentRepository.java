@@ -9,4 +9,7 @@ import java.util.List;
 
 public interface StudentEnrollmentRepository {
     List<StudentEnrollment> findAllByClassSubjectId(String studentId);
+
+    void create(StudentEnrollment studentEnrollment);
+    void delete(StudentEnrollment studentEnrollment);
 }

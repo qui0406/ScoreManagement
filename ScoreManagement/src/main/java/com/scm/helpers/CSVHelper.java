@@ -66,15 +66,5 @@ public class CSVHelper {
         return null;
     }
 
-    public static void writeScores(String filePath, List<ScoreRequest> scores) {
-        try (Writer writer = new FileWriter(filePath)) {
-            StatefulBeanToCsv<ScoreRequest> beanToCsv = new StatefulBeanToCsvBuilder<ScoreRequest>(writer)
-                    .withSeparator(',')
-                    .build();
 
-            beanToCsv.write(scores);
-        } catch (Exception e) {
-            throw new RuntimeException("Lỗi khi ghi CSV: " + e.getMessage(), e);
-        }
-    }
 }
