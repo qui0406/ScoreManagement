@@ -23,7 +23,7 @@ public interface ScoreRepository {
 
     List<Score> getScoreSubjectByStudentId(Integer studentId,  Integer subjectId);
 
-    void closeScore(Integer teacherId, Integer classroomId);
+    void closeScore(Integer teacherId, Integer classSubjectId);
 
     void saveAll(Set<Score> scores);
     void save(Score score);

@@ -8,11 +8,15 @@ import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 @DecoratedWith(ScoreMapperDecorator.class)
 public interface ScoreMapper {
     ScoreMapper INSTANCE = Mappers.getMapper(ScoreMapper.class);
     Score toGrade(ScoreRequest dto);
+
+    List<Score> toListScore(List<ScoreRequest> dto);
 
     ScoreResponse toScoreResponse(Score dto);
 

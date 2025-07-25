@@ -24,9 +24,9 @@ public interface ScoreService {
     void addOrUpdateScore(ScoreRequest scoreRequest, String teacherId);
     List<ScoreResponse> getScoresByClassSubjectId(Integer classSubjectId);
 
-    void updateCloseScore(Integer teacherId,  Integer classroomId);
+    void updateCloseScore(Integer teacherId,  Integer classSubjectId);
 
-    void importScores(List<CSVScoreRequest> scores);
+//    void importScores(List<CSVScoreRequest> scores);
 
     Map<Integer, ScoreByTypeDTO> getGroupedScores(String studentId, String classSubjectId);
     void addListScore(ListScoreStudentRequest request, String teacherId);

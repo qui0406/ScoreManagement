@@ -58,7 +58,7 @@ public class ScoreServiceImpl implements ScoreService {
     private ScoreMapper scoreMapper;
 
     @Autowired
-    private CSVScoreMapper  csvScoreMapper;
+    private CSVScoreMapper csvScoreMapper;
 
 
     private final int SCORE_TYPE_MIDDLE_TEST = 1;
@@ -109,23 +109,23 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public void updateCloseScore(Integer teacherId, Integer classroomId) {
-        this.scoreRepository.closeScore(teacherId, classroomId);
+    public void updateCloseScore(Integer teacherId, Integer classSubjectId) {
+        this.scoreRepository.closeScore(teacherId, classSubjectId);
     }
 
-    @Override
-    @Transactional
-    public void importScores(List<CSVScoreRequest> scores) {
-        for (CSVScoreRequest dto : scores) {
-            // Validate score
-            if (dto.getScore() == null || dto.getScore().doubleValue() < 0 || dto.getScore().doubleValue() > 10) {
-                throw new IllegalArgumentException("Invalid score value for studentId: " + dto.getStudentId());
-            }
-            Score score = csvScoreMapper.toScore(dto);
-
-            scoreRepository.save(score);
-        }
-    }
+//    @Override
+//    @Transactional
+//    public void importScores(List<CSVScoreRequest> scores) {
+//        for (CSVScoreRequest dto : scores) {
+//            // Validate score
+//            if (dto.getScore() == null || dto.getScore().doubleValue() < 0 || dto.getScore().doubleValue() > 10) {
+//                throw new IllegalArgumentException("Invalid score value for studentId: " + dto.getStudentId());
+//            }
+//            Score score = csvScoreMapper.toScore(dto);
+//
+//            scoreRepository.save(score);
+//        }
+//    }
 
     @Override
     public Map<Integer, ScoreByTypeDTO> getGroupedScores(String studentId, String classSubjectId) {
@@ -175,12 +175,20 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public void addListScoreAllStudents(List<ListScoreStudentRequest> request, String teacherId) {
-        if (request == null || request.isEmpty()) {
+    public void addListScoreAllStudents(List<ListScoreStudentRequest> requests, String teacherId) {
+        if (requests == null || requests.isEmpty()) {
            // throw new AppException(ErrorCode.INVALID_REQUEST, "Danh sách sinh viên rỗng");
         }
+        for (ListScoreStudentRequest request : requests) {
+            log.info("Student ID: " + request.getStudentId());
+            log.info("ClassSubject ID: " + request.getClassSubjectId());
+            for (Map.Entry<Integer, BigDecimal> entry : request.getScores().entrySet()) {
+                log.info("Score Type: " + entry.getKey() + ", Score: " + entry.getValue());
+            }
+        }
 
-        for (ListScoreStudentRequest studentRequest : request) {
+
+        for (ListScoreStudentRequest studentRequest : requests) {
             this.addListScore(studentRequest, teacherId);
         }
     }
