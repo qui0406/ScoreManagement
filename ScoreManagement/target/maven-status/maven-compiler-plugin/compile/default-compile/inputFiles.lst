@@ -19,6 +19,7 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\TeacherCont
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\ClassroomDTO.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\ClassroomSubjectRequest.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\CSVScoreRequest.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\ListScoreStudentRequest.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\MessageRequest.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\Recipient.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\ScoreRequest.java
@@ -50,6 +51,7 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\exceptions\AppException
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\exceptions\ErrorCode.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\filters\JwtFilter.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\helpers\CSVHelper.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\helpers\PDFHelper.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\ClassroomMapper.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\ClassroomSubjectMapper.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\CSVScoreMapper.java

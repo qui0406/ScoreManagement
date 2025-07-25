@@ -32,7 +32,6 @@ public class ClassroomRepositoryImpl implements ClassroomRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
 
-
     @Override
     public List<Classroom> getClassroomsByTeacherId(String teacherId) {
         try {

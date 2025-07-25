@@ -83,6 +83,7 @@ com\scm\dto\responses\ClassroomSubjectResponse.class
 com\scm\dto\responses\SemesterResponse.class
 com\scm\filters\JwtFilter.class
 com\scm\dto\responses\ClassScoreRequest.class
+com\scm\helpers\PDFHelper.class
 com\scm\repositories\Impl\TeacherRepositoryImpl.class
 com\scm\mapper\SemesterMapperImpl.class
 com\scm\repositories\Impl\StudentEnrollmentRepositoryImpl.class
@@ -133,6 +134,7 @@ com\scm\exceptions\AppException.class
 com\scm\mapper\ClassroomMapper.class
 com\scm\exceptions\ErrorCode.class
 com\scm\mapper\UserMapperImpl.class
+com\scm\dto\requests\ListScoreStudentRequest.class
 com\scm\repositories\Impl\UserRepositoryImp.class
 com\scm\services\UserService.class
 com\scm\mapper\SubjectMapper.class

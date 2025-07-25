@@ -12,6 +12,8 @@ import com.scm.dto.requests.ScoreRequest;
 import com.scm.dto.requests.ScoreTypeRequest;
 import com.scm.dto.responses.*;
 import com.scm.exceptions.AppException;
+import com.scm.helpers.CSVHelper;
+import com.scm.helpers.PDFHelper;
 import com.scm.mapper.UserMapper;
 import com.scm.pojo.User;
 import com.scm.services.*;
@@ -26,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -64,6 +67,7 @@ public class ApiTeacherController {
 
     @Autowired
     private UserMapper  userMapper;
+
 
     @PreAuthorize("hasRole('TEACHER')")
     @GetMapping("/classrooms")
@@ -161,46 +165,31 @@ public class ApiTeacherController {
 
     @PostMapping(path = "/upload-scores", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<?> uploadScores(@RequestParam(value = "file") MultipartFile file, Principal principal) {
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body("File is empty");
         }
-
-        log.info("Principal: {}", principal);
-        SecurityContext context = SecurityContextHolder.getContext();
-        log.info("SecurityContext: {}", context.getAuthentication());
         try {
-            String username = principal.getName();
-            log.info("Username: {}", username);
-            User teacher = userDetailsService.getUserByUsername(username);
-            log.info("Teacher: {}", teacher);
-            InputStreamReader reader = new InputStreamReader(file.getInputStream());
-            log.info("InputStreamReader: {}", reader);
-            CsvToBean<CSVScoreRequest> csvToBean = new CsvToBeanBuilder<CSVScoreRequest>(reader)
-                    .withType(CSVScoreRequest.class)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .withThrowExceptions(true)
-                    .build();
-            log.info("CsvToBean created: {}", csvToBean);
-            List<CSVScoreRequest> scores = csvToBean.parse();
-            log.info("Parsed scores: {}", scores);
-            if (csvToBean.getCapturedExceptions().size() > 0) {
-                log.error("CSV parsing errors: {}", csvToBean.getCapturedExceptions());
-                throw new Exception("Invalid CSV format: " + csvToBean.getCapturedExceptions().get(0).getMessage());
-            }
-            scores.forEach(score -> score.setTeacherId(teacher.getId()));
-            log.info("Calling scoreService.importScores...");
-            scoreService.importScores(scores);
-            log.info("Scores imported successfully");
-            return ResponseEntity.ok("Scores uploaded successfully.");
-        } catch (Exception e) {
-            log.error("Error processing file: ", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error processing file: " + e.getMessage());
+            List<ListScoreStudentRequest> listScoreStudentRequests = CSVHelper.parseScoreCSV(file);
+            this.scoreService.addListScoreAllStudents(listScoreStudentRequests, "3");
         }
+        catch (AppException ex){
+            return ResponseEntity.badRequest().body("doc file that bai");
+        }
+        return ResponseEntity.ok("value: Successfully");
     }
 
-
+    @PostMapping("/export-score")
+    public ResponseEntity<String> exportScores(@RequestBody List<ListScoreStudentRequest> listScoreStudentRequest, Principal principal) throws Exception {
+        try{
+            PDFHelper.exportScoreListToPDF(listScoreStudentRequest);
+            return ResponseEntity.ok("value: Successfully");
+        }
+        catch (AppException ex){
+            return ResponseEntity.badRequest().body("value:" + ex.getErrorCode().getMessage());
+        }
+    }
 
     @GetMapping("/class-subject/{classSubjectId}/scores")
     public ResponseEntity<List<ScoreResponse>> getGradesByClassSubject(@PathVariable(value="classSubjectId") Integer classSubjectId) {
@@ -227,12 +216,12 @@ public class ApiTeacherController {
         }
     }
 
-    @PostMapping("/score/close-score/{classroomId}")
-    public boolean closeScore(@PathVariable(value="classroomId") Integer classroomId, Principal principal) {
+    @PostMapping("/score/close-score/{classSubjectId}")
+    public boolean closeScore(@PathVariable(value="classSubjectId") Integer classSubjectId, Principal principal) {
         try {
             String teacherName = principal.getName();
             User teacher = userDetailsService.getUserByUsername(teacherName);
-            this.scoreService.updateCloseScore(teacher.getId(), classroomId);
+            this.scoreService.updateCloseScore(teacher.getId(), classSubjectId);
             return true;
         }catch (AppException e) {
             e.printStackTrace();
