@@ -7,6 +7,7 @@ com\scm\pojo\ScoreType.class
 com\scm\dto\StudentDTO.class
 com\scm\pojo\enums\ScoreTypeEnum.class
 com\scm\pojo\StudentEnrollment.class
+com\scm\pojo\ClassSubjectScore.class
 com\scm\pojo\Semester.class
 com\scm\mapper\decorator\ClassroomSubjectDecorator.class
 com\scm\repositories\ScoreTableRepository.class
@@ -24,6 +25,7 @@ com\scm\dto\ResponseBaseApi$ResponseBaseApiBuilder.class
 com\scm\mapper\decorator\SemesterMapperDecorator.class
 com\scm\dto\responses\ClassroomResponse.class
 com\scm\services\SendGridMailService.class
+com\scm\repositories\ClassSubjectScoreRepository.class
 com\scm\services\Impl\ScoreTypeServiceImpl.class
 com\scm\repositories\Impl\SemesterRepositoryImpl.class
 com\scm\repositories\Impl\ScoreRepositoryImpl.class
@@ -123,6 +125,7 @@ com\scm\dto\responses\RegisterSubjectResponse.class
 com\scm\repositories\TeacherRepository.class
 com\scm\controllers\ApiUserController.class
 com\scm\mapper\CSVScoreMapperImpl.class
+com\scm\repositories\Impl\ClassSubjectScoreRepositoryImpl.class
 com\scm\services\ClassroomSubjectService.class
 com\scm\dto\responses\TeacherResponse$TeacherResponseBuilder.class
 com\scm\services\SubjectService.class

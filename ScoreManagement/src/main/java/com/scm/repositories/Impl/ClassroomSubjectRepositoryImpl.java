@@ -6,9 +6,7 @@ package com.scm.repositories.Impl;
 
 import com.scm.exceptions.AppException;
 import com.scm.exceptions.ErrorCode;
-import com.scm.pojo.ClassSubject;
-import com.scm.pojo.StudentEnrollment;
-import com.scm.pojo.Score;
+import com.scm.pojo.*;
 import com.scm.repositories.ClassroomSubjectRepository;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -91,8 +89,26 @@ public class ClassroomSubjectRepositoryImpl implements ClassroomSubjectRepositor
 
     @Override
     public ClassSubject create(ClassSubject classSubject) {
-        Session s = this.factory.getObject().getCurrentSession();
-        return s.merge(classSubject);
+        Session session = this.factory.getObject().getCurrentSession();
+        ClassSubject saved = session.merge(classSubject);
+        session.flush();
+
+        ScoreType middleScore = session.get(ScoreType.class, "1");
+        ScoreType finalScore = session.get(ScoreType.class, "2");
+
+        if (middleScore != null && finalScore != null) {
+            ClassSubjectScore css1 = new ClassSubjectScore();
+            css1.setClassSubject(saved);
+            css1.setScoreType(middleScore);
+
+            ClassSubjectScore css2 = new ClassSubjectScore();
+            css2.setClassSubject(saved);
+            css2.setScoreType(finalScore);
+
+            session.persist(css1);
+            session.persist(css2);
+        }
+        return saved;
     }
 
 
@@ -110,7 +126,6 @@ public class ClassroomSubjectRepositoryImpl implements ClassroomSubjectRepositor
             builder.equal(root.get("semester"), classSubject.getSemester()),
             builder.equal(root.get("teacher").get("id"), classSubject.getTeacher().getId())
         );
-
         Long count = session.createQuery(query).getSingleResult();
         return count > 0;
     }

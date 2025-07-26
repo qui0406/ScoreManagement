@@ -6,6 +6,7 @@ package com.scm.services.Impl;
 
 import com.scm.dto.requests.ScoreTypeRequest;
 import com.scm.dto.responses.ScoreTypeResponse;
+import com.scm.mapper.ScoreTypeMapper;
 import com.scm.pojo.ScoreType;
 import com.scm.repositories.ScoreTypeRepository;
 import com.scm.services.ScoreTypeService;
@@ -21,27 +22,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScoreTypeServiceImpl implements ScoreTypeService {
     @Autowired
-    private ScoreTypeRepository gradeTypeRepo;
+    private ScoreTypeRepository scoreTypeRepo;
+
+    @Autowired
+    private ScoreTypeMapper scoreTypeMapper;
+
 
     private static final int MAX_GRADE_TYPES = 5;
 
-    @Override
-    public List<ScoreTypeResponse> getScoreTypesByClassSubject(Integer classSubjectId) {
-        // Đảm bảo có tối thiểu điểm giữa kỳ và cuối kỳ
-        this.ensureMinimumScoreTypes(classSubjectId);
-
-        List<ScoreType> scoreTypes = this.gradeTypeRepo.getScoreTypesByClassSubject(classSubjectId);
-        List<ScoreTypeResponse> responses = new ArrayList<>();
-
-        for (ScoreType scoreType : scoreTypes) {
-            ScoreTypeResponse response = new ScoreTypeResponse();
-            response.setId(scoreType.getId());
-            response.setGradeTypeName(scoreType.getScoreTypeName());
-            responses.add(response);
-        }
-
-        return responses;
-    }
 
     @Override
     public void addGradeTypeToClassSubject(ScoreTypeRequest scoreTypeRequest, Integer classSubjectId) {
@@ -53,17 +41,17 @@ public class ScoreTypeServiceImpl implements ScoreTypeService {
         ScoreType scoreType = new ScoreType();
         scoreType.setScoreTypeName(scoreTypeRequest.getGradeTypeName());
 
-        this.gradeTypeRepo.addOrUpdateGradeType(scoreType);
+        this.scoreTypeRepo.addOrUpdateGradeType(scoreType);
     }
 
     @Override
     public void deleteGradeType(Integer id) {
-        this.gradeTypeRepo.deleteGradeType(id);
+        this.scoreTypeRepo.deleteGradeType(id);
     }
 
     @Override
     public boolean canAddMoreGradeTypes(Integer classSubjectId) {
-        long currentCount = this.gradeTypeRepo.countGradeTypesByClassSubject(classSubjectId);
+        long currentCount = this.scoreTypeRepo.countGradeTypesByClassSubject(classSubjectId);
         return currentCount < MAX_GRADE_TYPES;
     }
 
@@ -72,5 +60,42 @@ public class ScoreTypeServiceImpl implements ScoreTypeService {
         // Kiểm tra xem đã có đủ loại điểm tối thiểu (giữa kỳ + cuối kỳ) chưa
         // Logic này sẽ được triển khai khi cần thiết
         // Có thể tự động tạo điểm giữa kỳ và cuối kỳ nếu chưa có
+    }
+
+    @Override
+    public List<ScoreTypeResponse> getScoreTypes() {
+        List<ScoreType> scoreTypes = this.scoreTypeRepo.getScoreTypes();
+
+        List<ScoreTypeResponse> responses = new ArrayList<>();
+        for (ScoreType scoreType : scoreTypes) {
+            responses.add(scoreTypeMapper.scoreTypeResponse(scoreType));
+        }
+        return responses;
+    }
+
+    @Override
+    public List<ScoreTypeResponse> getScoreTypesByClassSubject(String classSubjectId) {
+        List<ScoreType> scoreTypes = this.scoreTypeRepo.getScoreTypesByClassSubject(classSubjectId);
+        List<ScoreTypeResponse> responses = new ArrayList<>();
+
+        for (ScoreType scoreType : scoreTypes) {
+            responses.add(scoreTypeMapper.scoreTypeResponse(scoreType));
+        }
+
+        return responses;
+    }
+
+    @Override
+    public void addScoreType(String classSubjectId, String scoreTypeId) {
+        if(scoreTypeId.equals("1") || scoreTypeId.equals("2") ) {
+            throw new IllegalArgumentException("khong hop le");
+        }
+        this.scoreTypeRepo.addScoreType(classSubjectId, scoreTypeId);
+    }
+
+
+    @Override
+    public void deleteScoreType(String classSubjectId, String scoreTypeId) {
+        this.scoreTypeRepo.deleteScoreType(classSubjectId, scoreTypeId);
     }
 }

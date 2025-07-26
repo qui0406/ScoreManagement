@@ -4,21 +4,15 @@
  */
 package com.scm.controllers;
 
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
-import com.scm.dto.requests.CSVScoreRequest;
 import com.scm.dto.requests.ListScoreStudentRequest;
 import com.scm.dto.requests.ScoreRequest;
-import com.scm.dto.requests.ScoreTypeRequest;
 import com.scm.dto.responses.*;
 import com.scm.exceptions.AppException;
 import com.scm.helpers.CSVHelper;
 import com.scm.helpers.PDFHelper;
-import com.scm.mapper.UserMapper;
 import com.scm.pojo.User;
 import com.scm.services.*;
 
-import java.io.InputStreamReader;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -28,10 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -119,7 +110,8 @@ public class ApiTeacherController {
     }
 
     @PostMapping("/add-list-score-all-student")
-    public ResponseEntity<?> addListScoreAllStudents(@RequestBody List<ListScoreStudentRequest> requests, Principal principal) {
+    public ResponseEntity<?> addListScoreAllStudents(@RequestBody
+                    List<ListScoreStudentRequest> requests, Principal principal) {
         try{
             String teacherName = principal.getName();
             User teacher = userDetailsService.getUserByUsername(teacherName);
@@ -134,7 +126,8 @@ public class ApiTeacherController {
 
 
     @GetMapping("/export-list-score/{classSubjectId}")
-    public ResponseEntity<List<ScoreStudentResponse>> getExportListScore(@PathVariable(value="classSubjectId") String classSubjectId
+    public ResponseEntity<List<ScoreStudentResponse>> getExportListScore(
+            @PathVariable(value="classSubjectId") String classSubjectId
             , Principal principal) {
         String teacherName = principal.getName();
         User teacher = userDetailsService.getUserByUsername(teacherName);
@@ -165,7 +158,8 @@ public class ApiTeacherController {
     @PostMapping(path = "/upload-scores", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('TEACHER')")
-    public ResponseEntity<?> uploadScores(@RequestParam(value = "file") MultipartFile file, Principal principal) {
+    public ResponseEntity<?> uploadScores(@RequestParam(value = "file") MultipartFile file,
+                                          Principal principal) {
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body("File is empty");
         }
@@ -180,7 +174,9 @@ public class ApiTeacherController {
     }
 
     @PostMapping("/export-score")
-    public ResponseEntity<String> exportScores(@RequestBody List<ListScoreStudentRequest> listScoreStudentRequest, Principal principal) throws Exception {
+    public ResponseEntity<String> exportScores(@RequestBody
+                   List<ListScoreStudentRequest> listScoreStudentRequest,
+                   Principal principal) throws Exception {
         try{
             PDFHelper.exportScoreListToPDF(listScoreStudentRequest);
             return ResponseEntity.ok("value: Successfully");
@@ -191,7 +187,8 @@ public class ApiTeacherController {
     }
 
     @GetMapping("/class-subject/{classSubjectId}/scores")
-    public ResponseEntity<List<ScoreResponse>> getGradesByClassSubject(@PathVariable(value="classSubjectId") Integer classSubjectId) {
+    public ResponseEntity<List<ScoreResponse>> getGradesByClassSubject(
+            @PathVariable(value="classSubjectId") Integer classSubjectId) {
         try {
             List<ScoreResponse> grades = this.scoreService.getScoresByClassSubjectId(classSubjectId);
             return new ResponseEntity<>(grades, HttpStatus.OK);
@@ -215,7 +212,8 @@ public class ApiTeacherController {
     }
 
     @PostMapping("/score/close-score/{classSubjectId}")
-    public boolean closeScore(@PathVariable(value="classSubjectId") Integer classSubjectId, Principal principal) {
+    public boolean closeScore(@PathVariable(value="classSubjectId") Integer classSubjectId,
+                              Principal principal) {
         try {
             String teacherName = principal.getName();
             User teacher = userDetailsService.getUserByUsername(teacherName);
@@ -229,9 +227,11 @@ public class ApiTeacherController {
 
     // thông tin chi tiết lớp môn
     @GetMapping("/class-subject/{classSubjectId}/details")
-    public ResponseEntity<ClassroomSubjectResponse> getClassroomSubjectDetails(@PathVariable(value="classSubjectId") Integer classSubjectId) {
+    public ResponseEntity<ClassroomSubjectResponse> getClassroomSubjectDetails(
+            @PathVariable(value="classSubjectId") Integer classSubjectId) {
         try {
-            ClassroomSubjectResponse details = this.classroomSubjectService.getClassroomSubjectDetails(classSubjectId);
+            ClassroomSubjectResponse details = this.classroomSubjectService
+                    .getClassroomSubjectDetails(classSubjectId);
             if (details == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -241,32 +241,50 @@ public class ApiTeacherController {
         }
     }
 
-    // danh sách loại điểm của lớp môn
-    @GetMapping("/class-subject/{classSubjectId}/score-types")
-    public ResponseEntity<List<ScoreTypeResponse>> getGradeTypesByClassSubject(@PathVariable(value="classSubjectId") Integer classSubjectId) {
+    @GetMapping("/class-subject/score-types")
+    public ResponseEntity<List<ScoreTypeResponse>> getScoreTypes() {
         try {
-            List<ScoreTypeResponse> gradeTypes = this.scoreTypeService.getScoreTypesByClassSubject(classSubjectId);
-            return new ResponseEntity<>(gradeTypes, HttpStatus.OK);
+            List<ScoreTypeResponse> scoreTypes = this.scoreTypeService.getScoreTypes();
+            return new ResponseEntity<>(scoreTypes, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // thêm loại điểm mới cho lớp môn
-    @PostMapping("/class-subject/{classSubjectId}/score-types")
-    public ResponseEntity<String> addGradeTypeToClassSubject(
-            @PathVariable Integer classSubjectId,
-            @RequestBody ScoreTypeRequest scoreTypeRequest) {
+    @GetMapping("/class-subject/score-types/{classSubjectId}")
+    public ResponseEntity<List<ScoreTypeResponse>> getScoreTypesByClassSubject(
+            @PathVariable(value="classSubjectId")
+             String classSubjectId) {
         try {
-            // giới hạn không quá 5 cột
-            if (!this.scoreTypeService.canAddMoreGradeTypes(classSubjectId)) {
-                return new ResponseEntity<>("Không thể thêm quá 5 loại điểm!", HttpStatus.BAD_REQUEST);
-            }
-
-            this.scoreTypeService.addGradeTypeToClassSubject(scoreTypeRequest, classSubjectId);
-            return new ResponseEntity<>("Thêm loại điểm thành công!", HttpStatus.OK);
+            List<ScoreTypeResponse> scoreTypes = this.scoreTypeService
+                    .getScoreTypesByClassSubject(classSubjectId);
+            return new ResponseEntity<>(scoreTypes, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Lỗi khi thêm loại điểm: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/class-subject/score-type/{classSubjectId}/add")
+    public ResponseEntity<?> addScoreType(
+            @PathVariable(value = "classSubjectId") String classSubjectId,
+            @RequestParam(value = "scoreTypeId") String scoreTypeId,
+            Principal principal) {
+        String teacherName = principal.getName();
+        User teacherId = userDetailsService.getUserByUsername(teacherName);
+        this.scoreTypeService.addScoreType(classSubjectId, scoreTypeId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/class-subject/score-type/{classSubjectId}/delete")
+    public ResponseEntity<?> deleteScoreType(
+            @PathVariable(value = "classSubjectId") String classSubjectId,
+            @RequestParam(value = "scoreTypeId") String scoreTypeId,
+            Principal principal) {
+        String teacherName = principal.getName();
+        User teacherId = userDetailsService.getUserByUsername(teacherName);
+        this.scoreTypeService.deleteScoreType(classSubjectId, scoreTypeId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
 }
