@@ -53,7 +53,7 @@ public class TeacherController {
         model.addAttribute("students", this.studentService.getStudentsByClassSubjectId(classSubjectId));
 
         // Danh sách loại điểm
-        model.addAttribute("gradeTypes", this.scoreTypeService.getScoreTypesByClassSubject(classSubjectId));
+        model.addAttribute("gradeTypes", this.scoreTypeService.getScoreTypesByClassSubject(classSubjectId.toString()));
 
         // Danh sách điểm đã nhập
     //    model.addAttribute("grades", this.scoreService.getGradesByClassSubjectId(classSubjectId));

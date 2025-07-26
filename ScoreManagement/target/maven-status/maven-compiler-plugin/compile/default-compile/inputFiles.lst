@@ -75,6 +75,7 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\SubjectMapper.ja
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\UserMapper.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\Classroom.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\ClassSubject.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\ClassSubjectScore.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\enums\ScoreTypeEnum.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\Faculty.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\Score.java
@@ -88,9 +89,11 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\Teacher.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\User.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\ClassroomRepository.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\ClassroomSubjectRepository.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\ClassSubjectScoreRepository.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\FacultyRepository.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\Impl\ClassroomRepositoryImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\Impl\ClassroomSubjectRepositoryImpl.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\Impl\ClassSubjectScoreRepositoryImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\Impl\FacultyRepositoryImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\Impl\ScoreRepositoryImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\Impl\ScoreStudentRepositoryImpl.java

@@ -1,13 +1,15 @@
 package com.scm.mapper;
 
 import com.scm.dto.SubjectDTO;
+import com.scm.dto.responses.ScoreTypeResponse;
+import com.scm.pojo.ScoreType;
 import com.scm.pojo.Subject;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-26T15:46:53+0700",
+    date = "2025-07-26T19:11:51+0700",
     comments = "version: 1.6.0.Beta1, compiler: javac, environment: Java 21.0.7 (Microsoft)"
 )
 @Component
@@ -25,5 +27,19 @@ public class ScoreTypeMapperImpl implements ScoreTypeMapper {
         subjectDTO.setSubjectName( subject.getSubjectName() );
 
         return subjectDTO;
+    }
+
+    @Override
+    public ScoreTypeResponse scoreTypeResponse(ScoreType scoreType) {
+        if ( scoreType == null ) {
+            return null;
+        }
+
+        ScoreTypeResponse scoreTypeResponse = new ScoreTypeResponse();
+
+        scoreTypeResponse.setId( scoreType.getId() );
+        scoreTypeResponse.setScoreTypeName( scoreType.getScoreTypeName() );
+
+        return scoreTypeResponse;
     }
 }

@@ -23,6 +23,7 @@ public enum ErrorCode {
     DUPLICATE_DATA(1011, "Dữ liệu đã tồn tại", HttpStatus.BAD_REQUEST),
     EMAIL_EXISTED(1012, "Email existed",  HttpStatus.BAD_REQUEST),
     USER_EXISTED(1013, "User existed", HttpStatus.BAD_REQUEST),
+    SCORE_TYPE_EXISTED(1014, "Score type existed", HttpStatus.BAD_REQUEST),
 
     // --- AUTHENTICATION & AUTHORIZATION ERRORS ---
     UNAUTHORIZED(1101, "Bạn không có quyền", HttpStatus.UNAUTHORIZED),
