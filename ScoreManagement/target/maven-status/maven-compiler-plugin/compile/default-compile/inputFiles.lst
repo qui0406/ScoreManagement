@@ -9,6 +9,7 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SpringSecurityC
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\ThymeleafConfigs.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\WebAppContextConfigs.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\admin\UserAdminController.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiStudentController.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiSubjectController.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiTeacherController.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiTeacherSuperController.java
@@ -30,6 +31,7 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\SemesterRe
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\StudentRequest.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\SubjectRequest.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\TeacherRequest.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\UpdateUserRequest.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\UserRequest.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\ResponseBaseApi.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\ClassroomResponse.java
@@ -42,6 +44,7 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\ScoreStud
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\ScoreTypeResponse.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\SemesterResponse.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\StudentResponse.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\SubjectResponse.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\TeacherResponse.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\UserResponse.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\ScoreByTypeDTO.java

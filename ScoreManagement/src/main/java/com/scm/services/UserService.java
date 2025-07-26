@@ -4,6 +4,8 @@
  */
 package com.scm.services;
 
+import com.scm.dto.requests.UpdateUserRequest;
+import com.scm.dto.requests.UserRequest;
 import com.scm.dto.responses.StudentResponse;
 import com.scm.dto.responses.TeacherResponse;
 import com.scm.dto.responses.UserResponse;
@@ -31,4 +33,11 @@ public interface UserService extends UserDetailsService{
     boolean authenticate(String username, String password);
     List<User> getAllUsers();
     UserResponse getProfile(Principal principal);
+
+//    UserResponse update(UpdateUserRequest request);
+//
+//    boolean checkExistEmail(String email);
+//    boolean checkExistUsername(String username);
+
+
 }

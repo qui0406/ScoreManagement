@@ -4,6 +4,8 @@
  */
 package com.scm.repositories.Impl;
 
+import com.scm.exceptions.AppException;
+import com.scm.exceptions.ErrorCode;
 import com.scm.pojo.Student;
 import com.scm.pojo.Teacher;
 import com.scm.pojo.User;
@@ -11,6 +13,7 @@ import com.scm.repositories.UserRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import jakarta.ws.rs.NotFoundException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -82,8 +85,36 @@ public class UserRepositoryImp implements UserRepository{
         return this.passwordEncoder.matches(password, user.getPassword());
     }
 
-
-
-
-
+//
+//    @Override
+//    public User update(User user) {
+//        Session session = factory.getObject().getCurrentSession();
+//        session.merge(user);
+//        return user;
+//    }
+//
+//
+//
+//    @Override
+//    public boolean checkExistEmail(String email) {
+//        return findUserByEmail(email) != null;
+//    }
+//
+//    @Override
+//    public boolean checkExistUsername(String username) {
+//        return getUserByUsername(username) != null;
+//    }
+//
+//    @Override
+//    public User findUserByEmail(String email) {
+//        try (Session s = factory.getObject().openSession()) {
+//            CriteriaBuilder builder = s.getCriteriaBuilder();
+//            CriteriaQuery<User> query = builder.createQuery(User.class);
+//            Root<User> root = query.from(User.class);
+//            query.select(root).where(builder.equal(root.get("email"), email));
+//            return s.createQuery(query).uniqueResult();
+//        }catch (AppException ex){
+//            throw new NotFoundException(ErrorCode.EMAIL_EXISTED.getMessage());
+//        }
+//    }
 }

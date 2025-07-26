@@ -19,6 +19,7 @@ com\scm\repositories\StudentRepository.class
 com\scm\mapper\ClassroomMapperImpl.class
 com\scm\mapper\ScoreMapper.class
 com\scm\pojo\Subject.class
+com\scm\controllers\ApiStudentController$ApiStudentControllerBuilder.class
 com\scm\dto\ResponseBaseApi$ResponseBaseApiBuilder.class
 com\scm\mapper\decorator\SemesterMapperDecorator.class
 com\scm\dto\responses\ClassroomResponse.class
@@ -126,6 +127,7 @@ com\scm\services\ClassroomSubjectService.class
 com\scm\dto\responses\TeacherResponse$TeacherResponseBuilder.class
 com\scm\services\SubjectService.class
 com\scm\controllers\admin\UserAdminController.class
+com\scm\controllers\ApiStudentController.class
 com\scm\dto\responses\MessageResponse.class
 com\scm\mapper\SubjectMapperImpl.class
 com\scm\services\Impl\ScoreServiceImpl.class
@@ -142,7 +144,9 @@ com\scm\exceptions\ErrorCode.class
 com\scm\mapper\UserMapperImpl.class
 com\scm\dto\requests\ListScoreStudentRequest.class
 com\scm\repositories\Impl\UserRepositoryImp.class
+com\scm\dto\requests\UpdateUserRequest.class
 com\scm\services\UserService.class
+com\scm\dto\responses\SubjectResponse.class
 com\scm\mapper\SubjectMapper.class
 com\scm\pojo\Staff.class
 com\scm\dto\requests\StudentRequest.class

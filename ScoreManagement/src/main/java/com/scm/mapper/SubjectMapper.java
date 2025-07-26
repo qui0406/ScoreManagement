@@ -2,6 +2,7 @@ package com.scm.mapper;
 
 import com.scm.dto.SubjectDTO;
 import com.scm.dto.requests.SubjectRequest;
+import com.scm.dto.responses.SubjectResponse;
 import com.scm.pojo.Subject;
 import org.mapstruct.Mapper;
 
@@ -11,5 +12,5 @@ public interface SubjectMapper {
 
     Subject toSubject(SubjectRequest subjectRequest);
 
-
+    SubjectResponse toSubjectResponse(Subject subject);
 }

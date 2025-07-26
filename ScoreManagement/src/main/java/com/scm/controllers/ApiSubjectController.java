@@ -2,11 +2,13 @@ package com.scm.controllers;
 
 import com.scm.dto.requests.ClassroomSubjectRequest;
 import com.scm.dto.responses.ClassroomSubjectResponse;
+import com.scm.dto.responses.SubjectResponse;
 import com.scm.exceptions.AppException;
 import com.scm.mapper.ClassroomSubjectMapper;
 import com.scm.pojo.User;
 import com.scm.services.ClassroomSubjectService;
 import com.scm.services.ScoreStudentService;
+import com.scm.services.SubjectService;
 import com.scm.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/secure/user")
@@ -26,6 +30,9 @@ public class ApiSubjectController {
 
     @Autowired
     private ScoreStudentService scoreStudentService;
+
+    @Autowired
+    private SubjectService subjectService;
 
     @PostMapping("/create")
     public ResponseEntity<?> registerSubject(@RequestBody ClassroomSubjectRequest request, Principal principal) {
@@ -69,5 +76,13 @@ public class ApiSubjectController {
     public ResponseEntity<?> getMyScore(@PathVariable("studentId") String studentId, Principal principal,
                                         @RequestParam(value="classSubjectId") String classSubjectId) {
         return ResponseEntity.ok(scoreStudentService.getScoreByStudent(studentId, classSubjectId));
+    }
+
+    @GetMapping("/get-all-subjects")
+    public ResponseEntity<List<SubjectResponse>> getAllSubjects(Principal principal,
+                                                                @RequestParam Map<String, String> params) {
+        String username = principal.getName();
+        User student = userDetailsService.getUserByUsername(username);
+        return ResponseEntity.ok(this.subjectService.getAllSubjectsByStudent(student.getId().toString(), params));
     }
 }
