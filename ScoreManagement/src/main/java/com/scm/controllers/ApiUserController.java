@@ -40,7 +40,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Builder
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@CrossOrigin(origins = "http://localhost:3000")
 public class ApiUserController {
 
     UserService userDetailsService;
@@ -50,7 +49,6 @@ public class ApiUserController {
     ScoreStudentService scoreStudentService;
 
     @PostMapping("/login")
-    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<?> login(@RequestBody Student u) {
         if (this.userDetailsService.authenticate(u.getUsername(), u.getPassword())) {
             try {
@@ -91,23 +89,7 @@ public class ApiUserController {
     }
 
 
-    @PostMapping(path = "/update-profile",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@RequestParam Map<String, String> params,
-                                    @RequestParam(value = "avatar", required = false) MultipartFile avatar) {
-        User u = this.userDetailsService.registerStudent(params, avatar);
-        UserResponse userResponse = userMapper.toUserResponse(u);
-        return ResponseEntity.ok().body(userResponse);
-    }
 
-    @GetMapping("/my-profile")
-    public ResponseEntity<?> getMyProfile(Principal principal) {
-        if (principal == null) {
-            throw new RuntimeException("Unauthenticated");
-        }
-        return ResponseEntity.ok(this.userDetailsService.getProfile(principal));
-    }
 
 
 
