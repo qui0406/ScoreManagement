@@ -51,4 +51,18 @@ public class StudentRepositoryImpl implements StudentRepository {
         Session s = factory.getObject().getCurrentSession();
         return s.get(Student.class, id);
     }
+
+    @Override
+    public String findIdByUsername(String username) {
+        Session s = factory.getObject().getCurrentSession();
+        CriteriaBuilder cb = s.getCriteriaBuilder();
+
+        CriteriaQuery<String> cq = cb.createQuery(String.class);
+        Root<Student> root = cq.from(Student.class);
+
+        cq.select(root.get("id"))
+                .where(cb.equal(root.get("username"), username));
+
+        return s.createQuery(cq).uniqueResult();
+    }
 }

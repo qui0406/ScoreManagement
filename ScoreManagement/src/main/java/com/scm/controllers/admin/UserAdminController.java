@@ -25,7 +25,6 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
-@CrossOrigin
 public class UserAdminController {
     @Autowired
     private UserService userDetailsService;
@@ -41,6 +40,7 @@ public class UserAdminController {
         model.addAttribute("users", this.userDetailsService.getAllUsers());
         return "admin/users";
     }
+
 
 
     @GetMapping("/login")
@@ -65,4 +65,27 @@ public class UserAdminController {
         this.semesterService.create(semesterRequest);
         return "redirect:/admin/createSemester";
     }
+
+//    @PostMapping(path = "/register-teacher",
+//            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    public String createTeacher(@ModelAttribute(value="teacher")
+//                                @Valid @RequestParam Map<String, String> params,
+//                                @RequestParam(value = "avatar", required = false) MultipartFile avatar) {
+//        Teacher u = this.userDetailsService.registerTeacher(params, avatar);
+//        TeacherResponse teacherResponse = userMapper.toTeacherResponse(u);
+//        return "redirect:/admin/infoTeacher";
+//    }
+//
+//    @PostMapping("/create-subject")
+//    public String createSubject(@ModelAttribute(value="subject") SubjectRequest subjectRequest) {
+//        this.subjectService.create(subjectRequest);
+//        return "redirect:/admin/infoSubject";
+//    }
+//
+//    @DeleteMapping("/delete-subject/{subjectId}")
+//    public void deleteSubject(@PathVariable(value= "subjectId") String subjectId) {
+//        this.subjectService.delete(subjectId);
+//    }
+
 }

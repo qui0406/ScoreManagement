@@ -18,5 +18,4 @@ public interface ScoreTypeRepository {
     void addOrUpdateGradeType(ScoreType scoreType);
     void deleteGradeType(Integer id);
     long countGradeTypesByClassSubject(Integer classSubjectId);
-    void initializeDefaultGradeTypes(Integer classSubjectId);
 }

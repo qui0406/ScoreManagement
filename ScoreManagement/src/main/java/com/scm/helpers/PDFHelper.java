@@ -44,7 +44,6 @@ public class PDFHelper {
                 table.addCell(scores.containsKey(i) ? String.valueOf(scores.get(i)) : "");
             }
         }
-
         document.add(table);
         document.close();
     }

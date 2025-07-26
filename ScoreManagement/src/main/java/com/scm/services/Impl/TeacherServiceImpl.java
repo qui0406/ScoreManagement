@@ -11,9 +11,15 @@ import org.springframework.stereotype.Service;
 public class TeacherServiceImpl implements TeacherService {
     @Autowired
     private TeacherRepository teacherRepo;
+
     @Override
     public TeacherDTO getTeacherDTOById(String teacherId) {
         Teacher teacher = teacherRepo.findTeacherById(Integer.parseInt(teacherId));
         return new TeacherDTO(teacher.getMsgv(), teacher.getFirstName() + " " + teacher.getLastName());
+    }
+
+    @Override
+    public String findIdByUsername(String username) {
+        return this.teacherRepo.findIdByUsername(username);
     }
 }

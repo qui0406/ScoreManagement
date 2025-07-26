@@ -1,4 +1,5 @@
 com\scm\dto\requests\ScoreStudentRequest.class
+com\scm\services\Impl\SubjectServiceImpl.class
 com\scm\dto\responses\ScoreStudentResponse.class
 com\scm\dto\ClassroomDTO.class
 com\scm\services\SemesterService.class
@@ -46,6 +47,7 @@ com\scm\dto\requests\UserRequest.class
 com\scm\repositories\ScoreRepository.class
 com\scm\mapper\decorator\CSVScoreMapperDecorator.class
 com\scm\repositories\Impl\StudentRepositoryImpl.class
+com\scm\controllers\ApiTeacherSuperController.class
 com\scm\pojo\Score.class
 com\scm\repositories\ClassroomSubjectRepository.class
 com\scm\mapper\CSVScoreMapperImpl_.class
@@ -62,9 +64,11 @@ com\scm\dto\TeacherDTO.class
 com\scm\services\Impl\StudentServiceImpl.class
 com\scm\repositories\SubjectRepository.class
 com\scm\mapper\decorator\ScoreStudentMapperDecorator.class
+com\scm\responses\ApiResponse$ApiResponseBuilder.class
 com\scm\dto\requests\MessageRequest.class
 com\scm\configs\DispatcherSerlvetInit.class
 com\scm\dto\requests\Recipient.class
+com\scm\responses\ApiResponse.class
 com\scm\services\CSVService.class
 com\scm\mapper\UserMapper.class
 com\scm\configs\WebAppContextConfigs.class
@@ -120,6 +124,7 @@ com\scm\controllers\ApiUserController.class
 com\scm\mapper\CSVScoreMapperImpl.class
 com\scm\services\ClassroomSubjectService.class
 com\scm\dto\responses\TeacherResponse$TeacherResponseBuilder.class
+com\scm\services\SubjectService.class
 com\scm\controllers\admin\UserAdminController.class
 com\scm\dto\responses\MessageResponse.class
 com\scm\mapper\SubjectMapperImpl.class
@@ -127,6 +132,7 @@ com\scm\services\Impl\ScoreServiceImpl.class
 com\scm\services\StudentEnrollmentService.class
 com\scm\pojo\Classroom.class
 com\scm\configs\SecurityWebApplicationInitializer.class
+com\scm\dto\requests\SubjectRequest.class
 com\scm\dto\requests\ScoreTypeRequest.class
 com\scm\configs\CloudinaryConfig.class
 com\scm\repositories\FacultyRepository.class
@@ -138,6 +144,7 @@ com\scm\dto\requests\ListScoreStudentRequest.class
 com\scm\repositories\Impl\UserRepositoryImp.class
 com\scm\services\UserService.class
 com\scm\mapper\SubjectMapper.class
+com\scm\pojo\Staff.class
 com\scm\dto\requests\StudentRequest.class
 com\scm\services\Impl\ScoreStudentServiceImpl.class
 com\scm\helpers\CSVHelper.class
