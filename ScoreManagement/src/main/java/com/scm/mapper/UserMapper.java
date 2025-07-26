@@ -6,6 +6,7 @@ package com.scm.mapper;
 
 import com.scm.dto.requests.StudentRequest;
 import com.scm.dto.requests.TeacherRequest;
+import com.scm.dto.requests.UpdateUserRequest;
 import com.scm.dto.requests.UserRequest;
 import com.scm.dto.responses.StudentResponse;
 import com.scm.dto.responses.TeacherResponse;
@@ -29,4 +30,6 @@ public interface UserMapper {
     TeacherResponse toTeacherResponse(Teacher teacher);
 
     StudentResponse toStudentResponse(Student student);
+
+    Student toStudentUpdate(UpdateUserRequest request);
 }

@@ -6,6 +6,7 @@ package com.scm.services.Impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.scm.dto.requests.UpdateUserRequest;
 import com.scm.dto.responses.UserResponse;
 import com.scm.mapper.UserMapper;
 import com.scm.pojo.*;
@@ -200,4 +201,31 @@ public class UserServiceImpl implements UserService{
     public boolean authenticate(String username, String password) {
         return this.userRepo.authenticate(username, password);
     }
+//
+//    @Override
+//    public UserResponse update(UpdateUserRequest request) {
+////        Student u = userMapper.toStudentUpdate(request);
+////        u.setPassword(this.passwordEncoder.encode(request.getPassword()));
+////        MultipartFile avatar = request.getAvatar();
+////        if (!avatar.isEmpty()) {
+////            try {
+////                Map res = cloudinary.uploader().upload(avatar.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+////                u.setAvatar(res.get("secure_url").toString());
+////            } catch (IOException ex) {
+////                return null;
+////            }
+////        }
+////        return userMapper.toUserResponse(this.userRepo.update(u));
+//        return null;
+//    }
+//
+//    @Override
+//    public boolean checkExistEmail(String email) {
+//        return this.userRepo.checkExistEmail(email);
+//    }
+//
+//    @Override
+//    public boolean checkExistUsername(String username) {
+//        return this.userRepo.checkExistUsername(username);
+//    }
 }

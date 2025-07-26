@@ -7,6 +7,8 @@ package com.scm.controllers;
 import com.scm.dto.responses.StudentResponse;
 import com.scm.dto.responses.TeacherResponse;
 import com.scm.dto.responses.UserResponse;
+import com.scm.exceptions.AppException;
+import com.scm.exceptions.ErrorCode;
 import com.scm.mapper.UserMapper;
 import com.scm.pojo.Student;
 import com.scm.pojo.Teacher;
@@ -73,6 +75,13 @@ public class ApiUserController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> create(@Valid @RequestParam Map<String, String> params,
                                     @RequestParam(value = "avatar", required = false) MultipartFile avatar) {
+
+//        if(this.userDetailsService.checkExistUsername(params.get("username"))){
+//            throw new AppException(ErrorCode.USER_EXISTED);
+//        }
+//        if(this.userDetailsService.checkExistEmail(params.get("email"))){
+//            throw new AppException(ErrorCode.EMAIL_EXISTED);
+//        }
         Student u = this.userDetailsService.registerStudent(params, avatar);
         StudentResponse studentResponse = userMapper.toStudentResponse(u);
         return ResponseEntity.ok().body(studentResponse);
