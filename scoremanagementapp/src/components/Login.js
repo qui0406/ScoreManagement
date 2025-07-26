@@ -4,14 +4,16 @@ import { authApis, endpoints } from "../configs/Apis";
 import Apis from "../configs/Apis";
 import cookie from "react-cookies";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { MyUserContext } from "./../configs/MyContexts";
+import { MyUserContext, MyDispatchContext    } from "./../configs/MyContexts";
 
 const Login = () => {
     const info = [
         { label: "Tên đăng nhập", type: "text", field: "username" },
         { label: "Mật khẩu", type: "password", field: "password" }
     ];
-    const [,dispatch] = useContext(MyUserContext);
+    // const [,dispatch] = useContext(MyUserContext);
+    const dispatch = useContext(MyDispatchContext);
+
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(false);
     const nav = useNavigate();
@@ -25,17 +27,17 @@ const Login = () => {
             setLoading(true);
             let res = await Apis.post(endpoints['login'], { ...user });
             cookie.save('token', res.data.token);
-            //let userInfo = await authApis().get(endpoints['my-profile']);
-            // dispatch({
-            //     "type": "login",
-            //     "payload": userInfo.data
-            // });
+            let userInfo = await authApis().get(endpoints['my-profile']);
+            dispatch({
+                "type": "login",
+                "payload": userInfo.data
+            });
 
             console.log("token", res.data.token);
 
 
-            // let next = q.get('next');
-            // nav(next ? next : '/home');
+            let next = q.get('next');
+            nav(next ? next : '/home');
 
             console.log("Thanh cong")
         } catch (e) {

@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import Apis from "../configs/Apis";
 import { authApis, endpoints } from "../configs/Apis";
-import { Row, Col, Card, Alert, Button } from "react-bootstrap";
+import { Row, Col, Card, Alert, Button, Container } from "react-bootstrap";
 import { MyUserContext } from "../configs/MyContexts";
 import { useNavigate } from "react-router-dom";
 
@@ -15,10 +15,13 @@ const Home = () => {
             // if (!user || user.role !== 'teacher')
             //     nav("/login");
             const loadClasses = async () => {
-                let url =  `${endpoints['products']}`;
+                let url =  `${endpoints['my-classes']}`;
                 try {
                     setLoading(true);
-                    let res = await Apis.get(url);
+                    let res = await authApis().get(url);
+                    console.log("🔎 data từ API:", res.data);
+
+                    setClasses(res.data);
                 } catch (error) {
                     setMsg("Lỗi tải danh sách lớp học");
                 } finally {
@@ -29,8 +32,8 @@ const Home = () => {
         }, [user]
     );
     return (
-        <>
-            <h2>Danh sách lớp học</h2>
+        < Container className="mt-5">
+            <h2 className="mb-4">Danh sách lớp học</h2>
             {(!classes || classes.length === 0) && <Alert variant="info">Không có lớp nào!</Alert>}
             <Row>
                 {classes.map(c => (
@@ -38,22 +41,22 @@ const Home = () => {
                         <Card >
                             <Card.Body>
                                 <Card.Title>
-                                    {c.subject?.subjectName}
+                                      {c.subject?.subjectName}
                                 </Card.Title>
                                 <Card.Text>
                                     <b>Lớp:</b> {c.classroom?.name}<br />
-                                    <b>Học kỳ:</b> {c.semester}<br />
-                                    <b>Số sinh viên:</b> {c.totalStudents}<br />
-                                    <b>Số loại điểm:</b> {c.countScoreType}
+                                    <b>Học kỳ:</b> {c.semester?.name}<br />
+                                    {/* <b>Số sinh viên:</b> {c.totalStudents}<br /> */}
+                                    {/* <b>Số loại điểm:</b> {c.countScoreType} */}
                                 </Card.Text>
-                                <Button variant="info" onClick={() => nav(`/studentlist/${c.id}`)} className="cursor-pointer">Xem chi tiết</Button>
+                                <Button className="me-2" variant="info" onClick={() => nav(`/studentlist/${c.id}`)} >Xem chi tiết</Button>
                                 <Button variant="primary" onClick={() => nav(`/addscore/${c.id}`)}>Nhập điểm</Button>
                             </Card.Body>
                         </Card>
                     </Col>
                 ))}
             </Row>
-        </>
+        </Container>
 
     );
 }

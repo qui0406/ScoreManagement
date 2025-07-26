@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Container } from "react-bootstrap";
 import { authApis, endpoints } from "../../configs/Apis";
 import { Table, Alert, Spinner } from "react-bootstrap";
 
@@ -22,8 +22,12 @@ const AddScore = () => {
             try {
                 let res = await authApis().get(endpoints['studentList'](classId));
                 setStudents(res.data);
+                console.log("🔎 Dữ liệu sinh viên:", res.data);
+
                 let resCol = await authApis().get(endpoints['getScoreTypes'](classId));
                 setScoreTypes(resCol.data);
+                console.log("Cột điểm từ API:", resCol.data);
+
             } catch (err) {
                 setMsg("Lỗi không tìm thấy học sinh/cột điểm!");
             } finally {
@@ -54,6 +58,7 @@ const AddScore = () => {
             setNewColName("");
             setShowAddCol(false);
             let resCol = await authApis().get(endpoints['getScoreTypes'](classId));
+            setScoreTypes(resCol.data);
 
         } catch (err) {
             alert("Lỗi khi thêm loại điểm mới!");
@@ -112,7 +117,7 @@ const AddScore = () => {
     };
 
     return (
-        <>
+        < Container className="mt-5">
 
             <h2>Nhập điểm lớp học</h2>
             {msg && <Alert variant="danger">{msg}</Alert>}
@@ -148,7 +153,7 @@ const AddScore = () => {
                             disabled={isClose}
                         />
                         <Button variant="primary" type="submit" disabled={loading || isClose}>
-                            {loading ? <Spinner size="sm" /> : "Xác nhận"}
+                            {loading ? <Spinner size="sm" /> : "Thêm"}
                         </Button>
                     </Form>
                 )}
@@ -156,26 +161,26 @@ const AddScore = () => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>Mã SV</th>
+                        <th>Email SV</th>
                         <th>Họ</th>
                         <th>Tên</th>
                         {scoreTypes.map(col => (
-                            <th key={col.key || col.id}>{col.label || col.name}</th>
+                            <th key={col.id}>{col.name}</th>
                         ))}
                     </tr>
                 </thead>
                 <tbody>
                     {students.map(stu => (
                         <tr key={stu.id}>
-                            <td>{stu.studentCode}</td>
+                            <td>{stu.email}</td>
                             <td>{stu.lastName}</td>
                             <td>{stu.firstName}</td>
                             {scoreTypes.map(col => (
                                 <td key={col.key || col.id}>
                                     <input
                                         type="number"
-                                        value={scores[stu.id]?.[col.key || col.id] || ""}
-                                        onChange={e => addScore(stu.id, col.key || col.id, e.target.value)}
+                                        value={scores[stu.id]?.[col.id] || ""}
+                                        onChange={e => addScore(stu.id, col.id, e.target.value)}
                                         style={{ width: 60 }}
                                         min={0}
                                         max={10}
@@ -187,7 +192,7 @@ const AddScore = () => {
                     ))}
                 </tbody>
             </Table>
-        </>
+        </Container>
     );
 };
 

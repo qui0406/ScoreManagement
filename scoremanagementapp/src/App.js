@@ -12,7 +12,7 @@ import { useReducer } from "react";
 import MyUserReducer from "./reducers/MyUserReducer";
 import { Navigate } from "react-router-dom";
 const App = () => {
-  const [user,dispatch] = useReducer(MyUserReducer, null);
+  const [user, dispatch] = useReducer(MyUserReducer, null);
 
   return (
     <MyUserContext.Provider value={user}>
@@ -22,8 +22,8 @@ const App = () => {
           <Routes>
             <Route path="/register" element={<Register />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/studentlist" element={<StudentList />} />
-            <Route path="/addscore" element={<AddScore />} />
+            <Route path="/studentlist/:classId" element={<StudentList />} />
+            <Route path="/addscore/:classId" element={<AddScore />} />
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Navigate to="/login" />} />
           </Routes>

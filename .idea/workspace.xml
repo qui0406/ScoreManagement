@@ -9,10 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e40a971e-6bcf-42ad-bb09-aa2bedee0213" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/scoremanagementapp/src/components/Teacher/AddScore.js" beforeDir="false" afterPath="$PROJECT_DIR$/scoremanagementapp/src/components/Teacher/AddScore.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scoremanagementapp/src/configs/Apis.js" beforeDir="false" afterPath="$PROJECT_DIR$/scoremanagementapp/src/configs/Apis.js" afterDir="false" />
-    </list>
+    <list default="true" id="e40a971e-6bcf-42ad-bb09-aa2bedee0213" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -292,6 +289,7 @@
       <workItem from="1753114081497" duration="13139000" />
       <workItem from="1753325257789" duration="21007000" />
       <workItem from="1753457537172" duration="6316000" />
+      <workItem from="1753514660810" duration="35000" />
     </task>
     <servers />
   </component>
