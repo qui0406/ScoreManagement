@@ -18,26 +18,29 @@ const Header = () => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Nav.Link href="#action1">Home</Nav.Link>
-                            <Nav.Link href="#action2">Link</Nav.Link>
-                            <NavDropdown title="Link" id="navbarScrollingDropdown">
-                                <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action4">
-                                    Another action
-                                </NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="#action5">
-                                    Something else here
-                                </NavDropdown.Item>
-                            </NavDropdown>
-                            {user === null?<>
+                            {user === null ? <>
                                 <Link to="/login" className="nav-link">Đăng nhập</Link>
                                 <Link to="/register" className="nav-link">Đăng ký</Link>
-                            </>:
-                            <>
-                                <Link to ="/home" className="nav-link">Trang chủ</Link>
-                                <Button className="btn btn-danger" onClick={() => {dispatch({ type: "logout" });}}>Đăng xuất</Button>
-                            </>}
+                            </> :
+                                <>
+                                    {user.role === "Teacher" ?
+                                        <>
+                                            <Link to="/home" className="nav-link">Trang chủ</Link>
+                                            {/* <Link to="" className="nav-link"></Link> */}
+                                            {/* <Link to="" className="nav-link"></Link> */}
+                                        </>
+                                        : user.role === "Student" ?
+                                            <>
+                                                <Link to="/student/home" className="nav-link">Trang chủ</Link>
+                                                <Link to="/student/my-courses" className="nav-link">Khóa học của tôi</Link>
+                                                <Link to="/student/profile" className="nav-link">Hồ sơ</Link>
+                                            </>
+                                            : null}
+
+                                    <Button className="btn btn-danger ms-2" onClick={() => dispatch({ type: "logout" })}>
+                                        Đăng xuất
+                                    </Button>
+                                </>}
                             <Nav.Link href="#" disabled>
                                 Link
                             </Nav.Link>

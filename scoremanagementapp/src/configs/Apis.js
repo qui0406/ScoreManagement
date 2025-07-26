@@ -6,11 +6,12 @@ const BASE_URL = "http://localhost:8080/ScoreManagement";
 export const endpoints = {
     'register': '/api/auth/register',
     'login': '/api/auth/login',
+    'my-profile' :'/api/auth/my-profile',
     'studentList': '/api/secure/teacher/class-subject/${classSubjectId}/students',
     'addScore': '/api/secure/teacher/add-list-score-all-students', 
     'getScoreTypes': classSubjectId => `/api/secure/teacher/class-subject/${classSubjectId}/score-types`,
     'addScoreType': classSubjectId => `/api/secure/teacher/class-subject/${classSubjectId}/score-types`,
-
+    'closeScore': classSubjectId => `/api/secure/teacher/score/close-score/${classSubjectId}`,
 };
 
 export const authApis = () => {
