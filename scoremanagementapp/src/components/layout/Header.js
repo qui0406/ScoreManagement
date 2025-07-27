@@ -23,27 +23,32 @@ const Header = () => {
                                 <Link to="/register" className="nav-link">Đăng ký</Link>
                             </> :
                                 <>
-                                    {user.role === "Teacher" ?
+                                    {user.role === "ROLE_TEACHER" ?
                                         <>
                                             <Link to="/home" className="nav-link">Trang chủ</Link>
                                             {/* <Link to="" className="nav-link"></Link> */}
                                             {/* <Link to="" className="nav-link"></Link> */}
                                         </>
-                                        : user.role === "Student" ?
+                                        : user.role === "ROLE_USER" ?
                                             <>
                                                 <Link to="/student/home" className="nav-link">Trang chủ</Link>
-                                                <Link to="/student/my-courses" className="nav-link">Khóa học của tôi</Link>
+                                                <Link to="/subjects" className="nav-link">Khóa học của tôi</Link>
                                                 <Link to="/student/profile" className="nav-link">Hồ sơ</Link>
                                             </>
                                             : null}
 
-                                    <Button className="btn btn-danger ms-2" onClick={() => dispatch({ type: "logout" })}>
+                                    
+                                    <Link to="/profile" className="nav-link text-info">
+                                        <img src={user.avatar} width={30} className="rounded" />
+                                         <span className="ms-2">{user.username}!</span>
+                                    </Link>
+                                    <Button  className="btn btn-danger ms-2" onClick={() => dispatch({ type: "logout" })}>
                                         Đăng xuất
                                     </Button>
                                 </>}
-                            <Nav.Link href="#" disabled>
+                            {/* <Nav.Link href="#" disabled>
                                 Link
-                            </Nav.Link>
+                            </Nav.Link> */}
                         </Nav>
                         <Form className="d-flex">
                             <Form.Control
