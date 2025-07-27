@@ -2,13 +2,14 @@ package com.scm.mapper;
 
 import com.scm.dto.SubjectDTO;
 import com.scm.dto.requests.SubjectRequest;
+import com.scm.dto.responses.SubjectResponse;
 import com.scm.pojo.Subject;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-26T14:26:21+0700",
+    date = "2025-07-26T21:07:40+0700",
     comments = "version: 1.6.0.Beta1, compiler: javac, environment: Java 21.0.7 (Microsoft)"
 )
 @Component
@@ -37,5 +38,21 @@ public class SubjectMapperImpl implements SubjectMapper {
         Subject subject = new Subject();
 
         return subject;
+    }
+
+    @Override
+    public SubjectResponse toSubjectResponse(Subject subject) {
+        if ( subject == null ) {
+            return null;
+        }
+
+        SubjectResponse subjectResponse = new SubjectResponse();
+
+        if ( subject.getId() != null ) {
+            subjectResponse.setId( String.valueOf( subject.getId() ) );
+        }
+        subjectResponse.setSubjectName( subject.getSubjectName() );
+
+        return subjectResponse;
     }
 }

@@ -21,6 +21,9 @@ public enum ErrorCode {
     SEMESTER_CLOSED(1009, "Học kỳ đã kết thúc, không thể chỉnh sửa", HttpStatus.BAD_REQUEST),
     NOT_ENROLLED(1010, "Bạn chưa đăng ký môn học này", HttpStatus.BAD_REQUEST),
     DUPLICATE_DATA(1011, "Dữ liệu đã tồn tại", HttpStatus.BAD_REQUEST),
+    EMAIL_EXISTED(1012, "Email existed",  HttpStatus.BAD_REQUEST),
+    USER_EXISTED(1013, "User existed", HttpStatus.BAD_REQUEST),
+    SCORE_TYPE_EXISTED(1014, "Score type existed", HttpStatus.BAD_REQUEST),
 
     // --- AUTHENTICATION & AUTHORIZATION ERRORS ---
     UNAUTHORIZED(1101, "Bạn không có quyền", HttpStatus.UNAUTHORIZED),

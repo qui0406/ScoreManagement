@@ -6,6 +6,8 @@ package com.scm.services;
 
 import com.scm.dto.requests.ScoreTypeRequest;
 import com.scm.dto.responses.ScoreTypeResponse;
+import com.scm.pojo.ScoreType;
+
 import java.util.List;
 
 /**
@@ -13,9 +15,14 @@ import java.util.List;
  * @author admin
  */
 public interface ScoreTypeService {
-    List<ScoreTypeResponse> getScoreTypesByClassSubject(Integer classSubjectId);
     void addGradeTypeToClassSubject(ScoreTypeRequest scoreTypeRequest, Integer classSubjectId);
     void deleteGradeType(Integer id);
     boolean canAddMoreGradeTypes(Integer classSubjectId);
     void ensureMinimumScoreTypes(Integer classSubjectId);
+
+    List<ScoreTypeResponse> getScoreTypes();
+    List<ScoreTypeResponse> getScoreTypesByClassSubject(String classSubjectId);
+    void addScoreType(String classSubjectId, String scoreTypeId);
+    void deleteScoreType(String classSubjectId, String scoreTypeId);
+
 }

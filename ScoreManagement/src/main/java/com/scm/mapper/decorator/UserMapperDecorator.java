@@ -1,5 +1,6 @@
 package com.scm.mapper.decorator;
 
+import com.scm.dto.requests.UpdateUserRequest;
 import com.scm.dto.responses.StudentResponse;
 import com.scm.dto.responses.TeacherResponse;
 import com.scm.dto.responses.UserResponse;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+@Component
 @NoArgsConstructor
 public abstract class UserMapperDecorator implements UserMapper {
     @Autowired

@@ -1,6 +1,7 @@
 package com.scm.services;
 
 import com.scm.dto.responses.ScoreStudentResponse;
+import com.scm.pojo.ScoreType;
 
 import java.util.List;
 import java.util.Map;
@@ -11,4 +12,6 @@ public interface ScoreStudentService {
     List<ScoreStudentResponse> getScoreByClassSubject(String classSubjectId);
 
     List<ScoreStudentResponse> findScoreByStudentId(Map<String, String> params, String classSubjectId);
+
+    List<ScoreType> getScoreTypes();
 }

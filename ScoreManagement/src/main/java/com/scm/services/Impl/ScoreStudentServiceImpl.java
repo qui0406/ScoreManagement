@@ -3,6 +3,7 @@ package com.scm.services.Impl;
 import com.scm.dto.responses.ScoreStudentResponse;
 import com.scm.mapper.ScoreStudentMapper;
 import com.scm.pojo.Score;
+import com.scm.pojo.ScoreType;
 import com.scm.pojo.Student;
 import com.scm.repositories.ClassroomSubjectRepository;
 import com.scm.repositories.ScoreStudentRepository;
@@ -56,5 +57,10 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
             scoreStudentRespons.add(response);
         }
         return scoreStudentRespons;
+    }
+
+    @Override
+    public List<ScoreType> getScoreTypes() {
+        return null;
     }
 }

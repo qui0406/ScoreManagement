@@ -1,5 +1,6 @@
 package com.scm.mapper;
 
+import com.scm.dto.requests.UpdateUserRequest;
 import com.scm.dto.responses.StudentResponse;
 import com.scm.dto.responses.TeacherResponse;
 import com.scm.dto.responses.UserResponse;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-26T14:26:21+0700",
+    date = "2025-07-26T21:07:40+0700",
     comments = "version: 1.6.0.Beta1, compiler: javac, environment: Java 21.0.7 (Microsoft)"
 )
 @Component
@@ -74,5 +75,25 @@ public class UserMapperImpl_ implements UserMapper {
         studentResponse.classroom( student.getClassroom() );
 
         return studentResponse.build();
+    }
+
+    @Override
+    public Student toStudentUpdate(UpdateUserRequest request) {
+        if ( request == null ) {
+            return null;
+        }
+
+        Student student = new Student();
+
+        student.setFirstName( request.getFirstName() );
+        student.setLastName( request.getLastName() );
+        student.setUsername( request.getUsername() );
+        student.setPassword( request.getPassword() );
+        student.setPhone( request.getPhone() );
+        student.setGender( request.isGender() );
+        student.setAddress( request.getAddress() );
+        student.setDob( request.getDob() );
+
+        return student;
     }
 }

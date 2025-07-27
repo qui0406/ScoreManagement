@@ -21,4 +21,11 @@ public interface UserRepository {
     Teacher teacherRegister(Teacher teacher);
     boolean authenticate(String username, String password);
     List<User> getAllUsers();
+
+//    User update(User user);
+//
+//    boolean checkExistEmail(String email);
+//    boolean checkExistUsername(String username);
+//
+//    User findUserByEmail(String email);
 }

@@ -5,7 +5,9 @@ import com.scm.pojo.Faculty;
 import com.scm.pojo.StudentEnrollment;
 import com.scm.pojo.Subject;
 import com.scm.repositories.SubjectRepository;
+import jakarta.persistence.Query;
 import jakarta.persistence.criteria.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -13,10 +15,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Transactional
+@Slf4j
 public class SubjectRepositoryImpl implements SubjectRepository {
+    private static final int PAGE_SIZE = 10;
+
     @Autowired
     private LocalSessionFactoryBean factory;
 
@@ -27,7 +33,7 @@ public class SubjectRepositoryImpl implements SubjectRepository {
     }
 
     @Override
-    public List<Subject> getAllSubjectsByStudentId(String studentId) {
+    public List<Subject> getAllSubjectsByStudentId(String studentId, Map<String, String> params) {
         Session session = factory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Subject> query = builder.createQuery(Subject.class);
@@ -40,8 +46,17 @@ public class SubjectRepositoryImpl implements SubjectRepository {
                 builder.equal(root.get("student").get("id"), studentId)
         );
 
-        List<Subject> subjects = session.createQuery(query).getResultList();
-        return subjects;
+        Query q = session.createQuery(query);
+        if (params != null && params.containsKey("page")) {
+            int page = Integer.parseInt(params.get("page"));
+            int start = (page - 1) * PAGE_SIZE;
+
+            q.setMaxResults(PAGE_SIZE);
+            q.setFirstResult(start);
+        }
+
+        log.info(params.get("page"));
+        return q.getResultList();
     }
 
     @Override

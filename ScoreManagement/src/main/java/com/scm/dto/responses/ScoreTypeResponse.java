@@ -12,5 +12,5 @@ import lombok.*;
 @AllArgsConstructor
 public class ScoreTypeResponse {
     private Integer id;
-    private String gradeTypeName;
+    private String scoreTypeName;
 }
