@@ -7,6 +7,7 @@ import com.scm.exceptions.ErrorCode;
 import com.scm.mapper.UserMapper;
 import com.scm.pojo.User;
 import com.scm.services.ScoreStudentService;
+import com.scm.services.SubjectService;
 import com.scm.services.UserService;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,12 @@ public class ApiStudentController {
 
     @Autowired
     private ScoreStudentService scoreStudentService;
+
+    @Autowired
+    private SubjectService subjectService;
+
+//    @Autowired
+//    private ScoreStudentService scoreStudentService;
 
 //    @PutMapping(path = "/update-profile",
 //            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
@@ -62,4 +69,22 @@ public class ApiStudentController {
         }
         return ResponseEntity.ok(this.userDetailsService.getProfile(principal));
     }
+
+    @GetMapping("/my-score/{classDetailId}")
+    public ResponseEntity<?> getMyScore(Principal principal,
+                                        @PathVariable(value="classDetailId") String classDetailId) {
+        String name = principal.getName();
+        User user = this.userDetailsService.getUserByUsername(name);
+        return ResponseEntity.ok(this.scoreStudentService.getScoreByStudentAndClass(user.getId().toString(), classDetailId));
+    }
+
+    @GetMapping("/list-subject/semester/{semesterId}")
+    public ResponseEntity<?> getSubjectsInSemester(Principal principal,
+                                                   @PathVariable(value="semesterId") String semesterId) {
+        String name = principal.getName();
+        User user = this.userDetailsService.getUserByUsername(name);
+        return ResponseEntity.ok(this.subjectService.getAllSubjectsBySemester(user.getId().toString(), semesterId));
+    }
+
+
 }

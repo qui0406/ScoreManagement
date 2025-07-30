@@ -21,7 +21,11 @@ public class Subject {
     @Column(name = "name", nullable = false, length = 100)
     private String subjectName;
 
-    @ManyToOne(fetch =  FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="faculty_id", nullable = false)
     private Faculty faculty;
+
+    @ManyToOne
+    @JoinColumn(name="semester_id", nullable = false)
+    private Semester semester;
 }

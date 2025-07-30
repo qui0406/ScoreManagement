@@ -15,6 +15,6 @@ import java.util.Map;
 @AllArgsConstructor
 public class ListScoreStudentRequest {
     private String studentId;
-    private String classSubjectId;
+    private String classDetailId;
     private Map<Integer, BigDecimal> scores;
 }

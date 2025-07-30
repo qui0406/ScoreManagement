@@ -7,11 +7,10 @@ package com.scm.repositories.Impl;
 import com.scm.exceptions.AppException;
 import com.scm.exceptions.ErrorCode;
 import com.scm.pojo.*;
-import com.scm.repositories.ClassSubjectScoreRepository;
+import com.scm.repositories.ClassDetailsRepository;
 import com.scm.repositories.ScoreTypeRepository;
 import jakarta.persistence.Query;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -36,74 +35,71 @@ public class ScoreTypeRepositoryImpl implements ScoreTypeRepository {
     private LocalSessionFactoryBean factory;
 
     @Autowired
-    private ClassSubjectScoreRepository classSubjectScoreRepository;
+    private ClassDetailsRepository classDetailsRepository;
 
     @Override
-    public List<ScoreType> getScoreTypesByClassSubject(String classSubjectId) {
+    public List<ScoreType> getScoreTypesByClassDetails(String classDetailId) {
         Session session = factory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<ScoreType> query = builder.createQuery(ScoreType.class);
-        Root<ClassSubjectScore> root = query.from(ClassSubjectScore.class);
-        Join<ClassSubjectScore, ScoreType> scoreTypeJoin = root.join("scoreType");
+        Root<ClassDetailsScoreType> root = query.from(ClassDetailsScoreType.class);
+        Join<ClassDetailsScoreType, ScoreType> scoreTypeJoin = root.join("scoreType");
         query.select(scoreTypeJoin).distinct(true)
-                .where(builder.equal(root.get("classSubject").get("id"), classSubjectId));
+                .where(builder.equal(root.get("classDetails").get("id"), classDetailId));
         List<ScoreType> scoreTypes = session.createQuery(query).getResultList();
         return scoreTypes;
     }
 
     @Override
-    public void addScoreType(String classSubjectId, String scoreTypeId) {
+    public void addScoreType(String classDetailId, String scoreTypeId) {
         Session session = factory.getObject().getCurrentSession();
 
-        if (!checkScoreTypeExistedClassSubject(classSubjectId, scoreTypeId)) {
-            ClassSubject classSubject = session.get(ClassSubject.class, classSubjectId);
+        if (!checkScoreTypeExistedClassSubject(classDetailId, scoreTypeId)) {
+            ClassDetails classDetails = session.get(ClassDetails.class, classDetailId);
             ScoreType scoreType = session.get(ScoreType.class, scoreTypeId);
 
-            ClassSubjectScore classSubjectScore = new ClassSubjectScore();
-            classSubjectScore.setClassSubject(classSubject);
-            classSubjectScore.setScoreType(scoreType);
+            ClassDetailsScoreType classDetailsScoreType = new ClassDetailsScoreType();
+            classDetailsScoreType.setClassDetails(classDetails);
+            classDetailsScoreType.setScoreType(scoreType);
 
-            classSubjectScoreRepository.save(classSubjectScore);
-        }else {
+            session.persist(classDetailsScoreType);
+        } else {
             throw new AppException(ErrorCode.SCORE_TYPE_EXISTED);
         }
     }
 
     @Override
-    public void deleteScoreType(String classSubjectId, String scoreTypeId) {
+    public void deleteScoreType(String classDetailId, String scoreTypeId) {
         Session session = factory.getObject().getCurrentSession();
-        if (checkScoreTypeExistedClassSubject(classSubjectId, scoreTypeId)) {
+
+        if (checkScoreTypeExistedClassSubject(classDetailId, scoreTypeId)) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<ClassSubjectScore> query = builder.createQuery(ClassSubjectScore.class);
-            Root<ClassSubjectScore> root = query.from(ClassSubjectScore.class);
+            CriteriaQuery<ClassDetailsScoreType> query = builder.createQuery(ClassDetailsScoreType.class);
+            Root<ClassDetailsScoreType> root = query.from(ClassDetailsScoreType.class);
 
             query.select(root).where(
-                    builder.equal(root.get("classSubject").get("id"), classSubjectId),
+                    builder.equal(root.get("classDetails").get("id"), classDetailId),
                     builder.equal(root.get("scoreType").get("id"), scoreTypeId)
             );
 
-            ClassSubjectScore classSubjectScore = session.createQuery(query).uniqueResult();
-            classSubjectScoreRepository.delete(classSubjectScore);
-        }else {
-            throw new AppException(ErrorCode.SCORE_TYPE_EXISTED);
+            ClassDetailsScoreType classDetailsScoreType = session.createQuery(query).uniqueResult();
+
+            if (classDetailsScoreType != null)
+                session.remove(classDetailsScoreType);
+        } else {
+            throw new AppException(ErrorCode.INVALID_DATA);
         }
     }
 
 
-    private boolean checkScoreTypeExistedClassSubject(String classSubjectId, String scoreTypeId) {
-        List<ScoreType> scoreTypes = getScoreTypesByClassSubject(classSubjectId);
-        ScoreType addScoreType = getScoreTypeById(scoreTypeId);
+    private boolean checkScoreTypeExistedClassSubject(String classDetailId, String scoreTypeId) {
+        List<ScoreType> scoreTypes = getScoreTypesByClassDetails(classDetailId);
+        ScoreType addScoreType = findById(scoreTypeId);
         if (scoreTypes.contains(addScoreType)) {
             return true;
         }else {
             return false;
         }
-    }
-
-    @Override
-    public ScoreType getScoreTypeById(String scoreTypeId) {
-        Session session = factory.getObject().getCurrentSession();
-        return  session.get(ScoreType.class, scoreTypeId);
     }
 
     @Override
@@ -129,37 +125,9 @@ public class ScoreTypeRepositoryImpl implements ScoreTypeRepository {
 
 
     @Override
-    public ScoreType findScoreTypeById(Integer id) {
+    public ScoreType findById(String id) {
         Session s = this.factory.getObject().getCurrentSession();
         return s.get(ScoreType.class, id);
     }
-
-    @Override
-    public void addOrUpdateGradeType(ScoreType scoreType) {
-        Session s = this.factory.getObject().getCurrentSession();
-        if (scoreType.getId() == null) {
-            s.persist(scoreType);
-        } else {
-            s.merge(scoreType);
-        }
-    }
-
-    @Override
-    public void deleteGradeType(Integer id) {
-        Session s = this.factory.getObject().getCurrentSession();
-        ScoreType scoreType = this.findScoreTypeById(id);
-        if (scoreType != null) {
-            s.remove(scoreType);
-        }
-    }
-
-    @Override
-    public long countGradeTypesByClassSubject(Integer classSubjectId) {
-        Session s = this.factory.getObject().getCurrentSession();
-
-
-        return 1;
-    }
-
 
 }

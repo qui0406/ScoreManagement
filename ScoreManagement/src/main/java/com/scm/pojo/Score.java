@@ -21,8 +21,8 @@ public class Score {
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "class_subject_id", nullable = false)
-    private ClassSubject classSubject;
+    @JoinColumn(name = "class_detail_id", nullable = false)
+    private ClassDetails classDetails;
 
     @ManyToOne
     @JoinColumn(name = "score_type_id", nullable = false)
@@ -32,5 +32,5 @@ public class Score {
     private BigDecimal score;
 
     @Column(name = "active", nullable = false)
-    private Boolean active = false;
+    private Boolean active = true;
 }

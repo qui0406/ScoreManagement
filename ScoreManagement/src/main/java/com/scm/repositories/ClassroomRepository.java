@@ -4,6 +4,7 @@
  */
 package com.scm.repositories;
 
+import com.scm.pojo.ClassDetails;
 import com.scm.pojo.Classroom;
 import com.scm.pojo.Student;
 
@@ -15,10 +16,13 @@ import java.util.List;
  */
 
 public interface ClassroomRepository {
-    List<Classroom> getClassroomsByTeacherId(String teacherId);
     List<Classroom> getListClassRoom();
-    Classroom findClassRoomById(Integer classroomId);
+    Classroom findById(String classroomId);
+
+    String getIdByClassName(String className);
 
     List<Student> getStudentsInClassroom(String classroomId);
 
+    Classroom create(Classroom classroom);
+    void delete(Classroom classroom);
 }

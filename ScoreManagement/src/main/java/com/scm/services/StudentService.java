@@ -12,7 +12,10 @@ import java.util.List;
  * @author admin
  */
 public interface StudentService {
-    List<StudentResponse> getStudentsByClassSubjectId(Integer classSubjectId);
+    List<StudentResponse> getAllStudentsByClass(String classDetailId);
 
     String findIdByUsername(String username);
+    String getIdByMssv(String mssv);
+
+    List<String> getAllMssvByClass(String classDetailId);
 }

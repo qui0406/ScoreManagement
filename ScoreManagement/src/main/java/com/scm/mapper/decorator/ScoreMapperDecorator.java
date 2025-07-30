@@ -3,17 +3,12 @@ package com.scm.mapper.decorator;
 import com.scm.dto.requests.ScoreRequest;
 import com.scm.dto.responses.ScoreResponse;
 import com.scm.mapper.ScoreMapper;
-import com.scm.mapper.UserMapper;
 import com.scm.pojo.*;
-import com.scm.repositories.ClassroomSubjectRepository;
+import com.scm.repositories.ClassDetailsRepository;
 import com.scm.repositories.ScoreTypeRepository;
 import com.scm.repositories.StudentRepository;
 import com.scm.repositories.TeacherRepository;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,25 +28,29 @@ public class ScoreMapperDecorator implements ScoreMapper {
     @Autowired
     private StudentRepository studentRepo;
     @Autowired
-    private ClassroomSubjectRepository classSubjectRepo;
+    private ClassDetailsRepository classDetailsRepo;
     @Autowired
     private ScoreTypeRepository scoreTypeRepo;
     @Autowired
     private TeacherRepository teacherRepo;
 
     @Override
-    public Score toGrade(ScoreRequest dto) {
+    public Score toScore(ScoreRequest request) {
         Score score = new Score();
-        score.setId(dto.getId());
-        score.setScore(dto.getScore());
+        score.setScore(request.getScore());
 
-        Student student = studentRepo.findStudentById(dto.getStudentId());
-        ClassSubject classSubject = classSubjectRepo.findClassroomSubjectById(dto.getClassSubjectId());
-        ScoreType scoreType = scoreTypeRepo.findScoreTypeById(dto.getScoreTypeId());
-        Teacher teacher = teacherRepo.findTeacherById(dto.getTeacherId());
+        log.info(",,,,,,,,,,,,,,,,,,,,,");
+        log.info(request.getStudentId());
+        log.info(request.getClassDetailId());
+        log.info(request.getScoreTypeId());
+        log.info("/////////////////////////////");
+
+        Student student = studentRepo.findById(request.getStudentId());
+        ClassDetails classDetails = classDetailsRepo.findById(request.getClassDetailId());
+        ScoreType scoreType = scoreTypeRepo.findById(request.getScoreTypeId());
 
         score.setStudent(student);
-        score.setClassSubject(classSubject);
+        score.setClassDetails(classDetails);
         score.setScoreType(scoreType);
         return score;
     }
@@ -62,15 +61,14 @@ public class ScoreMapperDecorator implements ScoreMapper {
 
         for (ScoreRequest scoreRequest : dto) {
             Score score = new Score();
-            score.setId(scoreRequest.getId());
             score.setScore(scoreRequest.getScore());
 
-            Student student = studentRepo.findStudentById(scoreRequest.getStudentId());
-            ClassSubject classSubject = classSubjectRepo.findClassroomSubjectById(scoreRequest.getClassSubjectId());
-            ScoreType scoreType = scoreTypeRepo.findScoreTypeById(scoreRequest.getScoreTypeId());
+            Student student = studentRepo.findById(scoreRequest.getStudentId().toString());
+            ClassDetails classDetails = classDetailsRepo.findById(scoreRequest.getClassDetailId().toString());
+            ScoreType scoreType = scoreTypeRepo.findById(scoreRequest.getScoreTypeId().toString());
 
             score.setStudent(student);
-            score.setClassSubject(classSubject);
+            score.setClassDetails(classDetails);
             score.setScoreType(scoreType);
             scores.add(score);
         }

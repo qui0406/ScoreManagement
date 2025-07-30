@@ -62,7 +62,7 @@ public abstract class User implements Serializable {
 
     @Column(name = "dob")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dob;
+    private Date dob;
 
     @ColumnDefault("1")
     @Column(name = "active")

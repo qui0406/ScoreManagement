@@ -14,7 +14,9 @@ import java.util.List;
  * @author admin
  */
 public interface StudentRepository {
-    List<Student> getStudentsByClassSubjectId(Integer classSubjectId);
-    Student findStudentById(Integer id);
+    Student findById(String id);
     String findIdByUsername(String username);
+    String getIdByMssv(String mssv);
+    List<Student> getAllStudentsByClass(String classDetailId);
+    List<String> getAllMssvByClass(String classDetailId);
 }

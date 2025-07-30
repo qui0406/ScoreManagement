@@ -31,4 +31,8 @@ public class Semester {
 
     @Column(name= "close_registration", nullable = false)
     private LocalDate closeRegistration;
+
+    @ManyToOne
+    @JoinColumn(name = "staff_id")
+    private Staff staff;
 }

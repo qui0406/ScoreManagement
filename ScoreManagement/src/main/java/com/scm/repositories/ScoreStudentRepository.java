@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 public interface ScoreStudentRepository {
-    Score getScoreByStudent(String studentId, String classSubjectId);
+    List<Score> getScoresByStudentAndClass(String studentId, String classDetailId);
 
     List<Score> getAllScoreByStudentAndClassSubject(String studentId, String classSubjectId);
 
     List<Student> getAllStudentsInClassSubject(String classSubjectId);
 
-    List<Student> findScoreStudentByMSSVOrName(Map<String,String> pamams);
+    List<Student> findScoreStudentByMSSVOrName(Map<String,String> params, String classDetailId);
 }

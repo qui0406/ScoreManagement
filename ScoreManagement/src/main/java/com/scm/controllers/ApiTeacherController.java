@@ -5,17 +5,21 @@
 package com.scm.controllers;
 
 import com.scm.dto.requests.ListScoreStudentRequest;
-import com.scm.dto.requests.ScoreRequest;
+import com.scm.dto.requests.ReadFileCSVRequest;
 import com.scm.dto.responses.*;
 import com.scm.exceptions.AppException;
+import com.scm.exceptions.ErrorCode;
 import com.scm.helpers.CSVHelper;
 import com.scm.helpers.PDFHelper;
+import com.scm.pojo.ScoreType;
 import com.scm.pojo.User;
 import com.scm.services.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +51,7 @@ public class ApiTeacherController {
     private ScoreService scoreService;
 
     @Autowired
-    private ScoreTypeService scoreTypeService;
-
-    @Autowired
-    private ClassroomSubjectService classroomSubjectService;
+    private ClassroomDetailsService classroomDetailsService;
 
     @Autowired
     private ScoreStudentService scoreStudentService;
@@ -58,127 +59,111 @@ public class ApiTeacherController {
     @Autowired
     private TeacherService teacherService;
 
+    @Autowired
+    private ScoreTypeService scoreTypeService;
+
 
     @PreAuthorize("hasRole('TEACHER')")
-    @GetMapping("/classrooms")
-    public ResponseEntity<List<ClassroomResponse>> getMyClassrooms(Principal principal) {
+    @GetMapping("/my-classrooms")
+    public ResponseEntity<List<ClassResponse>> getMyClassrooms(Principal principal) {
         try {
             String teacherName = principal.getName();
-            String teacherId = teacherService.findIdByUsername(teacherName);
-            List<ClassroomResponse> classrooms = this.classroomService.getClassroomsByTeacherId(teacherId);
+            User user = userDetailsService.getUserByUsername(teacherName);
+            List<ClassResponse> classrooms = this.classroomDetailsService.getClassroomsByTeacherId(user.getId().toString());
             return new ResponseEntity<>(classrooms, HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/class-subject/{classSubjectId}/students")
-    public ResponseEntity<List<StudentResponse>> getStudentsByClassSubject(@PathVariable(value="classSubjectId") Integer classSubjectId) {
-        try {
-            List<StudentResponse> students = this.studentService.getStudentsByClassSubjectId(classSubjectId);
-            return new ResponseEntity<>(students, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
-    @PostMapping("/add-scores")
-    public ResponseEntity<String> addOrUpdateScore(@RequestBody ScoreRequest scoreRequest, Principal principal) {
-        try {
-            String teacherName = principal.getName();
-            User teacher = userDetailsService.getUserByUsername(teacherName);
-            this.scoreService.addOrUpdateScore(scoreRequest, teacher.getId().toString());
-            return ResponseEntity.ok("value: Successfully");
-        } catch (AppException e) {
-            return ResponseEntity.badRequest().body("value:" + e.getErrorCode().getMessage());
-        } catch (Exception e) {
-            return new ResponseEntity<>("value: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PostMapping("/add-list-score")
-    public ResponseEntity<?> addListScore(@RequestBody ListScoreStudentRequest listScoreStudentRequest, Principal principal) {
-        try{
-            String teacherName = principal.getName();
-            User teacher = userDetailsService.getUserByUsername(teacherName);
-            this.scoreService.addListScore(listScoreStudentRequest, teacher.getId().toString());
-            return ResponseEntity.ok("value: Successfully");
-        }
-        catch (AppException e) {
-            return ResponseEntity.badRequest().body("value:" + e.getErrorCode().getMessage());
-        }
-    }
-
-    @PostMapping("/add-list-score-all-student")
-    public ResponseEntity<?> addListScoreAllStudents(@RequestBody
-                    List<ListScoreStudentRequest> requests, Principal principal) {
-        try{
-            String teacherName = principal.getName();
-            User teacher = userDetailsService.getUserByUsername(teacherName);
-            this.scoreService.addListScoreAllStudents(requests, teacher.getId().toString());
-            return ResponseEntity.ok("value: Successfully");
-        }
-        catch (AppException e) {
-            return ResponseEntity.badRequest().body("value:" + e.getErrorCode().getMessage());
-        }
-    }
-
-
-
-    @GetMapping("/export-list-score/{classSubjectId}")
+    @GetMapping("/export-list-score/{classDetailId}")
     public ResponseEntity<List<ScoreStudentResponse>> getExportListScore(
-            @PathVariable(value="classSubjectId") String classSubjectId
-            , Principal principal) {
-        String teacherName = principal.getName();
-        User teacher = userDetailsService.getUserByUsername(teacherName);
-        try{
-            return ResponseEntity.ok(this.scoreStudentService.getScoreByClassSubject(classSubjectId));
-        }
-        catch (AppException ex){
-            return null;
-        }
-    }
-
-    @GetMapping("/find-export-list-score/{classSubjectId}")
-    public ResponseEntity<List<ScoreStudentResponse>> findExportListScore(
-            @RequestParam Map <String, String> params,
-            @PathVariable(value="classSubjectId") String classSubjectId
+            @PathVariable(value="classDetailId") String classDetailId
             ,Principal principal) {
         String teacherName = principal.getName();
         User teacher = userDetailsService.getUserByUsername(teacherName);
         try{
-            return ResponseEntity.ok(this.scoreStudentService.findScoreByStudentId(params, classSubjectId));
+            return ResponseEntity.ok(this.scoreStudentService.getScoreByClassDetails(classDetailId, teacher.getId().toString()));
         }
         catch (AppException ex){
             return null;
         }
     }
 
+    @GetMapping("/find-export-list-score/{classDetailId}")
+    public ResponseEntity<List<ScoreStudentResponse>> findExportListScore(
+            @RequestParam Map<String, String> params,
+            @PathVariable(value="classDetailId") String classDetailId
+            ,Principal principal) {
+        String teacherName = principal.getName();
+        User teacher = userDetailsService.getUserByUsername(teacherName);
+        try{
+            return ResponseEntity.ok(this.scoreStudentService.findScoreByStudentId(params, classDetailId));
+        }
+        catch (AppException ex){
+            throw new AppException(ErrorCode.INVALID_DATA);
+        }
+    }
 
-    @PostMapping(path = "/upload-scores", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+
+    @PostMapping(path = "/upload-scores/{classDetailId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<?> uploadScores(@RequestParam(value = "file") MultipartFile file,
+                                          @PathVariable(value="classDetailId") String  classDetailId,
                                           Principal principal) {
         if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body("File is empty");
-        }
+            throw new AppException(ErrorCode.FILE_IS_EMPTY);        }
         try {
-            List<ListScoreStudentRequest> listScoreStudentRequests = CSVHelper.parseScoreCSV(file);
-            this.scoreService.addListScoreAllStudents(listScoreStudentRequests, "3");
+            String teacherName = principal.getName();
+            User teacher = userDetailsService.getUserByUsername(teacherName);
+            List<ReadFileCSVRequest> r = CSVHelper.parseScoreCSV(file);
+            List<String> listMssv = new ArrayList<>();
+
+            if (r == null) {
+                throw new AppException(ErrorCode.FILE_IS_EMPTY);
+            }
+            for(ReadFileCSVRequest x : r){
+                listMssv.add(x.getMssv());
+            }
+
+            if(!studentService.getAllMssvByClass(classDetailId).equals(listMssv)){
+                throw new AppException(ErrorCode.LIST_STUDENT_NOT_SUITABLE);
+            }
+
+            List<ListScoreStudentRequest> request = new ArrayList<>();
+
+            for (ReadFileCSVRequest readFileCSVRequest : r) {
+                ListScoreStudentRequest tmp = new ListScoreStudentRequest();
+                tmp.setStudentId(studentService.getIdByMssv(readFileCSVRequest.getMssv()));
+                tmp.setClassDetailId(classDetailId);
+                tmp.setScores(readFileCSVRequest.getScores());
+                request.add(tmp);
+            }
+            this.scoreService.addListScoreAllStudents(request, teacher.getId().toString());
         }
         catch (AppException ex){
-            return ResponseEntity.badRequest().body("doc file that bai");
+            throw new AppException(ErrorCode.READ_FILE_ERROR);
         }
         return ResponseEntity.ok("value: Successfully");
     }
 
-    @PostMapping("/export-score")
-    public ResponseEntity<String> exportScores(@RequestBody
-                   List<ListScoreStudentRequest> listScoreStudentRequest,
-                   Principal principal) throws Exception {
+    @PostMapping("/export-score/{classDetailId}")
+    public ResponseEntity<String> exportScores(@PathVariable(value="classDetailId") String classDetailId,
+            Principal principal) throws Exception {
         try{
-            PDFHelper.exportScoreListToPDF(listScoreStudentRequest);
+            String teacherName = principal.getName();
+            User teacher = userDetailsService.getUserByUsername(teacherName);
+            List<WriteScoreStudentPDFResponse> request = this.scoreStudentService.listScorePDF(classDetailId, teacher.getId().toString());
+
+            List<ScoreTypeResponse> listScoreType = this.scoreTypeService.getScoreTypesByClassDetails(classDetailId);
+            List<String> listScoreTypeName = listScoreType.stream()
+                    .map(ScoreTypeResponse::getScoreTypeName)
+                    .collect(Collectors.toList());
+
+            PDFHelper.exportScoreListToPDF(request, listScoreTypeName);
             return ResponseEntity.ok("value: Successfully");
         }
         catch (AppException ex){
@@ -186,105 +171,43 @@ public class ApiTeacherController {
         }
     }
 
-    @GetMapping("/class-subject/{classSubjectId}/scores")
-    public ResponseEntity<List<ScoreResponse>> getGradesByClassSubject(
-            @PathVariable(value="classSubjectId") Integer classSubjectId) {
-        try {
-            List<ScoreResponse> grades = this.scoreService.getScoresByClassSubjectId(classSubjectId);
-            return new ResponseEntity<>(grades, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
-    @GetMapping("/my-classes")
-    public ResponseEntity<List<ClassroomSubjectResponse>> getMyClassroomSubjects(Principal principal) {
-        try {
-            String teacherName = principal.getName();
-            User teacherId = userDetailsService.getUserByUsername(teacherName);
-            List<ClassroomSubjectResponse> classroomSubjects = this.classroomSubjectService
-                    .getClassroomSubjectsByTeacherId(teacherId.getId().toString());
 
-            return new ResponseEntity<>(classroomSubjects, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PostMapping("/score/close-score/{classSubjectId}")
-    public boolean closeScore(@PathVariable(value="classSubjectId") Integer classSubjectId,
+    @PostMapping("/score/block-score/{classDetailId}")
+    public ResponseEntity<?> blockScore(@PathVariable(value="classDetailId") String classDetailId,
                               Principal principal) {
         try {
             String teacherName = principal.getName();
             User teacher = userDetailsService.getUserByUsername(teacherName);
-            this.scoreService.updateCloseScore(teacher.getId(), classSubjectId);
-            return true;
+            this.scoreService.blockScore(teacher.getId().toString(), classDetailId);
+            return ResponseEntity.ok("value: Successfully");
         }catch (AppException e) {
-            e.printStackTrace();
-            return false;
+            throw new AppException(ErrorCode.BLOCK_SCORE_ERROR);
         }
     }
 
-    // thông tin chi tiết lớp môn
-    @GetMapping("/class-subject/{classSubjectId}/details")
-    public ResponseEntity<ClassroomSubjectResponse> getClassroomSubjectDetails(
-            @PathVariable(value="classSubjectId") Integer classSubjectId) {
-        try {
-            ClassroomSubjectResponse details = this.classroomSubjectService
-                    .getClassroomSubjectDetails(classSubjectId);
-            if (details == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(details, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping("/score/get-status/{classDetailId}")
+    public ResponseEntity<?> getStatus(@PathVariable(value="classDetailId") String classDetailId) {
+        return ResponseEntity.ok(this.scoreService.getStatusBlock(classDetailId));
     }
 
-    @GetMapping("/class-subject/score-types")
-    public ResponseEntity<List<ScoreTypeResponse>> getScoreTypes() {
-        try {
-            List<ScoreTypeResponse> scoreTypes = this.scoreTypeService.getScoreTypes();
-            return new ResponseEntity<>(scoreTypes, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//
+//    // thông tin chi tiết lớp môn
+//    @GetMapping("/class-subject/{classSubjectId}/details")
+//    public ResponseEntity<ClassDetailsResponse> getClassroomSubjectDetails(
+//            @PathVariable(value="classSubjectId") Integer classSubjectId) {
+//        try {
+//            ClassDetailsResponse details = this.classroomSubjectService
+//                    .getClassroomSubjectDetails(classSubjectId);
+//            if (details == null) {
+//                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//            }
+//            return new ResponseEntity<>(details, HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
-    @GetMapping("/class-subject/score-types/{classSubjectId}")
-    public ResponseEntity<List<ScoreTypeResponse>> getScoreTypesByClassSubject(
-            @PathVariable(value="classSubjectId")
-             String classSubjectId) {
-        try {
-            List<ScoreTypeResponse> scoreTypes = this.scoreTypeService
-                    .getScoreTypesByClassSubject(classSubjectId);
-            return new ResponseEntity<>(scoreTypes, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PostMapping("/class-subject/score-type/{classSubjectId}/add")
-    public ResponseEntity<?> addScoreType(
-            @PathVariable(value = "classSubjectId") String classSubjectId,
-            @RequestParam(value = "scoreTypeId") String scoreTypeId,
-            Principal principal) {
-        String teacherName = principal.getName();
-        User teacherId = userDetailsService.getUserByUsername(teacherName);
-        this.scoreTypeService.addScoreType(classSubjectId, scoreTypeId);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    @DeleteMapping("/class-subject/score-type/{classSubjectId}/delete")
-    public ResponseEntity<?> deleteScoreType(
-            @PathVariable(value = "classSubjectId") String classSubjectId,
-            @RequestParam(value = "scoreTypeId") String scoreTypeId,
-            Principal principal) {
-        String teacherName = principal.getName();
-        User teacherId = userDetailsService.getUserByUsername(teacherName);
-        this.scoreTypeService.deleteScoreType(classSubjectId, scoreTypeId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
 
 
 }

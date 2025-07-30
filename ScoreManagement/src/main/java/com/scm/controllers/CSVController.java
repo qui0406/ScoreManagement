@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class CSVController {
-    @Autowired
-    private ScoreService scoreService;
+//    @Autowired
+//    private ScoreService scoreService;
 
 }

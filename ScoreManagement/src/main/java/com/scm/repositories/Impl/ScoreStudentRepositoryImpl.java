@@ -1,11 +1,14 @@
 package com.scm.repositories.Impl;
 
-import com.scm.dto.responses.ScoreResponse;
+import com.scm.exceptions.AppException;
+import com.scm.exceptions.ErrorCode;
+import com.scm.pojo.ClassDetails;
+import com.scm.pojo.EnrollDetails;
 import com.scm.pojo.Score;
 import com.scm.pojo.Student;
 import com.scm.repositories.ScoreStudentRepository;
-import jakarta.persistence.Query;
 import jakarta.persistence.criteria.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -13,28 +16,35 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 @Repository
+@Slf4j
 @Transactional
 public class ScoreStudentRepositoryImpl implements ScoreStudentRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
 
     @Override
-    public Score getScoreByStudent(String studentId, String classSubjectId) {
-        Session session = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
+    public List<Score> getScoresByStudentAndClass(String studentId, String classDetailId) {
+        try {
+            Session session = this.factory.getObject().getCurrentSession();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Score> query = builder.createQuery(Score.class);
+            Root<Score> root = query.from(Score.class);
 
-        CriteriaQuery<Score> query = builder.createQuery(Score.class);
-        Root<Score> root = query.from(Score.class);
-
-        query.select(root).where(
-                builder.equal(root.get("student").get("id"), studentId),
-                builder.equal(root.get("classSubject").get("id"), classSubjectId)
-        );
-        return session.createQuery(query).setMaxResults(1).getSingleResult();
+            query.select(root).where(
+                    builder.equal(root.get("student").get("id"), studentId),
+                    builder.equal(root.get("classDetails").get("id"), classDetailId)
+            );
+            List<Score> result = session.createQuery(query).getResultList();
+            return result != null ? result : Collections.emptyList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyList();
     }
 
 
@@ -53,7 +63,7 @@ public class ScoreStudentRepositoryImpl implements ScoreStudentRepository {
 
 
     @Override
-    public List<Score> getAllScoreByStudentAndClassSubject(String studentId, String classSubjectId) {
+    public List<Score> getAllScoreByStudentAndClassSubject(String studentId, String classDetailId) {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
@@ -62,39 +72,47 @@ public class ScoreStudentRepositoryImpl implements ScoreStudentRepository {
 
         query.select(root).where(
                 builder.equal(root.get("student").get("id"), studentId),
-                builder.equal(root.get("classSubject").get("id"), classSubjectId)
+                builder.equal(root.get("classDetails").get("id"), classDetailId)
         );
         return session.createQuery(query).getResultList();
     }
 
     @Override
-    public List<Student> findScoreStudentByMSSVOrName(Map<String, String> params) {
-        Session session = factory.getObject().getCurrentSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Student> cq = cb.createQuery(Student.class);
-        Root<Student> root = cq.from(Student.class);
+    public List<Student> findScoreStudentByMSSVOrName(Map<String, String> params, String  classDetailId) {
+        try {
+            Session session = factory.getObject().getCurrentSession();
+            CriteriaBuilder b = session.getCriteriaBuilder();
+            CriteriaQuery<Student> q = b.createQuery(Student.class);
 
-        List<Predicate> predicates = new ArrayList<>();
+            Root<EnrollDetails> root = q.from(EnrollDetails.class);
+            Join<EnrollDetails, Student> studentJoin = root.join("student");
+            Join<EnrollDetails, ClassDetails> classJoin = root.join("classDetails");
 
-        if (params != null) {
-            String mssv = params.getOrDefault("mssv", "").trim();
-            if (!mssv.isEmpty()) {
-                predicates.add(cb.like(root.get("mssv"), "%" + mssv + "%")); // dùng cb.like
+            List<Predicate> predicates = new ArrayList<>();
+            predicates.add(b.equal(classJoin.get("id"), classDetailId));
+
+            if (params != null) {
+                String mssv = params.get("mssv");
+                if (mssv != null && !mssv.trim().isEmpty()) {
+                    predicates.add(b.like(b.lower(studentJoin.get("mssv")), "%" + mssv.trim().toLowerCase() + "%"));
+                }
+
+                String fullName = params.get("fullName");
+                if (fullName != null && !fullName.trim().isEmpty()) {
+                    fullName = fullName.replaceAll("\\s+", "").toLowerCase();
+                    Expression<String> lastName = b.lower(studentJoin.get("lastName"));
+                    Expression<String> firstName = b.lower(studentJoin.get("firstName"));
+                    Expression<String> fullNameExpr = b.concat(lastName, firstName);
+                    predicates.add(b.like(fullNameExpr, "%" + fullName + "%"));
+                }
             }
 
-            String fullName = params.getOrDefault("fullName", "").trim();
-            if (!fullName.isEmpty()) {
-                Expression<String> fullNameExpr = cb.concat(
-                        cb.concat(cb.lower(root.get("lastName")), " "),
-                        cb.lower(root.get("firstName"))
-                );
-                predicates.add(cb.like(fullNameExpr, "%" + fullName.toLowerCase() + "%")); // dùng cb.like và toLowerCase
-            }
+            q.select(studentJoin).where(b.and(predicates.toArray(new Predicate[0])));
+            List<Student> result = session.createQuery(q).getResultList();
+            return result != null ? result : Collections.emptyList();
+
+        } catch (Exception e) {
+            throw new AppException(ErrorCode.SCORE_TYPE_INCORRECT);
         }
-
-        cq.where(predicates.toArray(new Predicate[0]));
-
-        return session.createQuery(cq).getResultList();
     }
-
 }

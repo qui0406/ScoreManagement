@@ -22,6 +22,7 @@ public interface UserRepository {
     boolean authenticate(String username, String password);
     List<User> getAllUsers();
 
+
 //    User update(User user);
 //
 //    boolean checkExistEmail(String email);
