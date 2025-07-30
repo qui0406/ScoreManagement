@@ -9,6 +9,7 @@ import com.scm.dto.requests.CSVScoreRequest;
 import com.scm.dto.requests.ListScoreStudentRequest;
 import com.scm.dto.requests.ScoreRequest;
 import com.scm.dto.responses.ScoreResponse;
+import com.scm.pojo.Score;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -24,12 +25,12 @@ public interface ScoreService {
     void addOrUpdateScore(ScoreRequest scoreRequest, String teacherId);
     List<ScoreResponse> getScoresByClassSubjectId(Integer classSubjectId);
 
-    void updateCloseScore(Integer teacherId,  Integer classSubjectId);
+    void blockScore(String teacherId,  String classDetailId);
 
-//    void importScores(List<CSVScoreRequest> scores);
-
-    Map<Integer, ScoreByTypeDTO> getGroupedScores(String studentId, String classSubjectId);
+    Map<Integer, ScoreByTypeDTO> getGroupedScores(List<Score> scores);
     void addListScore(ListScoreStudentRequest request, String teacherId);
 
     void addListScoreAllStudents(List<ListScoreStudentRequest> request, String teacherId);
+
+    boolean getStatusBlock(String classDetailId);
 }

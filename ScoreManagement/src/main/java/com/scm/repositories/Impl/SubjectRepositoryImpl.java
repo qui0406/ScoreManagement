@@ -1,8 +1,8 @@
 package com.scm.repositories.Impl;
 
-import com.scm.pojo.ClassSubject;
+import com.scm.pojo.ClassDetails;
 import com.scm.pojo.Faculty;
-import com.scm.pojo.StudentEnrollment;
+import com.scm.pojo.EnrollDetails;
 import com.scm.pojo.Subject;
 import com.scm.repositories.SubjectRepository;
 import jakarta.persistence.Query;
@@ -27,7 +27,7 @@ public class SubjectRepositoryImpl implements SubjectRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public Subject findSubjectById(Integer id) {
+    public Subject findById(String id) {
         Session s = this.factory.getObject().getCurrentSession();
         return s.get(Subject.class, id);
     }
@@ -38,9 +38,9 @@ public class SubjectRepositoryImpl implements SubjectRepository {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Subject> query = builder.createQuery(Subject.class);
 
-        Root<StudentEnrollment> root = query.from(StudentEnrollment.class);
-        Join<StudentEnrollment, ClassSubject> classSubjectJoin = root.join("classSubject");
-        Join<ClassSubject, Subject> subjectJoin = classSubjectJoin.join("subject");
+        Root<EnrollDetails> root = query.from(EnrollDetails.class);
+        Join<EnrollDetails, ClassDetails> classSubjectJoin = root.join("classDetails");
+        Join<ClassDetails, Subject> subjectJoin = classSubjectJoin.join("subject");
 
         query.select(subjectJoin).where(
                 builder.equal(root.get("student").get("id"), studentId)
@@ -68,8 +68,8 @@ public class SubjectRepositoryImpl implements SubjectRepository {
         Root<Subject> root = query.from(Subject.class);
         Join<Subject, Faculty> facultyJoin = root.join("faculty");
 
-        Subquery<ClassSubject> subquery = query.subquery(ClassSubject.class);
-        Root<ClassSubject> subject = subquery.from(ClassSubject.class);
+        Subquery<ClassDetails> subquery = query.subquery(ClassDetails.class);
+        Root<ClassDetails> subject = subquery.from(ClassDetails.class);
 
         Predicate subjectMatch = builder.equal(subject.get("subject"), root);
         Predicate semesterMatch = builder.equal(subject.get("semester").get("id"), semesterId);
@@ -92,5 +92,22 @@ public class SubjectRepositoryImpl implements SubjectRepository {
     public void delete(Subject subject) {
         Session s = factory.getObject().getCurrentSession();
         s.remove(subject);
+    }
+
+    @Override
+    public List<Subject> getSubjectsCurrentSemester(String studentId, String semesterId) {
+        Session session = factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Subject> query = builder.createQuery(Subject.class);
+
+        Root<EnrollDetails> root = query.from(EnrollDetails.class);
+        Join<EnrollDetails, ClassDetails> classSubjectJoin = root.join("classDetails");
+        Join<ClassDetails, Subject> subjectJoin = classSubjectJoin.join("subject");
+
+        query.select(subjectJoin).where(
+                builder.equal(root.get("student").get("id"), studentId),
+                builder.equal(root.get("semester").get("id"), semesterId)
+        );
+        return session.createQuery(query).getResultList();
     }
 }

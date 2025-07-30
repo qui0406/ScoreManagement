@@ -4,7 +4,7 @@
  */
 package com.scm.repositories.Impl;
 
-import com.scm.pojo.ClassSubject;
+import com.scm.pojo.ClassDetails;
 import com.scm.pojo.Classroom;
 import com.scm.pojo.Student;
 import com.scm.repositories.ClassroomRepository;
@@ -33,25 +33,18 @@ public class ClassroomRepositoryImpl implements ClassroomRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Classroom> getClassroomsByTeacherId(String teacherId) {
-        try {
-            Session s = this.factory.getObject().getCurrentSession();
-            CriteriaBuilder b = s.getCriteriaBuilder();
-            CriteriaQuery<Classroom> q = b.createQuery(Classroom.class);
+    public String getIdByClassName(String className) {
+        Session s = factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
 
-            Root<ClassSubject> root = q.from(ClassSubject.class);
-            q.select(root.get("classId"));
+        CriteriaQuery<Integer> c = b.createQuery(Integer.class);
+        Root<Classroom> root = c.from(Classroom.class);
+        c.select(root.get("id"))
+                .where(b.equal(root.get("name"), className));
 
-            q.where(b.equal(root.get("teacher").get("id"), teacherId));
-
-            return s.createQuery(q).getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        Integer result = s.createQuery(c).uniqueResult(); // chạy query
+        return result != null ? result.toString() : null;
     }
-
-
 
     @Override
     public List<Classroom> getListClassRoom() {
@@ -64,7 +57,7 @@ public class ClassroomRepositoryImpl implements ClassroomRepository {
     }
 
     @Override
-    public Classroom findClassRoomById(Integer classroomId) {
+    public Classroom findById(String classroomId) {
         Session s = factory.getObject().getCurrentSession();
         return s.get(Classroom.class, classroomId);
     }
@@ -80,5 +73,18 @@ public class ClassroomRepositoryImpl implements ClassroomRepository {
                 .where(builder.equal(root.get("classroom").get("id"), classroomId));
 
         return session.createQuery(query).getResultList();
+    }
+
+    @Override
+    public Classroom create(Classroom classroom) {
+        Session session = factory.getObject().getCurrentSession();
+        session.persist(classroom);
+        return classroom;
+    }
+
+    @Override
+    public void delete(Classroom classroom) {
+        Session session = factory.getObject().getCurrentSession();
+        session.remove(classroom);
     }
 }

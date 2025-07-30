@@ -18,10 +18,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScoreRequest {
-    private Integer id;
     private BigDecimal score;
-    private Integer studentId;
-    private Integer classSubjectId;
-    private Integer scoreTypeId;
-    private Integer teacherId;
+    private String studentId;
+    private String classDetailId;
+    private String scoreTypeId;
 }

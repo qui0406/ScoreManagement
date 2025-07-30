@@ -41,7 +41,8 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
         "com.scm.filters",
         "com.scm.mapper",
         "com.scm.services",
-        "com.scm.repositories"
+        "com.scm.repositories",
+        "com.scm.validators"
 })
 @EnableTransactionManagement
 public class SpringSecurityConfigs {
@@ -52,8 +53,8 @@ public class SpringSecurityConfigs {
             "/api/auth/**",
     };
 
-    private static final String[] ADMIN_ENDPOINTS = {
-            "/admin/**",
+    private static final String[] STAFF_ENDPOINTS = {
+            "/api/secure/staff/**",
     };
 
     private static final String[] TEACHER_ENDPOINTS = {
@@ -92,12 +93,14 @@ public class SpringSecurityConfigs {
                 -> requests
                         .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers("/login", "/logout").permitAll()
-                .requestMatchers(TEACHER_ENDPOINTS).hasAnyRole("TEACHER", "ADMIN")
-                .requestMatchers(USER_ENDPOINTS).hasAnyRole("USER", "TEACHER", "ADMIN")
+                .requestMatchers(STAFF_ENDPOINTS).hasAnyRole("STAFF")
+                .requestMatchers(TEACHER_ENDPOINTS).hasAnyRole("TEACHER")
+                .requestMatchers(USER_ENDPOINTS).hasAnyRole("USER", "TEACHER")
                 .anyRequest().authenticated())
+
                 .formLogin(form -> form.loginPage("/admin/login")
                         .loginProcessingUrl("/admin/login")
-                        .defaultSuccessUrl("/admin/users", true)
+                        .defaultSuccessUrl("/admin/dashboard", true)
                         .failureUrl("/admin/login?error=true").permitAll())
                 .logout(logout ->
                         logout.logoutSuccessUrl("/admin/login").permitAll());

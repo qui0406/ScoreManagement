@@ -1,5 +1,12 @@
 package com.scm.pojo.enums;
 
 public enum ScoreTypeEnum {
-    CUOI_KY , GIUA_KY, DIEM_KHAC
+    GIUA_KY,
+    CUOI_KY,
+    CHUYEN_CAN,
+    BAI_TAP_NHOM,
+    BAI_TAP_LON,
+    KIEM_TRA_MIENG,
+    DIEM_HOAT_DONG,
+    KHAC
 }

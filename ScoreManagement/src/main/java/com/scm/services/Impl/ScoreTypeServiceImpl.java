@@ -6,6 +6,8 @@ package com.scm.services.Impl;
 
 import com.scm.dto.requests.ScoreTypeRequest;
 import com.scm.dto.responses.ScoreTypeResponse;
+import com.scm.exceptions.AppException;
+import com.scm.exceptions.ErrorCode;
 import com.scm.mapper.ScoreTypeMapper;
 import com.scm.pojo.ScoreType;
 import com.scm.repositories.ScoreTypeRepository;
@@ -32,37 +34,6 @@ public class ScoreTypeServiceImpl implements ScoreTypeService {
 
 
     @Override
-    public void addGradeTypeToClassSubject(ScoreTypeRequest scoreTypeRequest, Integer classSubjectId) {
-        // Kiểm tra giới hạn 5 cột
-        if (!this.canAddMoreGradeTypes(classSubjectId)) {
-            throw new RuntimeException("Không thể thêm quá " + MAX_GRADE_TYPES + " loại điểm!");
-        }
-
-        ScoreType scoreType = new ScoreType();
-        scoreType.setScoreTypeName(scoreTypeRequest.getGradeTypeName());
-
-        this.scoreTypeRepo.addOrUpdateGradeType(scoreType);
-    }
-
-    @Override
-    public void deleteGradeType(Integer id) {
-        this.scoreTypeRepo.deleteGradeType(id);
-    }
-
-    @Override
-    public boolean canAddMoreGradeTypes(Integer classSubjectId) {
-        long currentCount = this.scoreTypeRepo.countGradeTypesByClassSubject(classSubjectId);
-        return currentCount < MAX_GRADE_TYPES;
-    }
-
-    @Override
-    public void ensureMinimumScoreTypes(Integer classSubjectId) {
-        // Kiểm tra xem đã có đủ loại điểm tối thiểu (giữa kỳ + cuối kỳ) chưa
-        // Logic này sẽ được triển khai khi cần thiết
-        // Có thể tự động tạo điểm giữa kỳ và cuối kỳ nếu chưa có
-    }
-
-    @Override
     public List<ScoreTypeResponse> getScoreTypes() {
         List<ScoreType> scoreTypes = this.scoreTypeRepo.getScoreTypes();
 
@@ -74,8 +45,8 @@ public class ScoreTypeServiceImpl implements ScoreTypeService {
     }
 
     @Override
-    public List<ScoreTypeResponse> getScoreTypesByClassSubject(String classSubjectId) {
-        List<ScoreType> scoreTypes = this.scoreTypeRepo.getScoreTypesByClassSubject(classSubjectId);
+    public List<ScoreTypeResponse> getScoreTypesByClassDetails(String classDetailId) {
+        List<ScoreType> scoreTypes = this.scoreTypeRepo.getScoreTypesByClassDetails(classDetailId);
         List<ScoreTypeResponse> responses = new ArrayList<>();
 
         for (ScoreType scoreType : scoreTypes) {
@@ -86,16 +57,21 @@ public class ScoreTypeServiceImpl implements ScoreTypeService {
     }
 
     @Override
-    public void addScoreType(String classSubjectId, String scoreTypeId) {
+    public void addScoreType(String classDetailId, String scoreTypeId) {
         if(scoreTypeId.equals("1") || scoreTypeId.equals("2") ) {
-            throw new IllegalArgumentException("khong hop le");
+            throw new AppException(ErrorCode.SCORE_TYPE_INCORRECT);
         }
-        this.scoreTypeRepo.addScoreType(classSubjectId, scoreTypeId);
+        this.scoreTypeRepo.addScoreType(classDetailId, scoreTypeId);
     }
 
 
     @Override
-    public void deleteScoreType(String classSubjectId, String scoreTypeId) {
-        this.scoreTypeRepo.deleteScoreType(classSubjectId, scoreTypeId);
+    public void deleteScoreType(String classDetailId, String scoreTypeId) {
+        this.scoreTypeRepo.deleteScoreType(classDetailId, scoreTypeId);
+    }
+
+    @Override
+    public ScoreType getScoreTypeById(String id) {
+        return this.scoreTypeRepo.findById(id);
     }
 }

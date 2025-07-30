@@ -4,12 +4,15 @@
  */
 package com.scm.services.Impl;
 
-import com.scm.dto.responses.ClassroomResponse;
+import com.scm.dto.requests.ClassroomRequest;
+import com.scm.dto.responses.ClassResponse;
+import com.scm.exceptions.AppException;
+import com.scm.exceptions.ErrorCode;
+import com.scm.mapper.ClassroomMapper;
 import com.scm.pojo.Classroom;
+import com.scm.repositories.ClassDetailsRepository;
 import com.scm.repositories.ClassroomRepository;
 import com.scm.services.ClassroomService;
-import java.util.ArrayList;
-import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +28,30 @@ public class ClassroomServiceImpl implements ClassroomService {
     @Autowired
     private ClassroomRepository classroomRepo;
 
-    @Override
-    public List<ClassroomResponse> getClassroomsByTeacherId(String teacherId) {
-        List<Classroom> classrooms = this.classroomRepo.getClassroomsByTeacherId(teacherId);
-        List<ClassroomResponse> responses = new ArrayList<>();
+    @Autowired
+    private ClassroomMapper classroomMapper;
 
-        for (Classroom classroom : classrooms) {
-            ClassroomResponse response = new ClassroomResponse();
-            response.setId(classroom.getId());
-            response.setName(classroom.getName());
-            responses.add(response);
-        }
-        return responses;
+    @Autowired
+    private ClassDetailsRepository classDetailsRepo;
+
+
+
+    @Override
+    public ClassResponse create(ClassroomRequest request) {
+        Classroom classroom = classroomMapper.toClassroom(request);
+        return classroomMapper.toClassroomResponse(this.classroomRepo.create(classroom));
     }
 
+    @Override
+    public void delete(String classroomId) {
+        if (classroomId != null) {
+            this.classroomRepo.delete(this.classroomRepo.findById(classroomId));
+        }
+        throw new AppException(ErrorCode.INVALID_DATA);
+    }
 
+    @Override
+    public String getIdByClassName(String className) {
+        return this.classroomRepo.getIdByClassName(className);
+    }
 }

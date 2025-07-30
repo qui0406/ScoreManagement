@@ -1,10 +1,13 @@
 package com.scm.repositories.Impl;
 
+import com.scm.exceptions.AppException;
+import com.scm.exceptions.ErrorCode;
 import com.scm.pojo.Classroom;
 import com.scm.pojo.Score;
 import com.scm.pojo.ScoreType;
 import com.scm.pojo.Teacher;
 import com.scm.repositories.TeacherRepository;
+import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.CriteriaUpdate;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Transactional
@@ -23,8 +27,10 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
 
+    private static int PAGE_SIZE = 10;
+
     @Override
-    public Teacher findTeacherById(Integer id) {
+    public Teacher findById(String id) {
         Session s = factory.getObject().getCurrentSession();
         return s.get(Teacher.class, id);
     }
@@ -48,4 +54,31 @@ public class TeacherRepositoryImpl implements TeacherRepository {
         teacher.setRole("TEACHER_SUPER");
         s.merge(teacher);
     }
+
+    @Override
+    public List<Teacher> getAllTeachersByRole(Map<String, String> params) {
+        if(params.containsKey("role")) {
+            throw new AppException(ErrorCode.INVALID_DATA);
+        }
+
+        Session s = factory.getObject().getCurrentSession();
+        CriteriaBuilder cb = s.getCriteriaBuilder();
+
+        CriteriaQuery<Teacher> query = cb.createQuery(Teacher.class);
+        Root<Teacher> root = query.from(Teacher.class);
+        query.select(root).where(cb.equal(root.get("role"), params.get("role")));
+
+        Query q = s.createQuery(query);
+        if (params.get("teacherId") != null) {
+            int page = Integer.parseInt(params.get("page"));
+            int start = (page - 1) * PAGE_SIZE;
+
+            q.setMaxResults(PAGE_SIZE);
+            q.setFirstResult(start);
+        }
+
+        return q.getResultList();
+    }
+
+
 }

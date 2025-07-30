@@ -31,61 +31,16 @@ public class UserAdminController {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private SemesterService semesterService;
-
-    @GetMapping("/users")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String getUserPage(Model model) {
-        model.addAttribute("users", this.userDetailsService.getAllUsers());
-        return "admin/users";
-    }
-
-
-
     @GetMapping("/login")
     public String login() {
-        return "admin/login";
+        return "login";
     }
 
-    @GetMapping("/my-admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String getCurrentUser(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        if (userDetails == null) {
-            return "redirect:/admin";
-        }
-        String username = userDetails.getUsername();
-        User user = this.userDetailsService.getUserByUsername(username);
-        model.addAttribute("user", user);
-        return "admin/account";
+    @GetMapping("/dashboard")
+    public String users() {
+        return "dashboard";
     }
 
-    @PostMapping("/create-semester")
-    public String createSemester(@ModelAttribute(value="semester") SemesterRequest semesterRequest) {
-        this.semesterService.create(semesterRequest);
-        return "redirect:/admin/createSemester";
-    }
 
-//    @PostMapping(path = "/register-teacher",
-//            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-//            produces = MediaType.APPLICATION_JSON_VALUE)
-//    public String createTeacher(@ModelAttribute(value="teacher")
-//                                @Valid @RequestParam Map<String, String> params,
-//                                @RequestParam(value = "avatar", required = false) MultipartFile avatar) {
-//        Teacher u = this.userDetailsService.registerTeacher(params, avatar);
-//        TeacherResponse teacherResponse = userMapper.toTeacherResponse(u);
-//        return "redirect:/admin/infoTeacher";
-//    }
-//
-//    @PostMapping("/create-subject")
-//    public String createSubject(@ModelAttribute(value="subject") SubjectRequest subjectRequest) {
-//        this.subjectService.create(subjectRequest);
-//        return "redirect:/admin/infoSubject";
-//    }
-//
-//    @DeleteMapping("/delete-subject/{subjectId}")
-//    public void deleteSubject(@PathVariable(value= "subjectId") String subjectId) {
-//        this.subjectService.delete(subjectId);
-//    }
 
 }

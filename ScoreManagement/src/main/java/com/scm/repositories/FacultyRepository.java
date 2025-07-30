@@ -5,7 +5,7 @@ import com.scm.pojo.Faculty;
 import java.util.List;
 
 public interface FacultyRepository {
-    Faculty findFacultyById(Integer facultytId);
+    Faculty findById(String facultyId);
 
     List<Faculty> findAllFaculties();
 }

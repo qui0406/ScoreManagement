@@ -29,7 +29,7 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public void delete(String id) {
-        this.subjectRepository.delete(this.subjectRepository.findSubjectById(Integer.parseInt(id)));
+        this.subjectRepository.delete(this.subjectRepository.findById(id));
     }
 
     @Override
@@ -37,6 +37,17 @@ public class SubjectServiceImpl implements SubjectService {
         List<Subject> subjects = this.subjectRepository.getAllSubjectsByStudentId(studentId, params);
         List<SubjectResponse> subjectResponses = new ArrayList<>();
         for(Subject subject: subjects){
+            subjectResponses.add(subjectMapper.toSubjectResponse(subject));
+        }
+        return subjectResponses;
+    }
+
+    @Override
+    public List<SubjectResponse> getAllSubjectsBySemester(String studentId, String semesterId) {
+        List<Subject> responses= this.subjectRepository.getSubjectsCurrentSemester(studentId, semesterId);
+        List<SubjectResponse> subjectResponses = new ArrayList<>();
+
+        for(Subject subject: responses){
             subjectResponses.add(subjectMapper.toSubjectResponse(subject));
         }
         return subjectResponses;

@@ -19,7 +19,7 @@ public class UserResponse {
     String email;
     String phone;
     boolean gender;
-    LocalDate dob;
+    Date dob;
     String address;
     String role;
     String avatar;
