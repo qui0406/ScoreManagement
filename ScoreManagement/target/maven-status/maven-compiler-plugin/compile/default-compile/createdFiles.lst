@@ -84,6 +84,7 @@ com\scm\dto\responses\ClassResponse.class
 com\scm\dto\requests\CreateClassDetailsRequest.class
 com\scm\mapper\SemesterMapper.class
 com\scm\controllers\ScoreTypeController.class
+com\scm\controllers\admin\TeacherController.class
 com\scm\mapper\CSVScoreMapper.class
 com\scm\dto\responses\TeacherResponse.class
 com\scm\configs\HibernateConfigs.class
@@ -110,6 +111,7 @@ com\scm\dto\requests\ReadFileCSVRequest.class
 com\scm\repositories\Impl\ClassDetailsRepositoryImpl.class
 com\scm\services\StudentService.class
 com\scm\repositories\ScoreStudentRepository.class
+com\scm\controllers\admin\SubjectController.class
 com\scm\repositories\ScoreTypeRepository.class
 com\scm\repositories\UserRepository.class
 com\scm\utils\JwtUtils.class
