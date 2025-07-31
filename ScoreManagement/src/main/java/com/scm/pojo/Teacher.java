@@ -20,12 +20,4 @@ public class Teacher extends User {
 
     @Column(name= "position")
     String position;
-
-    @ManyToOne
-    @JoinColumn(name = "classroom_id", nullable = false)
-    Classroom classroom;
-
-    @ManyToOne
-    @JoinColumn(name = "faculty_id", nullable = false)
-    Faculty faculty;
 }

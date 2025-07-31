@@ -1,5 +1,7 @@
 package com.scm.mapper;
 
+import com.scm.dto.requests.StudentRegisterRequest;
+import com.scm.dto.requests.TeacherRegisterRequest;
 import com.scm.dto.requests.UpdateUserRequest;
 import com.scm.dto.responses.StudentResponse;
 import com.scm.dto.responses.TeacherResponse;
@@ -7,13 +9,15 @@ import com.scm.dto.responses.UserResponse;
 import com.scm.pojo.Student;
 import com.scm.pojo.Teacher;
 import com.scm.pojo.User;
+import java.time.ZoneOffset;
+import java.util.Date;
 import javax.annotation.processing.Generated;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-26T21:07:40+0700",
+    date = "2025-07-31T12:37:54+0700",
     comments = "version: 1.6.0.Beta1, compiler: javac, environment: Java 21.0.7 (Microsoft)"
 )
 @Component
@@ -56,8 +60,6 @@ public class UserMapperImpl_ implements UserMapper {
         teacherResponse.experience( teacher.getExperience() );
         teacherResponse.position( teacher.getPosition() );
         teacherResponse.msgv( teacher.getMsgv() );
-        teacherResponse.classroom( teacher.getClassroom() );
-        teacherResponse.faculty( teacher.getFaculty() );
 
         return teacherResponse.build();
     }
@@ -72,7 +74,6 @@ public class UserMapperImpl_ implements UserMapper {
 
         studentResponse.mssv( student.getMssv() );
         studentResponse.schoolYear( student.getSchoolYear() );
-        studentResponse.classroom( student.getClassroom() );
 
         return studentResponse.build();
     }
@@ -92,8 +93,63 @@ public class UserMapperImpl_ implements UserMapper {
         student.setPhone( request.getPhone() );
         student.setGender( request.isGender() );
         student.setAddress( request.getAddress() );
-        student.setDob( request.getDob() );
+        if ( request.getDob() != null ) {
+            student.setDob( Date.from( request.getDob().atStartOfDay( ZoneOffset.UTC ).toInstant() ) );
+        }
 
         return student;
+    }
+
+    @Override
+    public Student toStudent(StudentRegisterRequest request) {
+        if ( request == null ) {
+            return null;
+        }
+
+        Student student = new Student();
+
+        student.setFirstName( request.getFirstName() );
+        student.setLastName( request.getLastName() );
+        student.setUsername( request.getUsername() );
+        student.setPassword( request.getPassword() );
+        student.setEmail( request.getEmail() );
+        student.setPhone( request.getPhone() );
+        student.setGender( request.isGender() );
+        student.setAddress( request.getAddress() );
+        student.setDob( request.getDob() );
+        student.setActive( request.isActive() );
+        student.setRole( request.getRole() );
+        student.setMssv( request.getMssv() );
+        student.setSchoolYear( request.getSchoolYear() );
+
+        return student;
+    }
+
+    @Override
+    public Teacher toTeacher(TeacherRegisterRequest request) {
+        if ( request == null ) {
+            return null;
+        }
+
+        Teacher teacher = new Teacher();
+
+        teacher.setFirstName( request.getFirstName() );
+        teacher.setLastName( request.getLastName() );
+        teacher.setUsername( request.getUsername() );
+        teacher.setPassword( request.getPassword() );
+        teacher.setEmail( request.getEmail() );
+        teacher.setPhone( request.getPhone() );
+        teacher.setGender( request.isGender() );
+        teacher.setAddress( request.getAddress() );
+        teacher.setDob( request.getDob() );
+        teacher.setActive( request.isActive() );
+        teacher.setRole( request.getRole() );
+        teacher.setMsgv( request.getMsgv() );
+        if ( request.getExperience() != null ) {
+            teacher.setExperience( String.valueOf( request.getExperience() ) );
+        }
+        teacher.setPosition( request.getPosition() );
+
+        return teacher;
     }
 }

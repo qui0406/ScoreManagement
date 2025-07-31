@@ -4,7 +4,6 @@
  */
 package com.scm.repositories;
 
-import com.scm.pojo.ClassSubjectScore;
 import com.scm.pojo.ScoreType;
 import java.util.List;
 
@@ -13,16 +12,12 @@ import java.util.List;
  * @author admin
  */
 public interface ScoreTypeRepository {
-    List<ScoreType> getScoreTypesByClassSubject(String classSubjectId);
+    List<ScoreType> getScoreTypesByClassDetails(String classSubjectId);
     List<ScoreType> getDefaultScoreTypes();
-    ScoreType findScoreTypeById(Integer id);
-    void addOrUpdateGradeType(ScoreType scoreType);
-    void deleteGradeType(Integer id);
-    long countGradeTypesByClassSubject(Integer classSubjectId);
+    ScoreType findById(String id);
 
     List<ScoreType> getScoreTypes();
 
-    void addScoreType(String classSubjectId, String scoreType);
-    void deleteScoreType(String classSubjectId, String scoreTypeId);
-    ScoreType getScoreTypeById(String scoreTypeId);
+    void addScoreType(String classDetailId, String scoreType);
+    void deleteScoreType(String classDetailId, String scoreTypeId);
 }

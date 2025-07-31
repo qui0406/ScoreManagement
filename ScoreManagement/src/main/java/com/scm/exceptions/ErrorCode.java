@@ -24,6 +24,12 @@ public enum ErrorCode {
     EMAIL_EXISTED(1012, "Email existed",  HttpStatus.BAD_REQUEST),
     USER_EXISTED(1013, "User existed", HttpStatus.BAD_REQUEST),
     SCORE_TYPE_EXISTED(1014, "Score type existed", HttpStatus.BAD_REQUEST),
+    EMAIL_NO_FORRMAT(1015, "Email khong dung dinh dang",  HttpStatus.BAD_REQUEST),
+    CLASS_EXISTED(1016, "Class existed",  HttpStatus.BAD_REQUEST),
+    SCORE_TYPE_INCORRECT(1017, "Score type incorrect",  HttpStatus.BAD_REQUEST),
+    SCORE_IS_EMPTY(1018, "Score is empty",  HttpStatus.BAD_REQUEST),
+    FILE_IS_EMPTY(1019, "File is empty",  HttpStatus.BAD_REQUEST),
+    LIST_STUDENT_NOT_SUITABLE(1120, "List student not suitable",  HttpStatus.BAD_REQUEST),
 
     // --- AUTHENTICATION & AUTHORIZATION ERRORS ---
     UNAUTHORIZED(1101, "Bạn không có quyền", HttpStatus.UNAUTHORIZED),
@@ -33,6 +39,8 @@ public enum ErrorCode {
     INVALID_TOKEN(1105, "Token không hợp lệ", HttpStatus.UNAUTHORIZED),
 
 
+
+
     // --- RESOURCE ERRORS ---
     NOT_FOUND(1201, "Không tìm thấy dữ liệu", HttpStatus.NOT_FOUND),
 
@@ -40,7 +48,9 @@ public enum ErrorCode {
     INTERNAL_ERROR(1301, "Lỗi hệ thống", HttpStatus.INTERNAL_SERVER_ERROR),
     DATABASE_ERROR(1302, "Lỗi truy vấn cơ sở dữ liệu", HttpStatus.INTERNAL_SERVER_ERROR),
     SERVICE_UNAVAILABLE(1303, "Dịch vụ tạm thời không khả dụng", HttpStatus.SERVICE_UNAVAILABLE),
-    TIMEOUT(1304, "Yêu cầu quá thời gian xử lý", HttpStatus.REQUEST_TIMEOUT);
+    TIMEOUT(1304, "Yêu cầu quá thời gian xử lý", HttpStatus.REQUEST_TIMEOUT),
+    READ_FILE_ERROR(1305, "Read file fails",  HttpStatus.INTERNAL_SERVER_ERROR),
+    BLOCK_SCORE_ERROR(1306, "Error block score", HttpStatus.INTERNAL_SERVER_ERROR),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

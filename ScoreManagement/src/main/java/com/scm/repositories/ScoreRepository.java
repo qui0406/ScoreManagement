@@ -13,18 +13,22 @@ import java.util.Set;
  * @author admin
  */
 public interface ScoreRepository {
-    void addOrUpdateScore(Score grade, String teacherId);
+    void addScore(Score score);
+    void updateScore(Score score);
     List<Score> getScoresByClassSubjectId(Integer classSubjectId);
 
-    boolean checkTestExsit(Integer classSubjectId, Integer scoreTypeId, Integer studentId);
-    boolean checkOver5TestExsit(Integer classSubjectId, Integer scoreTypeId, Integer studentId);
+    boolean checkTestExisted(String classDetailId, String scoreTypeId, String studentId);
+    boolean checkOver5TestExisted(String classDetailId, String scoreTypeId, String studentId);
 
     List<Score> getScoreSubjectByStudentId(Integer studentId,  Integer subjectId);
 
-    void closeScore(Integer teacherId, Integer classSubjectId);
+    void blockScore(String classSubjectId);
 
     void saveAll(Set<Score> scores);
     void save(Score score);
 
+    boolean getStatusBlock(String classDetailId);
+
     List<Score> findScoreByStudentIdAndClassSubjectId(Integer studentId, Integer classSubjectId);
+    Score getScoreByClassDetailIdAndStudentAndScoreType(String classDetailId, String studentId, String scoreTypeId);
 }

@@ -13,4 +13,7 @@ public interface SubjectService {
     void delete(String subjectId);
 
     List<SubjectResponse> getAllSubjectsByStudent(String studentId, Map<String, String> params);
+
+    List<SubjectResponse> getAllSubjectsBySemester(String studentId, String semesterId);
+
 }

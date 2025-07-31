@@ -4,17 +4,20 @@
  */
 package com.scm.services;
 
-import com.scm.dto.responses.ClassroomResponse;
-import com.scm.pojo.Classroom;
-
-import java.util.List;
+import com.scm.dto.requests.ClassroomRequest;
+import com.scm.dto.responses.ClassResponse;
 
 /**
  *
  * @author admin
  */
 public interface ClassroomService {
-    List<ClassroomResponse> getClassroomsByTeacherId(String teacherId);
+
 //    List<Classroom> getListClassRoom();
-//    Classroom getClassRoomById(Integer classroomId);
+//    ClassroomResponse getClassRoomById(String classDetailId);
+
+    ClassResponse create(ClassroomRequest request);
+    void delete(String classroomId);
+
+    String getIdByClassName(String className);
 }

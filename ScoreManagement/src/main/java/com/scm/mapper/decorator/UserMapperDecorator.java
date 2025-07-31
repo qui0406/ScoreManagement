@@ -62,11 +62,9 @@ public abstract class UserMapperDecorator implements UserMapper {
         res.setAddress(teacher.getAddress());
         res.setRole(teacher.getRole());
         res.setAvatar(teacher.getAvatar());
-        res.setClassroom(teacher.getClassroom());
         res.setExperience(teacher.getExperience());
         res.setPosition(teacher.getPosition());
         res.setMsgv(teacher.getMsgv());
-        res.setFaculty(teacher.getFaculty());
         return res;
     }
 
@@ -86,8 +84,9 @@ public abstract class UserMapperDecorator implements UserMapper {
         res.setAvatar(student.getAvatar());
         res.setMssv(student.getMssv());
         res.setSchoolYear(student.getSchoolYear());
-        res.setClassroom(student.getClassroom());
         return res;
     }
+
+
 
 }

@@ -16,7 +16,7 @@ public class SemesterRepositoryImpl implements SemesterRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public Semester getSemesterById(String id) {
+    public Semester findById(String id) {
         Session s = factory.getObject().getCurrentSession();
         return s.get(Semester.class, id);
     }

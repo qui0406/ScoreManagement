@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-26T21:07:40+0700",
+    date = "2025-07-31T12:37:54+0700",
     comments = "version: 1.6.0.Beta1, compiler: javac, environment: Java 21.0.7 (Microsoft)"
 )
 @Component
@@ -19,15 +19,14 @@ import org.springframework.stereotype.Component;
 public class ScoreMapperImpl_ implements ScoreMapper {
 
     @Override
-    public Score toGrade(ScoreRequest dto) {
-        if ( dto == null ) {
+    public Score toScore(ScoreRequest request) {
+        if ( request == null ) {
             return null;
         }
 
         Score score = new Score();
 
-        score.setId( dto.getId() );
-        score.setScore( dto.getScore() );
+        score.setScore( request.getScore() );
 
         return score;
     }
@@ -40,7 +39,7 @@ public class ScoreMapperImpl_ implements ScoreMapper {
 
         List<Score> list = new ArrayList<Score>( dto.size() );
         for ( ScoreRequest scoreRequest : dto ) {
-            list.add( toGrade( scoreRequest ) );
+            list.add( toScore( scoreRequest ) );
         }
 
         return list;
@@ -58,7 +57,7 @@ public class ScoreMapperImpl_ implements ScoreMapper {
         scoreResponse.setScore( dto.getScore() );
         scoreResponse.setStudent( dto.getStudent() );
         scoreResponse.setScoreType( dto.getScoreType() );
-        scoreResponse.setClassSubject( dto.getClassSubject() );
+        scoreResponse.setClassDetails( dto.getClassDetails() );
 
         return scoreResponse;
     }

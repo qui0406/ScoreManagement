@@ -6,8 +6,14 @@ package com.scm.services.Impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.scm.dto.requests.StudentRegisterRequest;
+import com.scm.dto.requests.TeacherRegisterRequest;
 import com.scm.dto.requests.UpdateUserRequest;
+import com.scm.dto.responses.StudentResponse;
+import com.scm.dto.responses.TeacherResponse;
 import com.scm.dto.responses.UserResponse;
+import com.scm.exceptions.AppException;
+import com.scm.exceptions.ErrorCode;
 import com.scm.mapper.UserMapper;
 import com.scm.pojo.*;
 import com.scm.repositories.ClassroomRepository;
@@ -39,12 +45,12 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 @Service("userDetailsService")
 public class UserServiceImpl implements UserService{
-    
+
     @Autowired
     private UserRepository userRepo;
 
-    @Autowired
-    private ClassroomRepository classRoomRepo;
+//    @Autowired
+//    private ClassroomRepository classRoomRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -55,8 +61,8 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private FacultyRepository falcutyRepo;
+//    @Autowired
+//    private FacultyRepository falcutyRepo;
 
 
     @Override
@@ -88,76 +94,31 @@ public class UserServiceImpl implements UserService{
         return new org.springframework.security.core.userdetails.User(
                 u.getUsername(), u.getPassword(), authorities);
     }
-    
+
     @Override
-    public Student registerStudent(Map<String, String> params, MultipartFile avatar) {
-        Student u = new Student();
-        String mssv = params.get("mssv");
-        String name=params.get("firstName");
-        String email=params.get("email");
+    public StudentResponse registerStudent(StudentRegisterRequest request, MultipartFile avatar) {
+        Student u = userMapper.toStudent(request);
+        u.setSchoolYear(request.getSchoolYear());
 
-        u.setFirstName(name);
-        u.setLastName(params.get("lastName"));
-        u.setUsername(params.get("username"));
-
-        String expectedEmail = mssv + name+ "@ou.edu.vn";
-        if (!email.equalsIgnoreCase(expectedEmail)) {
-            throw new RuntimeException("Email không đúng định dạng. Phải là: " + expectedEmail);
-        }
-
-        u.setEmail(params.get("email"));
-        u.setPhone(params.get("phone"));
-        u.setMssv(mssv);
-
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date schoolYear = null;
-        try {
-            String rawDate = params.get("schoolYear");
-            if (rawDate != null && !rawDate.isBlank()) {
-                schoolYear = df.parse(rawDate);
-            }
-        } catch (ParseException e) {
-            throw new RuntimeException("Invalid date format for schoolYear", e);
-        }
-        u.setSchoolYear(schoolYear);
-
-        u.setPassword(this.passwordEncoder.encode(params.get("password")));
+        u.setPassword(this.passwordEncoder.encode(request.getPassword()));
         u.setRole("ROLE_USER");
+
         if (!avatar.isEmpty()) {
             try {
                 Map res = cloudinary.uploader().upload(avatar.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
                 u.setAvatar(res.get("secure_url").toString());
             } catch (IOException ex) {
-                return null;
+                throw new AppException(ErrorCode.INVALID_DATA);
             }
         }
-        Integer classroomId = Integer.parseInt(params.get("classroom"));
-        Classroom classRoom = classRoomRepo.findClassRoomById(classroomId);
 
-        log.info(classRoom.toString());
-
-        if (classRoom == null) {
-            throw new RuntimeException("Không tìm thấy lớp học với ID: " + classroomId);
-        }
-
-
-        u.setClassroom(classRoom);
-
-        return this.userRepo.studentRegister(u);
+        return this.userMapper.toStudentResponse(this.userRepo.studentRegister(u));
     }
 
     @Override
-    public Teacher registerTeacher(Map<String, String> params, MultipartFile avatar) {
-        Teacher u = new Teacher();
-
-        u.setFirstName(params.get("firstName"));
-        u.setLastName(params.get("lastName"));
-        u.setUsername(params.get("username"));
-        u.setEmail(params.get("email"));
-        u.setPhone(params.get("phone"));
-        u.setMsgv(params.get("msgv"));
-
-        u.setPassword(this.passwordEncoder.encode(params.get("password")));
+    public TeacherResponse registerTeacher(TeacherRegisterRequest request, MultipartFile avatar) {
+        Teacher u = userMapper.toTeacher(request);
+        u.setPassword(this.passwordEncoder.encode(request.getPassword()));
         u.setRole("ROLE_TEACHER");
         if (!avatar.isEmpty()) {
             try {
@@ -167,29 +128,7 @@ public class UserServiceImpl implements UserService{
                 return null;
             }
         }
-        Integer classroomId = Integer.parseInt(params.get("classroom"));
-        Classroom classRoom = classRoomRepo.findClassRoomById(classroomId);
-
-        log.info(classRoom.toString());
-
-        if (classRoom == null) {
-            throw new RuntimeException("Không tìm thấy lớp học với ID: " + classroomId);
-        }
-        u.setClassroom(classRoom);
-
-        Integer falcutyId = Integer.parseInt(params.get("faculty"));
-
-        log.info(falcutyId.toString());
-
-        Faculty falcuty = falcutyRepo.findFacultyById(falcutyId);
-
-        if (falcuty == null) {
-            throw new RuntimeException("Không tìm thấy khoa với ID: " + falcutyId);
-        }
-
-        u.setFaculty(falcuty);
-
-        return this.userRepo.teacherRegister(u);
+        return this.userMapper.toTeacherResponse(this.userRepo.teacherRegister(u));
     }
 
     @Override
@@ -201,21 +140,21 @@ public class UserServiceImpl implements UserService{
     public boolean authenticate(String username, String password) {
         return this.userRepo.authenticate(username, password);
     }
-//
+
 //    @Override
 //    public UserResponse update(UpdateUserRequest request) {
-////        Student u = userMapper.toStudentUpdate(request);
-////        u.setPassword(this.passwordEncoder.encode(request.getPassword()));
-////        MultipartFile avatar = request.getAvatar();
-////        if (!avatar.isEmpty()) {
-////            try {
-////                Map res = cloudinary.uploader().upload(avatar.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
-////                u.setAvatar(res.get("secure_url").toString());
-////            } catch (IOException ex) {
-////                return null;
-////            }
-////        }
-////        return userMapper.toUserResponse(this.userRepo.update(u));
+//        Student u = userMapper.toStudentUpdate(request);
+//        u.setPassword(this.passwordEncoder.encode(request.getPassword()));
+//        MultipartFile avatar = request.getAvatar();
+//        if (!avatar.isEmpty()) {
+//            try {
+//                Map res = cloudinary.uploader().upload(avatar.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+//                u.setAvatar(res.get("secure_url").toString());
+//            } catch (IOException ex) {
+//                return null;
+//            }
+//        }
+//        return userMapper.toUserResponse(this.userRepo.update(u));
 //        return null;
 //    }
 //

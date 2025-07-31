@@ -4,6 +4,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.bean.*;
 import com.opencsv.exceptions.CsvValidationException;
 import com.scm.dto.requests.ListScoreStudentRequest;
+import com.scm.dto.requests.ReadFileCSVRequest;
 import com.scm.dto.requests.ScoreRequest;
 
 import java.io.*;
@@ -22,10 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class CSVHelper {
 
 
-    public static List<ListScoreStudentRequest> parseScoreCSV(MultipartFile inputFile) {
+    public static List<ReadFileCSVRequest> parseScoreCSV(MultipartFile inputFile) {
         try (CSVReader csvReader = new CSVReader(new InputStreamReader(inputFile.getInputStream()))) {
             String[] headers = csvReader.readNext();
-            List<ListScoreStudentRequest> resultList = new ArrayList<>();
+            List<ReadFileCSVRequest> resultList = new ArrayList<>();
             String[] row;
 
             while ((row = csvReader.readNext()) != null) {
@@ -34,9 +35,10 @@ public class CSVHelper {
                     rowMap.put(headers[i].trim(), row[i].trim());
                 }
 
-                ListScoreStudentRequest request = new ListScoreStudentRequest();
-                request.setStudentId(rowMap.get("studentId"));
-                request.setClassSubjectId(rowMap.get("classSubjectId"));
+                ReadFileCSVRequest request = new ReadFileCSVRequest();
+                request.setFullName(rowMap.get("fullName"));
+                request.setMssv(rowMap.get("mssv"));
+                request.setClassName(rowMap.get("className"));
 
                 Map<Integer, BigDecimal> scores = new HashMap<>();
                 for (int i = 1; i <= 7; i++) {
@@ -56,13 +58,11 @@ public class CSVHelper {
                 request.setScores(scores);
                 resultList.add(request);
             }
-
             return resultList;
 
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 

@@ -12,18 +12,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Staff extends User{
-    String msnv;
+    String msgv;
     String position;
-
-    @ManyToOne
-    @JoinColumn(name = "classroom_id")
-    private Classroom classroom;
-
-    @ManyToOne
-    @JoinColumn(name = "subject_id")
-    private Subject subject;
-
-    @ManyToOne
-    @JoinColumn(name = "class_subject_id")
-    private ClassSubject classSubject;
 }

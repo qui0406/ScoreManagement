@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SubjectRequest {
-    private String name;
-
+    private String subjectName;
     private String facultyId;
+    private String semesterId;
 }

@@ -15,14 +15,9 @@ import java.util.List;
  * @author admin
  */
 public interface ScoreTypeService {
-    void addGradeTypeToClassSubject(ScoreTypeRequest scoreTypeRequest, Integer classSubjectId);
-    void deleteGradeType(Integer id);
-    boolean canAddMoreGradeTypes(Integer classSubjectId);
-    void ensureMinimumScoreTypes(Integer classSubjectId);
-
     List<ScoreTypeResponse> getScoreTypes();
-    List<ScoreTypeResponse> getScoreTypesByClassSubject(String classSubjectId);
-    void addScoreType(String classSubjectId, String scoreTypeId);
-    void deleteScoreType(String classSubjectId, String scoreTypeId);
-
+    List<ScoreTypeResponse> getScoreTypesByClassDetails(String classDetailId);
+    void addScoreType(String classDetailId, String scoreTypeId);
+    void deleteScoreType(String classDetailId, String scoreTypeId);
+    ScoreType getScoreTypeById(String id);
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface SubjectRepository {
-    Subject findSubjectById(Integer id);
+    Subject findById(String id);
 
     List<Subject> getAllSubjectsByStudentId(String studentId, Map<String, String> params);
 
@@ -15,4 +15,8 @@ public interface SubjectRepository {
     void create(Subject subject);
 
     void delete(Subject subject);
+
+    List<Subject> getSubjectsCurrentSemester(String studentId, String semesterId);
+
+
 }

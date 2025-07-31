@@ -21,9 +21,9 @@ public class FacultyRepositoryImpl implements FacultyRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public Faculty findFacultyById(Integer facultytId) {
+    public Faculty findById(String facultyId) {
         Session s = factory.getObject().getCurrentSession();
-        return s.get(Faculty.class, facultytId);
+        return s.get(Faculty.class, facultyId);
     }
 
     @Override

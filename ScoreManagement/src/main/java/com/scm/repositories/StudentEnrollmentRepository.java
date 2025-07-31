@@ -1,15 +1,12 @@
 package com.scm.repositories;
 
-import com.scm.pojo.ClassSubject;
-import com.scm.pojo.Student;
-import com.scm.pojo.StudentEnrollment;
-import com.scm.pojo.Subject;
+import com.scm.pojo.EnrollDetails;
 
 import java.util.List;
 
 public interface StudentEnrollmentRepository {
-    List<StudentEnrollment> findAllByClassSubjectId(String studentId);
+    List<EnrollDetails> findAllByClassSubjectId(String studentId);
 
-    void create(StudentEnrollment studentEnrollment);
-    void delete(StudentEnrollment studentEnrollment);
+    void create(EnrollDetails enrollDetails);
+    void delete(EnrollDetails enrollDetails);
 }

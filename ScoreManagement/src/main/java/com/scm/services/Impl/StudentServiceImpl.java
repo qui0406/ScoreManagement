@@ -29,11 +29,9 @@ public class StudentServiceImpl implements StudentService {
     private UserMapper userMapper;
 
     @Override
-    public List<StudentResponse> getStudentsByClassSubjectId(Integer classSubjectId) {
-        List<Student> students = this.studentRepo.getStudentsByClassSubjectId(classSubjectId);
-
+    public List<StudentResponse> getAllStudentsByClass(String classDetailId) {
+        List<Student> students = this.studentRepo.getAllStudentsByClass(classDetailId);
         List<StudentResponse> studentResponses = new ArrayList<>();
-
         for (Student student : students) {
             StudentResponse response = userMapper.toStudentResponse(student);
             studentResponses.add(response);
@@ -44,5 +42,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public String findIdByUsername(String username) {
         return this.studentRepo.findIdByUsername(username);
+    }
+
+    @Override
+    public String getIdByMssv(String mssv) {
+        return this.studentRepo.getIdByMssv(mssv);
+    }
+
+    @Override
+    public List<String> getAllMssvByClass(String classDetailId) {
+        return this.studentRepo.getAllMssvByClass(classDetailId);
     }
 }

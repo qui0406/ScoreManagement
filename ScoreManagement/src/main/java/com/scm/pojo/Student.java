@@ -19,8 +19,4 @@ public class Student extends User {
 
     @Column(name = "school_year")
     Date schoolYear;
-
-    @ManyToOne
-    @JoinColumn(name = "classroom_id", nullable = false)
-    Classroom classroom;
 }
