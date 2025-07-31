@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,11 +25,20 @@ public class TeacherController {
     @Autowired
     private UserService userDetailsService;
 
-    @GetMapping("/list-teachers")
-    public String listTeachers(@RequestParam Map<String,String> map, Model model) {
-        model.addAttribute("listTeacher", this.teacherService.getAllTeachersByRole(map));
-        return "users";
+//    @GetMapping("/teachers")
+//    public String listTeachers(@RequestParam Map<String,String> map, Model model) {
+//        model.addAttribute("teachers", this.teacherService.getAllTeachersByRole(map));
+//        return "dashboard";
+//    }
+    @GetMapping("/teachers")
+    public String dashboard(@RequestParam Map<String, String> params, Model model) {
+        List<TeacherResponse> teachers = teacherService.getAllTeachersByRole(params);
+        model.addAttribute("teachers", teachers);
+        return "dashboard";
     }
+
+
+
 
     @GetMapping("/register-teacher")
     public String showRegisterTeacherForm(Model model) {
