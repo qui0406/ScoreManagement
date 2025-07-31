@@ -30,6 +30,9 @@ public enum ErrorCode {
     SCORE_IS_EMPTY(1018, "Score is empty",  HttpStatus.BAD_REQUEST),
     FILE_IS_EMPTY(1019, "File is empty",  HttpStatus.BAD_REQUEST),
     LIST_STUDENT_NOT_SUITABLE(1120, "List student not suitable",  HttpStatus.BAD_REQUEST),
+    FORUM_NOT_FOUND(1121, "Forum not found",  HttpStatus.NOT_FOUND),
+    USER_NOT_FOUND(1122, "User not found",  HttpStatus.NOT_FOUND),
+    UPLOAD_FILE_ERROR(1123, "Upload file error",  HttpStatus.BAD_REQUEST),
 
     // --- AUTHENTICATION & AUTHORIZATION ERRORS ---
     UNAUTHORIZED(1101, "Bạn không có quyền", HttpStatus.UNAUTHORIZED),

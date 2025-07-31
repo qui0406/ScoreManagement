@@ -40,19 +40,6 @@ public class ClassDetailMapperDecorator implements ClassDetailMapper {
 
     @Autowired
     private SubjectRepository subjectRepo;
-//
-//    @Autowired
-//    private SemesterRepository semesterRepo;
-//
-//    @Autowired
-//    private ScoreRepository scoreRepo;
-//
-//    @Autowired
-//    private TeacherService teacherService;
-//
-//    @Autowired
-//    private ScoreService scoreService;
-
 
 
     @Override

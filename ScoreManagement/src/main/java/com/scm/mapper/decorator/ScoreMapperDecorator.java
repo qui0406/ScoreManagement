@@ -39,12 +39,6 @@ public class ScoreMapperDecorator implements ScoreMapper {
         Score score = new Score();
         score.setScore(request.getScore());
 
-        log.info(",,,,,,,,,,,,,,,,,,,,,");
-        log.info(request.getStudentId());
-        log.info(request.getClassDetailId());
-        log.info(request.getScoreTypeId());
-        log.info("/////////////////////////////");
-
         Student student = studentRepo.findById(request.getStudentId());
         ClassDetails classDetails = classDetailsRepo.findById(request.getClassDetailId());
         ScoreType scoreType = scoreTypeRepo.findById(request.getScoreTypeId());

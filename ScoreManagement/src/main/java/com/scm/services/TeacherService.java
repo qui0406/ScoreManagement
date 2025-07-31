@@ -13,4 +13,6 @@ public interface TeacherService {
     String findIdByUsername(String username);
 
     List<TeacherResponse> getAllTeachersByRole(Map<String, String> params);
+
+    void updateRoleTeacher(String teacherId);
 }

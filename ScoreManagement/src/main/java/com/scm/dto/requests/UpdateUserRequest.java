@@ -20,5 +20,4 @@ public class UpdateUserRequest {
     private String address;
     private boolean gender;
     private LocalDate dob;
-//    private MultipartFile avatar;
 }
