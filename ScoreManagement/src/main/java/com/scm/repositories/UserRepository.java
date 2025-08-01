@@ -22,11 +22,14 @@ public interface UserRepository {
     boolean authenticate(String username, String password);
     List<User> getAllUsers();
 
+    User findById(String id);
 
-//    User update(User user);
-//
-//    boolean checkExistEmail(String email);
-//    boolean checkExistUsername(String username);
-//
-//    User findUserByEmail(String email);
+    User update(User user);
+
+    boolean checkExistEmail(String email);
+    boolean checkExistUsername(String username);
+
+    User findUserByEmail(String email);
+
+    String findIdByUserName(String username);
 }

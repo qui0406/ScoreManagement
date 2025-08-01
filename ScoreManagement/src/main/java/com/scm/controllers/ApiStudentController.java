@@ -38,29 +38,22 @@ public class ApiStudentController {
     @Autowired
     private SubjectService subjectService;
 
-//    @Autowired
-//    private ScoreStudentService scoreStudentService;
 
-//    @PutMapping(path = "/update-profile",
-//            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-//            produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<?> update(@RequestBody UpdateUserRequest request,
-//                                    Principal principal) {
-//        if (principal == null) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Chua dang nhap!");
-//        }
-//
-//        String username = principal.getName();
-//        User currentUser = this.userDetailsService.getUserByUsername(username);
-//
-//        if(this.userDetailsService.checkExistUsername(username)){
-//            throw new AppException(ErrorCode.USER_EXISTED);
-//        }
-//        if(this.userDetailsService.checkExistEmail(currentUser.getEmail())){
-//            throw new AppException(ErrorCode.EMAIL_EXISTED);
-//        }
-//        return ResponseEntity.ok(this.userDetailsService.update(request));
-//    }
+    @PutMapping(path = "/update-profile",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> update(@ModelAttribute UpdateUserRequest request,
+                                    MultipartFile avatar,
+                                    Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Chua dang nhap!");
+        }
+
+        String username = principal.getName();
+        User currentUser = this.userDetailsService.getUserByUsername(username);
+
+        return ResponseEntity.ok(this.userDetailsService.update(request, currentUser.getId().toString(), avatar));
+    }
 
     @GetMapping("/my-profile")
     public ResponseEntity<?> getMyProfile(Principal principal) {

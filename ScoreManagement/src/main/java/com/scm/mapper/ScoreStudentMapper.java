@@ -12,10 +12,8 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-//@DecoratedWith(ScoreStudentMapperDecorator.class)
 public interface ScoreStudentMapper {
     ScoreStudentResponse toScoreResponse(Score score);
-//    ScoreStudentResponse toScoreResponseList(List<Score> scores);
     Score toScore(ScoreRequest scoreRequest);
 
 }

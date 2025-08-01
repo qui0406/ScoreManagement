@@ -20,4 +20,8 @@ public interface ClassroomDetailsService {
     void delete(String classDetailsId);
 
     List<ClassResponse> getClassroomsByTeacherId(String teacherId);
+
+    String getTeacherIdByClassDetailId(String classDetailId);
+
+
 }
