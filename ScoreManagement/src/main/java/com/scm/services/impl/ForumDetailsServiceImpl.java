@@ -48,7 +48,7 @@ public class ForumDetailsServiceImpl implements ForumDetailsService {
     public void update(ForumDetailsRequest request, String forumDetailId, String userResponseId) {
         ForumDetails f = this.forumDetailsRepository.findById(forumDetailId);
 
-        if(f.getUser().getId().toString().equals(userResponseId)){
+        if(!f.getUser().getId().toString().equals(userResponseId)){
             throw new AppException(ErrorCode.UNAUTHORIZED);
         }
 

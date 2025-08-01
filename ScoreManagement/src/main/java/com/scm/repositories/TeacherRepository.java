@@ -12,5 +12,5 @@ public interface TeacherRepository {
 
     void updateRoleTeacher(String teacherId);
 
-    List<Teacher> getAllTeachersByRole(Map<String, String> params);
+    List<Teacher> getAllTeachersByRole(String role, String page);
 }

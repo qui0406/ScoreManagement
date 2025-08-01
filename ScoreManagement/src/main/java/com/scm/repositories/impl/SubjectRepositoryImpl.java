@@ -55,7 +55,6 @@ public class SubjectRepositoryImpl implements SubjectRepository {
             q.setFirstResult(start);
         }
 
-        log.info(params.get("page"));
         return q.getResultList();
     }
 

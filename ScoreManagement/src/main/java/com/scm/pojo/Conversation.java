@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "conversation")
+@Table(name = "conversation",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"teacher_id", "student_id"}))
 public class Conversation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +23,21 @@ public class Conversation implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="student_id", nullable=false)
-    private  Student student;
-
-    private String content;
+    private Student student;
 
     @Column(name="created_at")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt= LocalDateTime.now();
+
+    public boolean isParticipant(Integer userId) {
+        return teacher.getId().equals(userId) || student.getId().equals(userId);
+    }
+
+    public Integer getOtherParticipantId(Integer currentUserId) {
+        if (teacher.getId().equals(currentUserId)) {
+            return student.getId();
+        } else if (student.getId().equals(currentUserId)) {
+            return teacher.getId();
+        }
+        throw new IllegalArgumentException("User is not a participant in this conversation");
+    }
 }

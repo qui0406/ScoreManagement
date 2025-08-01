@@ -52,22 +52,18 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     }
 
     @Override
-    public List<Teacher> getAllTeachersByRole(Map<String, String> params) {
-        if(params.containsKey("role")) {
-            throw new AppException(ErrorCode.INVALID_DATA);
-        }
-
+    public List<Teacher> getAllTeachersByRole(String role, String page) {
         Session s = factory.getObject().getCurrentSession();
         CriteriaBuilder cb = s.getCriteriaBuilder();
 
         CriteriaQuery<Teacher> query = cb.createQuery(Teacher.class);
         Root<Teacher> root = query.from(Teacher.class);
-        query.select(root).where(cb.equal(root.get("role"), params.get("role")));
+        query.select(root).where(cb.equal(root.get("role"), role));
 
         Query q = s.createQuery(query);
-        if (params.get("teacherId") != null) {
-            int page = Integer.parseInt(params.get("page"));
-            int start = (page - 1) * PAGE_SIZE;
+        if (page != null) {
+            int p = Integer.parseInt(page);
+            int start = (p - 1) * PAGE_SIZE;
 
             q.setMaxResults(PAGE_SIZE);
             q.setFirstResult(start);

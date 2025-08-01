@@ -25,7 +25,6 @@ import java.util.UUID;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "user")
 public abstract class User implements Serializable {
-    private static long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

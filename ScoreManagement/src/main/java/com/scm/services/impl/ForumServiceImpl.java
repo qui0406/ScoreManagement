@@ -31,7 +31,7 @@ public class ForumServiceImpl implements ForumService {
 
     @Override
     public void delete(String id,  String userCreatedId) {
-        Forum f = forumRepository.findById(userCreatedId);
+        Forum f = forumRepository.findById(id);
         if (!f.getUser().getId().toString().equals(userCreatedId)) {
             throw new AppException(ErrorCode.UNAUTHORIZED);
         }

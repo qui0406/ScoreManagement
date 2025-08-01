@@ -12,7 +12,7 @@ public interface TeacherService {
 
     String findIdByUsername(String username);
 
-    List<TeacherResponse> getAllTeachersByRole(Map<String, String> params);
+    List<TeacherResponse> getAllTeachersByRole(String role, String page);
 
     void updateRoleTeacher(String teacherId);
 }

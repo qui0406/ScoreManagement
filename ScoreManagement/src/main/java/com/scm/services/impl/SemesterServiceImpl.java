@@ -1,4 +1,4 @@
-package com.scm.services.Impl;
+package com.scm.services.impl;
 
 import com.scm.dto.requests.SemesterRequest;
 import com.scm.dto.responses.SemesterResponse;

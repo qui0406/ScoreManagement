@@ -52,4 +52,9 @@ public class ClassroomDetailsServiceImpl implements ClassroomDetailsService {
     public void delete(String classDetailsId) {
         this.classDetailsRepository.delete(classDetailsId);
     }
+
+    @Override
+    public String getTeacherIdByClassDetailId(String classDetailId) {
+        return this.classDetailsRepository.findById(classDetailId).getTeacher().getId().toString();
+    }
 }

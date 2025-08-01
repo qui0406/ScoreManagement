@@ -16,7 +16,7 @@ public class Score {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 

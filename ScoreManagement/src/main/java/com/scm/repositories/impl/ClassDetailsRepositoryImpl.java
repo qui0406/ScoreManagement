@@ -199,4 +199,5 @@ public class ClassDetailsRepositoryImpl implements ClassDetailsRepository {
         List<ClassDetails> responses = session.createQuery(query).getResultList();
         return responses;
     }
+
 }

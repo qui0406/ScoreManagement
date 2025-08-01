@@ -33,8 +33,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<TeacherResponse> getAllTeachersByRole(Map<String , String> params) {
-        List<Teacher> listTeachers = this.teacherRepo.getAllTeachersByRole(params);
+    public List<TeacherResponse> getAllTeachersByRole(String role, String page) {
+        List<Teacher> listTeachers = this.teacherRepo.getAllTeachersByRole(role, page);
 
         List<TeacherResponse> responses = new ArrayList<>();
         for (Teacher teacher : listTeachers) {
