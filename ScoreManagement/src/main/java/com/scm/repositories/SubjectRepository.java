@@ -18,5 +18,5 @@ public interface SubjectRepository {
 
     List<Subject> getSubjectsCurrentSemester(String studentId, String semesterId);
 
-
+    List<Subject> getAllSubjects(String page);
 }

@@ -16,4 +16,5 @@ public interface SubjectService {
 
     List<SubjectResponse> getAllSubjectsBySemester(String studentId, String semesterId);
 
+    List<SubjectResponse> getAllSubjects(String page);
 }

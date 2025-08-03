@@ -52,4 +52,14 @@ public class SubjectServiceImpl implements SubjectService {
         }
         return subjectResponses;
     }
+
+    @Override
+    public List<SubjectResponse> getAllSubjects(String page) {
+        List<Subject> subjects = this.subjectRepository.getAllSubjects(page);
+        List<SubjectResponse> subjectResponses = new ArrayList<>();
+        for(Subject subject: subjects){
+            subjectResponses.add(subjectMapper.toSubjectResponse(subject));
+        }
+        return subjectResponses;
+    }
 }
