@@ -1,8 +1,9 @@
-name: score-management
+version: '3.8'
+
 services:
   kafka:
     image: 'bitnami/kafka:3.8.0'
-    container_name: score_kafka
+    container_name: score_kafka_test
     hostname: kafka
     restart: always
     ports:
@@ -15,3 +16,24 @@ services:
       - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,EXTERNAL://localhost:9094
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+    networks:
+      - score_network
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: score_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --requirepass 12345678
+    networks:
+      - score_network
+
+volumes:
+  redis_data:
+
+networks:
+  score_network:
+    driver: bridge

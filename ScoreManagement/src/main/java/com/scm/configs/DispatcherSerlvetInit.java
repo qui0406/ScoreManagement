@@ -22,15 +22,20 @@ public class DispatcherSerlvetInit extends AbstractAnnotationConfigDispatcherSer
             HibernateConfigs.class,
             ThymeleafConfigs.class,
             SpringSecurityConfigs.class,
-                CloudinaryConfig.class
+            CloudinaryConfig.class,
+            WebAppContextConfigs.class,
+            RedisConfig.class,
+            WebSocketConfig.class,
+            AuthHandshakeInterceptor.class,
+                JwtChannelInterceptor.class,
+                SocketIOConfig.class
+
         };
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] {
-            WebAppContextConfigs.class
-        };
+        return new Class[0] ;
     }
 
     @Override

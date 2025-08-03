@@ -6,6 +6,7 @@ com\scm\pojo\enums\ScoreTypeEnum.class
 com\scm\repositories\ClassDetailsScoreTypeRepository.class
 com\scm\dto\StudentMessageDTO.class
 com\scm\pojo\Semester.class
+com\scm\configs\WebSocketSecurityConfig.class
 com\scm\repositories\StudentEnrollmentRepository.class
 com\scm\pojo\User.class
 com\scm\controllers\CSVController.class
@@ -27,6 +28,7 @@ com\scm\dto\responses\StudentResponse.class
 com\scm\pojo\EnrollDetails.class
 com\scm\mapper\decorator\UserMapperDecorator.class
 com\scm\mapper\decorator\SubjectMapperDecorator.class
+com\scm\services\impl\RedisServiceImpl.class
 com\scm\dto\requests\ForumDetailsRequest.class
 com\scm\mapper\ClassDetailMapper.class
 com\scm\dto\SemesterDTO.class
@@ -51,6 +53,7 @@ com\scm\configs\DispatcherSerlvetInit.class
 com\scm\services\impl\ClassroomServiceImpl.class
 com\scm\responses\ApiResponse.class
 com\scm\pojo\Forum.class
+com\scm\services\MessageService.class
 com\scm\mapper\ScoreTypeMapper.class
 com\scm\repositories\impl\ClassDetailsScoreTypeRepositoryImpl.class
 com\scm\services\impl\ForumServiceImpl.class
@@ -83,11 +86,13 @@ com\scm\dto\requests\SemesterRequest.class
 com\scm\dto\ScoreByTypeDTO.class
 com\scm\scoremanagement\JakartaRestConfiguration.class
 com\scm\mapper\ForumDetailsMapperImpl.class
+com\scm\services\RedisService.class
 com\scm\dto\responses\MessageResponse$MessageResponseBuilder.class
 com\scm\dto\responses\RegisterSubjectResponse.class
 com\scm\repositories\impl\ClassDetailsRepositoryImpl.class
 com\scm\dto\requests\ClassroomRequest.class
 com\scm\mapper\decorator\ConversationMapperDecorator.class
+com\scm\configs\RedisConfig.class
 com\scm\controllers\ApiUserController.class
 com\scm\mapper\decorator\ForumDetailsMapperDecorator.class
 com\scm\services\impl\SemesterServiceImpl.class
@@ -108,6 +113,7 @@ com\scm\pojo\Staff.class
 com\scm\controllers\ApiTeacherController.class
 com\scm\mapper\ScoreMapperImpl_.class
 com\scm\services\ForumDetailsService.class
+com\scm\dto\requests\ChatRequest.class
 com\scm\dto\requests\Recipient$RecipientBuilder.class
 com\scm\services\impl\EnrollDetailsServiceImpl.class
 com\scm\mapper\SubjectMapperImpl_.class
@@ -116,6 +122,7 @@ com\scm\dto\responses\ScoreStudentResponse.class
 com\scm\repositories\ForumRepository.class
 com\scm\services\SemesterService.class
 com\scm\pojo\ScoreType.class
+com\scm\services\impl\MessageServiceImpl.class
 com\scm\services\impl\ScoreTypeServiceImpl.class
 com\scm\repositories\ScoreTableRepository.class
 com\scm\dto\requests\CSVScoreRequest.class
@@ -124,6 +131,7 @@ com\scm\mapper\ClassroomMapperImpl.class
 com\scm\controllers\ApiStudentController$ApiStudentControllerBuilder.class
 com\scm\dto\requests\EnrollClassRequest.class
 com\scm\services\ClassroomDetailsService.class
+com\scm\pojo\ChatMessage.class
 com\scm\services\impl\SubjectServiceImpl.class
 com\scm\pojo\ForumDetails.class
 com\scm\mapper\EnrollDetailsMapperImpl_.class
@@ -142,7 +150,6 @@ com\scm\repositories\impl\MessageRepositoryImpl.class
 com\scm\dto\ResponseBaseApi.class
 com\scm\repositories\MessageRepository.class
 com\scm\dto\responses\ForumResponse.class
-com\scm\configs\AuthHandshakeInterceptor.class
 com\scm\mapper\ForumMapperImpl.class
 com\scm\repositories\ClassroomRepository.class
 com\scm\validators\ValidStudentEmail.class
@@ -159,7 +166,6 @@ com\scm\repositories\ForumDetailsRepository.class
 com\scm\mapper\ConversationMapper.class
 com\scm\dto\responses\ClassResponse.class
 com\scm\controllers\ApiConversationController.class
-com\scm\controllers\MessageHandlingController.class
 com\scm\dto\responses\TeacherResponse.class
 com\scm\configs\HibernateConfigs.class
 com\scm\dto\requests\ScoreRequest.class
@@ -168,6 +174,7 @@ com\scm\services\impl\StudentServiceImpl.class
 com\scm\dto\requests\TeacherRegisterRequest.class
 com\scm\services\ConversationService.class
 com\scm\controllers\ApiSubjectController.class
+com\scm\dto\responses\ChatResponse.class
 com\scm\filters\JwtFilter.class
 com\scm\dto\requests\UserRequest$UserRequestBuilder.class
 com\scm\services\impl\ScoreStudentServiceImpl.class
@@ -184,7 +191,6 @@ com\scm\services\TeacherService.class
 com\scm\repositories\SemesterRepository.class
 com\scm\mapper\ScoreStudentMapperImpl.class
 com\scm\services\ForumService.class
-com\scm\configs\WebsocketEventListener.class
 com\scm\repositories\TeacherRepository.class
 com\scm\services\SubjectService.class
 com\scm\controllers\ApiClassController.class
@@ -210,6 +216,7 @@ com\scm\dto\requests\UpdateUserRequest.class
 com\scm\dto\responses\WriteScoreStudentPDFResponse.class
 com\scm\mapper\SubjectMapper.class
 com\scm\repositories\EnrollDetailsRepository.class
+com\scm\dto\MessageDTO.class
 com\scm\dto\requests\StudentRequest.class
 com\scm\repositories\ClassDetailsRepository.class
 com\scm\helpers\CSVHelper.class

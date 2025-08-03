@@ -50,7 +50,7 @@ public class SpringSecurityConfigs {
     private JwtFilter jwtFilter;
 
     private static final String[] PUBLIC_ENDPOINTS = {
-            "/api/auth/**",
+            "/api/auth/**","/api/test"
     };
 
     private static final String[] STAFF_ENDPOINTS = {
@@ -93,6 +93,7 @@ public class SpringSecurityConfigs {
                 -> requests
                         .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers("/login", "/logout").permitAll()
+                        .requestMatchers("/ws/**", "/websocket/**").permitAll()
                         .requestMatchers(STAFF_ENDPOINTS).hasAnyRole("STAFF")
                         .requestMatchers(TEACHER_SUPER_ENDPOINTS).hasAnyRole("TEACHER_SUPER")
                         .requestMatchers(TEACHER_ENDPOINTS).hasAnyRole("TEACHER", "TEACHER_SUPER")

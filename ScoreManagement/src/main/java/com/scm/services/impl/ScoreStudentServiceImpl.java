@@ -13,11 +13,14 @@ import com.scm.pojo.Student;
 import com.scm.repositories.ClassDetailsRepository;
 import com.scm.repositories.ScoreStudentRepository;
 import com.scm.repositories.StudentRepository;
+import com.scm.services.RedisService;
 import com.scm.services.ScoreService;
 import com.scm.services.ScoreStudentService;
 import com.scm.services.TeacherService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -39,6 +42,12 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
     private ClassDetailsRepository classDetailsRepository;
 
     @Autowired
+    private ScoreStudentService scoreStudentService;
+
+    @Autowired
+    private RedisService redisService;
+
+    @Autowired
     private ScoreService scoreService;
 
     @Autowired
@@ -58,6 +67,12 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
 
     @Override
     public List<ScoreStudentResponse> getScoreByClassDetails(String classDetailId, String teacherId) {
+        String cacheKey = "classScore:" + classDetailId + "_" + teacherId;
+        Object cached = redisService.getValue(cacheKey);
+        if (cached != null) {
+            return (List<ScoreStudentResponse>) cached;
+        }
+
         ClassDetails classDetails = this.classDetailsRepository.findById(classDetailId);
         if(!classDetails.getTeacher().getId().toString().equals(teacherId)){
             throw new AppException(ErrorCode.UNAUTHORIZED);
@@ -67,9 +82,11 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
         List<ScoreStudentResponse> scoreStudentResponse = new ArrayList<>();
 
         for (Student student : students) {
-            ScoreStudentResponse response = getScoreByStudentAndClass(student.getId().toString(), classDetailId);
+            ScoreStudentResponse response = scoreStudentService.getScoreByStudentAndClass(student.getId().toString(), classDetailId);
             scoreStudentResponse.add(response);
         }
+
+        redisService.setValue(cacheKey, scoreStudentResponse);
         return scoreStudentResponse;
     }
 
@@ -77,9 +94,6 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
     @Override
     public List<WriteScoreStudentPDFResponse> listScorePDF(String classDetailId, String teacherId) {
         ClassDetails classDetails = this.classDetailsRepository.findById(classDetailId);
-//        if(!classDetails.getTeacher().getId().toString().equals(teacherId)){
-//            throw new AppException(ErrorCode.UNAUTHORIZED);
-//        }
 
         List<Student> students = this.studentRepository.getAllStudentsByClass(classDetailId);
         List<WriteScoreStudentPDFResponse> pdfResponses = new ArrayList<>();

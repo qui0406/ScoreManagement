@@ -1,6 +1,7 @@
 package com.scm.configs;
 
 import com.scm.utils.JwtUtils;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;

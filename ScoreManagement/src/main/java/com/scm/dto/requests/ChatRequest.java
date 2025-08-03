@@ -1,15 +1,18 @@
 package com.scm.dto.requests;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ChatRequest {
-    private Integer conversationId;
-    private String content;
+    @NotBlank
+    String conversationId;
+
+    @NotBlank
+    String message;
 }

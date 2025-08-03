@@ -41,6 +41,9 @@ public class UserAdminController {
         return "dashboard";
     }
 
-
+    @GetMapping("/")
+    public String home() {
+        return "index";
+    }
 
 }
