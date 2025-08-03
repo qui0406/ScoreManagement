@@ -10,13 +10,12 @@ public class WebSocketSecurityConfig extends AbstractSecurityWebSocketMessageBro
     @Override
     protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
         messages
-                .simpDestMatchers("/app/**").authenticated()
-                .simpSubscribeDestMatchers("/topic/**", "/queue/**").authenticated()
-                .anyMessage().denyAll();
+                .simpDestMatchers("/app/**").authenticated() // Yêu cầu auth
+                .anyMessage().permitAll();
     }
 
     @Override
     protected boolean sameOriginDisabled() {
-        return true; // Chỉ dùng cho development
+        return true; // Tắt CSRF cho WebSocket (đã có JWT)
     }
 }

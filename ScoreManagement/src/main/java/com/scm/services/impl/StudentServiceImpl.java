@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,6 +30,7 @@ public class StudentServiceImpl implements StudentService {
     private UserMapper userMapper;
 
     @Override
+    @Cacheable(value = "studentsByClass", key = "#classDetailId")
     public List<StudentResponse> getAllStudentsByClass(String classDetailId) {
         List<Student> students = this.studentRepo.getAllStudentsByClass(classDetailId);
         List<StudentResponse> studentResponses = new ArrayList<>();

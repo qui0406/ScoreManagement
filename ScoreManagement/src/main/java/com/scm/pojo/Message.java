@@ -1,10 +1,13 @@
 package com.scm.pojo;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.redis.core.index.Indexed;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -18,12 +21,14 @@ public class Message implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "conversation_id", nullable = false)
-    private Conversation conversation;
+    @ManyToOne
+    private Conversation conversationId;
 
-    private String content;
+    private String message;
 
-    @Column(name="created_at")
-    private LocalDateTime createdAt;
+    @ManyToOne
+    private User sender;
+
+    @Indexed
+    private LocalDateTime createdDate;
 }

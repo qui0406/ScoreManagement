@@ -7,6 +7,7 @@ import com.scm.pojo.Subject;
 import com.scm.repositories.SubjectRepository;
 import com.scm.services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

@@ -9,6 +9,7 @@ import com.scm.services.EnrollDetailsService;
 import com.scm.services.StudentService;
 import com.scm.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,24 @@ public class ApiClassController {
 
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+
+    @GetMapping("/test")
+    public ResponseEntity<Object> createClassDetails() {
+        try{
+            redisTemplate.opsForValue().set("loda", "hello world");
+            System.out.println("Value of key loda: " + redisTemplate.opsForValue().get("loda"));
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 
 
     // Đăng ký môn học, lớp học
