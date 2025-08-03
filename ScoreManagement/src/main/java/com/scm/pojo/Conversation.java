@@ -27,17 +27,4 @@ public class Conversation implements Serializable {
 
     @Column(name="created_at")
     private LocalDateTime createdAt= LocalDateTime.now();
-
-    public boolean isParticipant(Integer userId) {
-        return teacher.getId().equals(userId) || student.getId().equals(userId);
-    }
-
-    public Integer getOtherParticipantId(Integer currentUserId) {
-        if (teacher.getId().equals(currentUserId)) {
-            return student.getId();
-        } else if (student.getId().equals(currentUserId)) {
-            return teacher.getId();
-        }
-        throw new IllegalArgumentException("User is not a participant in this conversation");
-    }
 }
