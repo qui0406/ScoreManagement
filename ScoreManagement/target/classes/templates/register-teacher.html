@@ -10,7 +10,7 @@
 <div th:replace="base :: header"></div>
 <main class="container">
     <h1 class="text-center text-info mt-4 mb-3">THÊM GIẢNG VIÊN MỚI</h1>
-    <form method="post" th:action="@{/register-teacher}" th:object="${teacher}" enctype="multipart/form-data">
+    <form method="post" th:action="@{/admin/register-teacher}" th:object="${teacher}" enctype="multipart/form-data">
         <div class="mb-3">
             <label class="form-label">Tên đăng nhập:</label>
             <input type="text" class="form-control" th:field="*{username}" placeholder="Tên đăng nhập"/>

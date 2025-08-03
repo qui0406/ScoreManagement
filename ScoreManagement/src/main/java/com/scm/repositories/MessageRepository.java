@@ -1,6 +1,8 @@
 package com.scm.repositories;
 
+import com.scm.pojo.Conversation;
 import com.scm.pojo.Message;
+import com.scm.pojo.MessageTest;
 
 import java.util.List;
 
@@ -12,4 +14,5 @@ public interface MessageRepository {
     Message findById(String id);
 
     List<Message> findAllMessagesByUserId(String userId, String page);
+    List<Message> findByConversationIdOrderByCreatedDateAsc(Conversation conversation);
 }

@@ -109,4 +109,25 @@ public class SubjectRepositoryImpl implements SubjectRepository {
         );
         return session.createQuery(query).getResultList();
     }
+
+    @Override
+    public List<Subject> getAllSubjects(String page) {
+        Session session = factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Subject> query = builder.createQuery(Subject.class);
+        Root<Subject> root = query.from(Subject.class);
+
+        query.select(root);
+        Query q = session.createQuery(query);
+        if (page != null && !page.isEmpty()) {
+            int p = Integer.parseInt(page);
+            int start = (p - 1) * PAGE_SIZE;
+
+            q.setMaxResults(PAGE_SIZE);
+            q.setFirstResult(start);
+        }
+
+        return q.getResultList();
+
+    }
 }

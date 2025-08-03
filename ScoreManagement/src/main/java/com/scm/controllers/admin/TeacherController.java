@@ -26,13 +26,6 @@ public class TeacherController {
     @Autowired
     private UserService userDetailsService;
 
-//    @GetMapping("/teachers")
-//    public String listTeachers(@RequestParam Map<String,String> map, Model model) {
-//        model.addAttribute("teachers", this.teacherService.getAllTeachersByRole(map));
-//        return "dashboard";
-//    }
-
-
     @GetMapping("/register-teacher")
     public String showRegisterTeacherForm(Model model) {
         model.addAttribute("teacher", new TeacherRegisterRequest());
@@ -48,23 +41,7 @@ public class TeacherController {
             return "register-teacher";
         }
         TeacherResponse teacher = userDetailsService.registerTeacher(request, avatar);
-        model.addAttribute("teacherInfo", teacher);
-        return "register-success";
-    }
-
-    @GetMapping("/list-teacher-normal")
-    public String listTeacherNormal(Model model,
-                                    @RequestParam("page") String page, Principal principal) {
-        List<TeacherResponse> teachersNormals = this.teacherService.getAllTeachersByRole("ROLE_TEACHER", page);
-        model.addAttribute("teachersNormals", teachersNormals);
-        return "dashboard";
-    }
-
-    @GetMapping("/list-teacher-super")
-    public String listTeacherSuper(Model model,
-                                    @RequestParam("page") String page, Principal principal) {
-        List<TeacherResponse> teachersSupers = this.teacherService.getAllTeachersByRole("ROLE_TEACHER_SUPER", page);
-        model.addAttribute("teachersSupers", teachersSupers);
+        model.addAttribute("teacher", teacher);
         return "dashboard";
     }
 

@@ -1,11 +1,11 @@
 package com.scm.repositories.impl;
 
-import com.scm.pojo.Conversation;
-import com.scm.pojo.Message;
+import com.scm.pojo.*;
 import com.scm.repositories.MessageRepository;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,4 +67,25 @@ public class MessageRepositoryImpl implements MessageRepository {
         }
         return q.getResultList();
     }
+
+    @Override
+    public List<Message> findByConversationIdOrderByCreatedDateAsc(Conversation conversation) {
+        Session s = factory.getObject().getCurrentSession();
+        CriteriaBuilder cb = s.getCriteriaBuilder();
+        CriteriaQuery<Message> cq = cb.createQuery(Message.class);
+        Root<Message> root = cq.from(Message.class);
+
+        // Add where clause for conversation
+        Predicate conversationPredicate = cb.equal(root.get("conversationId"), conversation);
+
+        // Create query with ordering
+        cq.select(root)
+                .where(conversationPredicate)
+                .orderBy(cb.asc(root.get("createdDate")));
+
+        // Execute query and return results
+        return s.createQuery(cq).getResultList();
+    }
+
+
 }
