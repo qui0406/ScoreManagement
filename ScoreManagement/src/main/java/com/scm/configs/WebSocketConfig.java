@@ -33,19 +33,22 @@ import java.util.Collections;
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-
-
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topics");
-        config.setApplicationDestinationPrefixes("/app");
-    }
+    @Autowired
+    private AuthHandshakeInterceptor authHandshakeInterceptor;
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
+                .addInterceptors(authHandshakeInterceptor)
                 .setAllowedOriginPatterns("*")
                 .withSockJS();
+    }
+
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry config) {
+        config.enableSimpleBroker("/topic", "/queue");
+        config.setApplicationDestinationPrefixes("/app");
+        config.setUserDestinationPrefix("/user");
     }
 
     @Override
@@ -53,31 +56,15 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registration.interceptors(new ChannelInterceptor() {
             @Override
             public Message<?> preSend(Message<?> message, MessageChannel channel) {
-                StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+                StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
                 if (StompCommand.CONNECT.equals(accessor.getCommand())) {
-                    String token = accessor.getFirstNativeHeader("Authorization");
-                    try {
-                        if (token != null && token.startsWith("Bearer ")) {
-                            token = token.substring(7);
-                            String username = JwtUtils.validateTokenAndGetUsername(token);
-                            if (username != null) {
-                                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                                        username, null, Collections.emptyList());
-                                SecurityContextHolder.getContext().setAuthentication(auth);
-                                accessor.setUser(auth);
-                            } else {
-                                throw new IllegalArgumentException("Invalid or expired JWT token");
-                            }
-                        } else {
-                            throw new IllegalArgumentException("Missing or invalid Authorization header");
-                        }
-                    } catch (Exception e) {
-                        throw new IllegalArgumentException("Token validation failed: " + e.getMessage());
+                    String username = (String) accessor.getSessionAttributes().get("username");
+                    if (username != null) {
+                        accessor.setUser(new StompPrincipal(username));
                     }
                 }
                 return message;
             }
         });
     }
-
 }

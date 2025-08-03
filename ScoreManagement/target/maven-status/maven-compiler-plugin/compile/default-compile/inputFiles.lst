@@ -10,6 +10,7 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\MessageConfig.j
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\RabbitMQConfig.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\RedisConfig.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SecurityWebApplicationInitializer.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SocketIOConfig.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SpringSecurityConfigs.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\StompPrincipal.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\ThymeleafConfigs.java
