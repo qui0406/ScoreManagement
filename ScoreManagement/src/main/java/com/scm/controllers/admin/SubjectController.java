@@ -20,20 +20,20 @@ public class SubjectController {
     @PostMapping("/create-subject")
     public String createSubject(@ModelAttribute(value="subject") SubjectRequest subject) {
         this.subjectService.create(subject);
-        return "redirect:/dashboard";
+        return "dashboard";
     }
 
     @DeleteMapping("/delete-subject/{subjectId}")
     public String deleteSubject(@PathVariable("subjectId") int subjectId) {
         this.deleteSubject(subjectId);
-        return "redirect:/dashboard";
+        return "dashboard";
     }
 
-    @GetMapping("/get-list-all-subject")
-    public String getAllSubject(@RequestParam(value = "page") String page ,Model model) {
+    @GetMapping("/subject")
+    public String getAllSubject(@RequestParam(value = "page", defaultValue = "1") String page ,Model model) {
         List<SubjectResponse> listSubjects = this.subjectService.getAllSubjects(page);
         model.addAttribute("subjects", listSubjects);
-        return "redirect:/subjects";
+        return "subject";
     }
 }
 
