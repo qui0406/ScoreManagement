@@ -6,6 +6,7 @@ import com.scm.mapper.UserMapper;
 import com.scm.pojo.Teacher;
 import com.scm.pojo.User;
 import com.scm.services.SemesterService;
+import com.scm.services.TeacherService;
 import com.scm.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -31,13 +33,25 @@ public class UserAdminController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private TeacherService teacherService;
+
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
     @GetMapping("/dashboard")
-    public String users() {
+    public String users(Model model,
+                        @RequestParam(value = "page", defaultValue = "1") String page,
+                        Principal principal) {
+        List<TeacherResponse> teachersNormals = this.teacherService.getAllTeachersByRole("ROLE_TEACHER", page);
+        // Lấy danh sách giảng viên quản lý
+        List<TeacherResponse> teachersSupers = this.teacherService.getAllTeachersByRole("ROLE_TEACHER_SUPER", page);
+
+        // Thêm vào model
+        model.addAttribute("teachersNormals", teachersNormals);
+        model.addAttribute("teachersSupers", teachersSupers);
         return "dashboard";
     }
 
