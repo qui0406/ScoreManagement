@@ -1,34 +1,34 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Title</title>-->
-<!--    <th:block th:replace="base :: bootstrap"></th:block>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:replace="base :: bootstrap"></th:block>
 
-<!--</head>-->
-<!--<body>-->
-<!--<div th:replace="base :: header"></div>-->
-<!--<main class="container">-->
-<!--    <h1 class="mt-4 mb-4">Danh sách môn học</h1>-->
-<!--    <a th:href="@{/admin/subject/add}" class="btn btn-success mb-3">Thêm giảng viên</a>-->
-<!--    <table class="table table-bordered table-hover">-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--            <th>Mã Môn học</th>-->
-<!--            <th>Tên môn học</th>-->
+</head>
+<body>
+<div th:replace="base :: header"></div>
+<main class="container">
+    <h1 class="mt-4 mb-4">Danh sách môn học</h1>
+    <a th:href="@{/admin/subject-form}" class="btn btn-success mb-3">Thêm giảng viên</a>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Mã Môn học</th>
+            <th>Tên môn học</th>
 
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr th:each="s : ${subjects}">-->
-<!--            <td th:text="${s.id}"></td>-->
-<!--            <td th:text="${s.subjectName}"></td>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="s : ${subjects}">
+            <td th:text="${s.id}"></td>
+            <td th:text="${s.subjectName}"></td>
 
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
-<!--</main>-->
-<!--<div th:replace="base :: footer"></div>-->
+        </tr>
+        </tbody>
+    </table>
+</main>
+<div th:replace="base :: footer"></div>
 
-<!--</body>-->
-<!--</html>-->
+</body>
+</html>

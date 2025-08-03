@@ -24,7 +24,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="t : ${teachers}">
+        <tr th:each="t : ${teachersNormals}">
             <td th:text="${t.msgv}"></td>
             <td th:text="${t.firstName + ' ' + t.lastName}"></td>
             <td th:text="${t.email}"></td>
