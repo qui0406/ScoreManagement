@@ -2,6 +2,8 @@ package com.scm.controllers.admin;
 
 import com.scm.dto.requests.SubjectRequest;
 import com.scm.dto.responses.SubjectResponse;
+import com.scm.pojo.Faculty;
+import com.scm.pojo.Semester;
 import com.scm.pojo.Subject;
 import com.scm.services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,24 @@ import java.util.List;
 public class SubjectController {
     @Autowired
     private SubjectService subjectService;
-
-    @PostMapping("/create-subject")
+//    private FacultySer
+    @PostMapping("/subject-form")
     public String createSubject(@ModelAttribute(value="subject") SubjectRequest subject) {
         this.subjectService.create(subject);
-        return "dashboard";
+        return "redirect:/admin/subject";
+    }
+    @GetMapping("/subject-form")
+    public String showSubjectForm(Model model) {
+        model.addAttribute("subject", new Subject());
+
+        // Lấy danh sách khoa và học kỳ (từ DB hoặc service)
+//        List<Faculty> faculties = facultyService.findAll();
+//        List<Semester> semesters = semesterService.findAll();
+
+//        model.addAttribute("faculties", faculties);
+//        model.addAttribute("semesters", semesters);
+
+        return "subject-form";
     }
 
     @DeleteMapping("/delete-subject/{subjectId}")
