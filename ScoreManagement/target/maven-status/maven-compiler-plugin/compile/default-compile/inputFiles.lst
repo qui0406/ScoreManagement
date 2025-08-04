@@ -7,6 +7,7 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SendgridConfig.
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SocketIOConfig.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SpringSecurityConfigs.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\ThymeleafConfigs.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\ValidatorConfig.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\WebAppContextConfigs.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\admin\FacultyController.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\admin\SemesterController.java

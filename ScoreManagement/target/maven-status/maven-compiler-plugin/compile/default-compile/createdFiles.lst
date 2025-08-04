@@ -3,6 +3,5 @@ com\scm\dto\responses\FacultyResponse.class
 com\scm\mapper\FacultyMapper.class
 com\scm\controllers\admin\FacultyController.class
 com\scm\services\FacultyService.class
-com\scm\services\impl\FacultyServiceImpl.class
 com\scm\controllers\admin\SemesterController.class
 com\scm\dto\requests\FacultyRequest.class

@@ -13,6 +13,7 @@ import com.scm.mapper.UserMapper;
 import com.scm.pojo.Student;
 import com.scm.pojo.Teacher;
 import com.scm.pojo.User;
+import com.scm.responses.ApiResponse;
 import com.scm.services.UserService;
 
 import java.util.Collections;
@@ -27,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,8 +67,13 @@ public class ApiUserController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> create(@ModelAttribute @Valid StudentRegisterRequest request,
                                     @RequestParam(value = "avatar", required = false)
-                                    MultipartFile avatar) {
+                                    MultipartFile avatar,
+                                    BindingResult bindingResult) {
         try{
+            if (bindingResult.hasErrors()) {
+                return ResponseEntity.badRequest()
+                        .body(ApiResponse.error("Validation error", bindingResult));
+            }
             StudentResponse studentResponse = userDetailsService.registerStudent(request, avatar);
             return ResponseEntity.ok(studentResponse);
         }catch (Exception e){
