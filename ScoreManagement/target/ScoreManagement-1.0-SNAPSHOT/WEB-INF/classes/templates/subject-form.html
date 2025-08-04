@@ -9,8 +9,8 @@
 <body>
 <div th:replace="base :: header"></div>
 <main class="container">
-    <h1 class="text-center text-info mt-4 mb-3">THÊM GIẢNG VIÊN MỚI</h1>
-    <form method="post" th:action="@{/create-subject}" th:object="${subject}" >
+    <h1 class="text-center text-info mt-4 mb-3">THÊM môn học mới</h1>
+    <form method="post" th:action="@{/admin/subject-form}" th:object="${subject}" >
         <div class="mb-3">
             <label class="form-label">Tên môn học:</label>
             <input type="text" class="form-control" th:field="*{subjectName}" placeholder="Tên môn học"/>
