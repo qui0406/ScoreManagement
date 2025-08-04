@@ -1,12 +1,8 @@
 package com.scm.pojo;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.redis.core.index.Indexed;
 
 import java.io.Serializable;
@@ -22,13 +18,13 @@ public class Message implements Serializable {
     private Integer id;
 
     @ManyToOne
+    @JoinColumn(name = "conversation_id", nullable = false)
     private Conversation conversationId;
 
     private String message;
 
-    @ManyToOne
-    private User sender;
+    @Column(name="sender_id", nullable = false)
+    private String senderId;
 
-    @Indexed
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate= LocalDateTime.now();
 }

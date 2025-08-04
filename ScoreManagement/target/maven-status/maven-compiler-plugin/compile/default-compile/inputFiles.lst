@@ -1,13 +1,10 @@
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\AuthHandshakeInterceptor.java
-E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\ChatMessageConsumer.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\ChatWebSocketHandler.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\CloudinaryConfig.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\CustomHandshakeHandler.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\DispatcherSerlvetInit.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\HibernateConfigs.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\JwtChannelInterceptor.java
-E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\MessageConfig.java
-E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\RabbitMQConfig.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\RedisConfig.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SecurityWebApplicationInitializer.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SocketIOConfig.java
@@ -15,14 +12,15 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SpringSecurityC
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\StompPrincipal.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\ThymeleafConfigs.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\WebAppContextConfigs.java
-E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\WebsocketChatEventListener.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\WebSocketConfig.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\WebSocketConfigTest.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\WebSocketSecurityConfig.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\admin\SubjectController.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\admin\TeacherController.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\admin\UserAdminController.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiAddScoreController.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiAdminController.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiChatController.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiClassController.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiConversationController.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiForumController.java
@@ -34,9 +32,11 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiUserCont
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\CSVController.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\EmailController.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ScoreTypeController.java
-E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\WebSocketChatController.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\SocketHandler.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\ChatMessageDto.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\ClassroomDTO.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\MessageDTO.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\ChatMessageRequest.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\ChatRequest.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\ClassroomRequest.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\ConversationRequest.java
@@ -62,6 +62,7 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\TeacherReq
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\UpdateUserRequest.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\requests\UserRequest.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\ResponseBaseApi.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\ChatMessageResponse.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\ChatResponse.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\ClassDetailsResponse.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\ClassResponse.java
@@ -81,6 +82,7 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\UserRespo
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\responses\WriteScoreStudentPDFResponse.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\ScoreByTypeDTO.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\SemesterDTO.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\SenderDTO.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\StudentDTO.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\StudentMessageDTO.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\dto\SubjectDTO.java
@@ -92,9 +94,11 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\exceptions\GlobalExcept
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\filters\JwtFilter.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\helpers\CSVHelper.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\helpers\PDFHelper.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\ChatMessageMapper.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\ClassDetailMapper.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\ClassroomMapper.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\ConversationMapper.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\decorator\ChatMessageMapperDecorator.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\decorator\ClassDetailMapperDecorator.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\decorator\ConversationMapperDecorator.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\decorator\EnrollDetailsMapperDecorator.java
@@ -132,6 +136,8 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\Student.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\Subject.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\Teacher.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\User.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\pojo\WebSocketSession.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\ChatMessageRepository.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\ClassDetailsRepository.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\ClassDetailsScoreTypeRepository.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\ClassroomRepository.java
@@ -140,6 +146,7 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\EnrollDeta
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\FacultyRepository.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\ForumDetailsRepository.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\ForumRepository.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\impl\ChatMessageRepositoryImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\impl\ClassDetailsRepositoryImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\impl\ClassDetailsScoreTypeRepositoryImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\impl\ClassroomRepositoryImpl.java
@@ -157,6 +164,7 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\impl\Stude
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\impl\SubjectRepositoryImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\impl\TeacherRepositoryImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\impl\UserRepositoryImp.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\impl\WebsocketSessionRepositoryImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\MessageRepository.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\ScoreRepository.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\ScoreStudentRepository.java
@@ -168,9 +176,11 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\StudentRep
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\SubjectRepository.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\TeacherRepository.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\UserRepository.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\WebSocketSessionRepository.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\responses\ApiResponse.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\scoremanagement\JakartaRestConfiguration.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\scoremanagement\resources\JakartaEE11Resource.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ChatMessageService.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ClassroomDetailsService.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ClassroomService.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ConversationService.java
@@ -178,6 +188,7 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\CSVService.jav
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\EnrollDetailsService.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ForumDetailsService.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ForumService.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\ChatMessageServiceImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\ClassroomDetailsServiceImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\ClassroomServiceImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\ConversationServiceImpl.java
@@ -194,6 +205,7 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\StudentSe
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\SubjectServiceImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\TeacherServiceImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\UserServiceImpl.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\WebSocketSessionServiceImpl.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\kafka\EmailConsumer.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\kafka\EmailProducer.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\kafka\KafkaConsumerService.java
@@ -209,6 +221,7 @@ E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\StudentService
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\SubjectService.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\TeacherService.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\UserService.java
+E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\WebSocketSessionService.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\utils\JwtUtils.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\validators\StudentEmailValidator.java
 E:\ScoreManagement\ScoreManagement\src\main\java\com\scm\validators\ValidStudentEmail.java

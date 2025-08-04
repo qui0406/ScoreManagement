@@ -25,8 +25,7 @@ public class DispatcherSerlvetInit extends AbstractAnnotationConfigDispatcherSer
             CloudinaryConfig.class,
             WebAppContextConfigs.class,
             RedisConfig.class,
-            WebSocketConfig.class,
-            AuthHandshakeInterceptor.class
+            SocketIOConfig.class
         };
     }
 
