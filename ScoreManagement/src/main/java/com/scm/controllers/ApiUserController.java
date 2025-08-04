@@ -74,13 +74,4 @@ public class ApiUserController {
         }
 
     }
-
-    @PostMapping(path = "/register-teacher",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createTeacher(@Valid @ModelAttribute TeacherRegisterRequest request,
-                                           @RequestParam(value = "avatar", required = false) MultipartFile avatar) {
-        TeacherResponse teacher = this.userDetailsService.registerTeacher(request, avatar);
-        return ResponseEntity.ok().body(teacher);
-    }
 }

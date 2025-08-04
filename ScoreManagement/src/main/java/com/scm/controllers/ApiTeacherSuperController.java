@@ -50,7 +50,6 @@ public class ApiTeacherSuperController {
 
     @PostMapping(path = "/upload-scores/{classDetailId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<?> uploadScores(@RequestParam(value = "file") MultipartFile file,
                                           @PathVariable(value="classDetailId") String  classDetailId,
                                           Principal principal) {
@@ -90,7 +89,7 @@ public class ApiTeacherSuperController {
         return ResponseEntity.ok("value: Successfully");
     }
 
-    @PostMapping("/export-score/{classDetailId}")
+    @PostMapping("/export-scores/{classDetailId}")
     public ResponseEntity<String> exportScores(@PathVariable(value="classDetailId") String classDetailId,
                                                Principal principal) throws Exception {
         try{

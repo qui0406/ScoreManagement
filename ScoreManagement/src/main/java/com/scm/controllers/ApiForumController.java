@@ -35,7 +35,7 @@ public class ApiForumController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @DeleteMapping("/delete/{forumId}")
+    @DeleteMapping("/delete-forum/{forumId}")
     public ResponseEntity<?> deleteForum(@PathVariable(value = "forumId") String forumId,
                                          Principal principal) {
         String name =  principal.getName();
@@ -69,5 +69,13 @@ public class ApiForumController {
         User u = userDetailsService.getUserByUsername(name);
         this.forumDetailsService.delete(forumId, u.getId().toString());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/get-all-reply-forum/{forumId}")
+    public ResponseEntity<?> getAllReplyForum(@PathVariable(value = "forumId") String forumId,
+                                              Principal principal) {
+        String name =  principal.getName();
+        String userId = userDetailsService.findIdByUserName(name);
+        return ResponseEntity.ok(this.forumDetailsService.getAllForumByForumId(forumId));
     }
 }

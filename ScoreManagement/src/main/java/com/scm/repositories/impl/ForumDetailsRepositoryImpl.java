@@ -62,4 +62,15 @@ public class ForumDetailsRepositoryImpl implements ForumDetailsRepository {
         return s.createQuery(q).getResultList();
 
     }
+
+    @Override
+    public List<ForumDetails> getAllByForumId(String forumId) {
+        Session s = factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<ForumDetails> q = b.createQuery(ForumDetails.class);
+        Root<ForumDetails> root = q.from(ForumDetails.class);
+        q.select(root);
+        q.where(b.equal(root.get("forum").get("id"), forumId));
+        return s.createQuery(q).getResultList();
+    }
 }

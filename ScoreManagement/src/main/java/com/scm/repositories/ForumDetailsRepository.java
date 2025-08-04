@@ -16,4 +16,6 @@ public interface ForumDetailsRepository {
     ForumDetails findById(String id);
 
     List<ForumDetails> findAllByForumId(Map<String,String> params);
+
+    List<ForumDetails> getAllByForumId(String forumId);
 }
