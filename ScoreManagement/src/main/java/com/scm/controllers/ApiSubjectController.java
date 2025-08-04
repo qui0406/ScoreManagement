@@ -29,7 +29,7 @@ public class ApiSubjectController {
     @Autowired
     private SubjectService subjectService;
 
-    @GetMapping("/get-all-subjects")
+    @GetMapping("/get-all-classes-me-register")
     public ResponseEntity<List<SubjectResponse>> getAllSubjects(Principal principal,
                                                                 @RequestParam Map<String, String> params) {
         String username = principal.getName();

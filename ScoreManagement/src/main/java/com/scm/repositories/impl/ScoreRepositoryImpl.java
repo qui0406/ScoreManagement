@@ -135,14 +135,14 @@ public class ScoreRepositoryImpl implements ScoreRepository {
     public void saveAll(Set<Score> scores) {
         Session session = factory.getObject().getCurrentSession();
         for (Score score : scores) {
-            session.save(score);
+            session.persist(score);
         }
     }
 
     @Override
     public void save(Score score){
         Session session = factory.getObject().getCurrentSession();
-        session.save(score);
+        session.persist(score);
     }
 
     @Override

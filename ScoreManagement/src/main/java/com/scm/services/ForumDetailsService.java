@@ -14,4 +14,6 @@ public interface ForumDetailsService {
     void update(ForumDetailsRequest request, String forumDetailId, String userResponseId);
 
     List<ForumDetailsResponse> findAllByForumId(Map<String,String> params);
+
+    List<ForumDetailsResponse> getAllForumByForumId(String forumId);
 }

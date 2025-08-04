@@ -32,21 +32,6 @@ public class ApiClassController {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
-    @GetMapping("/test")
-    public ResponseEntity<Object> createClassDetails() {
-        try{
-            redisTemplate.opsForValue().set("loda", "hello world");
-            System.out.println("Value of key loda: " + redisTemplate.opsForValue().get("loda"));
-            return ResponseEntity.status(HttpStatus.OK).body(null);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-
 
     // Đăng ký môn học, lớp học
     @PostMapping("/register-class")

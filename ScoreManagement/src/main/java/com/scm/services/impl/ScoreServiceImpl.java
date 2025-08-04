@@ -53,19 +53,19 @@ public class ScoreServiceImpl implements ScoreService {
 
         Score score = scoreRepository.getScoreByClassDetailIdAndStudentAndScoreType(classDetail, studentId, scoreTypeId);
 
-        if (score != null) {
-            if (scoreTypeId.equals(SCORE_TYPE_MIDDLE_TEST) || scoreTypeId.equals(SCORE_TYPE_FINAL_TEST)) {
-                boolean alreadyHasTest = scoreRepository.checkTestExisted(classDetail, scoreTypeId, studentId);
-                if (alreadyHasTest) {
-                    throw new AppException(ErrorCode.ONLY_1_COLLUM);
-                }
-            } else {
-                boolean canAddMore = scoreRepository.checkOver5TestExisted(classDetail, scoreTypeId, studentId);
-                if (!canAddMore) {
-                    throw new AppException(ErrorCode.OVER_5_TEST);
-                }
-            }
-        }
+//        if (score != null) {
+//            if (scoreTypeId.equals(SCORE_TYPE_MIDDLE_TEST) || scoreTypeId.equals(SCORE_TYPE_FINAL_TEST)) {
+//                boolean alreadyHasTest = scoreRepository.checkTestExisted(classDetail, scoreTypeId, studentId);
+//                if (alreadyHasTest) {
+//                    throw new AppException(ErrorCode.ONLY_1_COLLUM);
+//                }
+//            } else {
+//                boolean canAddMore = scoreRepository.checkOver5TestExisted(classDetail, scoreTypeId, studentId);
+//                if (!canAddMore) {
+//                    throw new AppException(ErrorCode.OVER_5_TEST);
+//                }
+//            }
+//        }
         Score s = scoreMapper.toScore(scoreRequest);
         if (score != null) {
             score.setScore(s.getScore());

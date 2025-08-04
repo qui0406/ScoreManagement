@@ -8,32 +8,59 @@ export const endpoints = {
     'register': '/api/auth/register',
     'login': '/api/auth/login',
     'my-profile' :'/api/secure/user/my-profile',
+    'update-profile': '/api/secure/user/update-profile',
+    'my-score': classDetailId => `/api/secure/user/my-score/${classDetailId}`,
+
     // Lớp học của giáo viên
-    'my-classes': '/api/secure/teacher/my-classes',
+    'my-classes': '/api/secure/teacher/my-classrooms',
     'classDetails': classId => `/api/secure/teacher/class-subject/${classId}/details`,
     'studentList': classId =>`/api/secure/teacher/class-subject/${classId}/students`,
 
     // Điểm
     'getScores': classSubjectId => `/api/secure/teacher/class-subject/${classSubjectId}/scores`,
     'addScore': '/api/secure/teacher/add-list-score-all-student', 
-    'closeScore': classSubjectId => `/api/secure/teacher/score/close-score/${classSubjectId}`,
-    'getExportScores': classSubjectId => `/api/secure/teacher/export-list-score/${classSubjectId}`,
+    'blockScore': classDetailId => `/api/secure/teacher/score/block-score/${classDetailId}`,
+    'statusScore': classDetailId => `/api/secure/teacher/score/get-status/${classDetailId}`,
+
+    'getExportScores': classDetailId => `/api/secure/teacher/export-list-score/${classDetailId}`,
+
     // Loại điểm
     'allScoreTypes': '/api/secure/teacher/class-subject/score-types',
-    'getScoreTypes': classSubjectId => `/api/secure/teacher/class-subject/score-types/${classSubjectId}`,
-    'addScoreType': (classSubjectId, scoreTypeId) =>`/api/secure/teacher/class-subject/score-type/${classSubjectId}/add?scoreTypeId=${scoreTypeId}`,
-    
+    'getScoreTypes': classDetailId => `/api/secure/teacher/class-subject/score-type/${classDetailId}`,
+    'addScoreType': (classDetailId, scoreTypeId) =>`/api/secure/teacher/class-subject/score-type/${classDetailId}/add?scoreTypeId=${scoreTypeId}`,
+    'deleteScoreType': (classDetailId, scoreTypeId) => `/api/secure/teacher/class-subject/score-type/${classDetailId}/delete?scoreTypeId=${scoreTypeId}`,
 
-    'findExportListScoreBase': classSubjectId =>`/api/secure/teacher/find-export-list-score/${classSubjectId}`,
+    //Doc diem tu file
+    'importScore': classDetailId => `/api/secure/teacher/upload-scores/${classDetailId}`,
+    'exportScore': classDetailId => `/api/secure/teacher/export-scores/${classDetailId}`,
 
-    // 'findExportListScore': (classSubjectId, keyword) =>
-    //     `/api/secure/teacher/find-export-list-score/${classSubjectId}?mssv=${encodeURIComponent(keyword)}&fullName=${encodeURIComponent(keyword)}`,
+    //Tim kiem sinh vien
+    'findExportListScoreBase': classDetailId =>`/api/secure/teacher/find-export-list-score/${classDetailId}`,
 
-    'mySubjects': '/api/secure/user/get-all-subjects',
+
+    'mySubjects': '/api/secure/user/get-all-classes-me-register',
     'getMyScore': (studentId, classSubjectId) => `/api/secure/user/get-my-score/${studentId}?classSubjectId=${classSubjectId}`,
 
-    'my-profile': '/api/secure/user/my-profile',
+    //Dang ky mon hoc, lop hoc
+    'registerClass': '/api/secure/user/register-class',
+    'deleteClass': enrollId => `/api/secure/user/delete-class/${enrollId}`,
+    'getClassesInSemester': semesterId => `/api/secure/user/list-subject/semester/${semesterId}`,
 
+    // Sinh vien trong lop
+    'getAllStudentsInClass': classDetailId => `/list-student-enrollment/${classDetailId}`,
+
+    //Tao cuoc hoi thoai
+    'createConversation': classDetailId => `/create-conversation/${classDetailId}`,
+    'deleteConversation': conversationId => `/delete-conversation/${conversationId}`,
+    'getAllConversations': classDetailId => `/list-conversation/${classDetailId}`,
+
+    // Tao forum
+    'createForum': '/create-forum',
+    'deleteForum': forumId => `/delete-forum/${forumId}`,
+    'replyForum': forumId => `/forum-reply/${forumId}`,
+    'replyForumUpdate': forumDetailId => `/forum-reply/update/${forumDetailId}`,
+    'replyForumDelete': forumDetailId => `/forum-reply/delete/${forumDetailId}`,
+    'getAllForums': forumId => `/get-all-reply-forum/${forumId}`,
 };
 
 export const authApis = () => {

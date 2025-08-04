@@ -68,4 +68,14 @@ public class ForumDetailsServiceImpl implements ForumDetailsService {
         }
         return responses;
     }
+
+    @Override
+    public List<ForumDetailsResponse> getAllForumByForumId(String forumId) {
+        List<ForumDetails> forumDetailsList = this.forumDetailsRepository.getAllByForumId(forumId);
+        List<ForumDetailsResponse> responses = new ArrayList<>();
+        for (ForumDetails forumDetail : forumDetailsList) {
+            responses.add(this.forumDetailsMapper.toForumDetailsResponse(forumDetail));
+        }
+        return responses;
+    }
 }
