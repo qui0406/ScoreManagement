@@ -10,8 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "conversation",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"teacher_id", "student_id"}))
+@Table(name = "conversation")
 public class Conversation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

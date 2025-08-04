@@ -2,7 +2,6 @@ package com.scm.repositories;
 
 import com.scm.pojo.Conversation;
 import com.scm.pojo.Message;
-import com.scm.pojo.MessageTest;
 
 import java.util.List;
 
