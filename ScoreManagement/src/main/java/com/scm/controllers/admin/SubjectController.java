@@ -28,13 +28,6 @@ public class SubjectController {
     public String showSubjectForm(Model model) {
         model.addAttribute("subject", new Subject());
 
-        // Lấy danh sách khoa và học kỳ (từ DB hoặc service)
-//        List<Faculty> faculties = facultyService.findAll();
-//        List<Semester> semesters = semesterService.findAll();
-
-//        model.addAttribute("faculties", faculties);
-//        model.addAttribute("semesters", semesters);
-
         return "subject-form";
     }
 

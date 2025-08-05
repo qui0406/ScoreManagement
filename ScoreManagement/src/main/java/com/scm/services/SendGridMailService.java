@@ -1,7 +1,9 @@
 package com.scm.services;
 
-import java.util.List;
+
+import com.scm.dto.requests.EmailRequest;
+import com.scm.dto.responses.EmailResponse;
 
 public interface SendGridMailService {
-    void sendMail(String subject, String content, List<String> sendToEmails, List<String> ccEmails, List<String> bccEmails);
+    EmailResponse sendMail(EmailRequest emailRequest);
 }

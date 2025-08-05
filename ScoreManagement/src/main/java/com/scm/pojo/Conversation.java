@@ -24,6 +24,10 @@ public class Conversation implements Serializable {
     @JoinColumn(name="student_id", nullable=false)
     private Student student;
 
+    @ManyToOne
+    @JoinColumn(name="class_detail_id", nullable = false)
+    private ClassDetails classDetails;
+
     @Column(name="created_at")
     private LocalDateTime createdAt= LocalDateTime.now();
 }

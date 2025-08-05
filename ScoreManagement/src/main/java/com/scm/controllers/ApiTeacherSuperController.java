@@ -1,7 +1,6 @@
 package com.scm.controllers;
 
-import com.scm.dto.requests.ListScoreStudentRequest;
-import com.scm.dto.requests.ReadFileCSVRequest;
+import com.scm.dto.requests.*;
 import com.scm.dto.responses.ScoreTypeResponse;
 import com.scm.dto.responses.WriteScoreStudentPDFResponse;
 import com.scm.exceptions.AppException;
@@ -12,6 +11,7 @@ import com.scm.pojo.User;
 import com.scm.services.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,11 +27,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/secure/teacher-super")
 @Slf4j
 public class ApiTeacherSuperController {
-    @Autowired
-    private UserService userDetailsService;
+    @Value("${spring.send_grid.from_email}")
+    private String sendGridFromEmail;
 
     @Autowired
-    private ClassroomService classroomService;
+    private UserService userDetailsService;
 
     @Autowired
     private StudentService studentService;
@@ -40,7 +40,7 @@ public class ApiTeacherSuperController {
     private ScoreService scoreService;
 
     @Autowired
-    private ClassroomDetailsService classroomDetailsService;
+    private SendGridMailService sendGridMailService;
 
     @Autowired
     private ScoreTypeService scoreTypeService;
@@ -110,8 +110,6 @@ public class ApiTeacherSuperController {
         }
     }
 
-
-
     @PostMapping("/score/block-score/{classDetailId}")
     public ResponseEntity<?> blockScore(@PathVariable(value="classDetailId") String classDetailId,
                                         Principal principal) {
@@ -119,6 +117,19 @@ public class ApiTeacherSuperController {
             String teacherName = principal.getName();
             User teacher = userDetailsService.getUserByUsername(teacherName);
             this.scoreService.blockScore(teacher.getId().toString(), classDetailId);
+
+
+            EmailRequest emailRequest = new EmailRequest();
+            List<Recipient> listRecipients= studentService.getAllRecipientStudentsByClass(classDetailId);
+            emailRequest.setSubject("Blocked Students");
+            emailRequest.setContent("This student has been blocked.");
+            emailRequest.setSender(new Sender(
+                    teacherName, sendGridFromEmail
+            ));
+            emailRequest.setTo(listRecipients);
+            this.sendGridMailService.sendMail(emailRequest);
+
+
             return ResponseEntity.ok("value: Successfully");
         }catch (AppException e) {
             throw new AppException(ErrorCode.BLOCK_SCORE_ERROR);

@@ -2,6 +2,7 @@ package com.scm.controllers;
 
 import com.scm.dto.requests.CreateClassDetailsRequest;
 import com.scm.dto.requests.EnrollClassRequest;
+import com.scm.dto.responses.ClassDetailsResponse;
 import com.scm.dto.responses.StudentResponse;
 import com.scm.pojo.User;
 import com.scm.services.ClassroomDetailsService;
@@ -30,6 +31,9 @@ public class ApiClassController {
     private StudentService studentService;
 
     @Autowired
+    private ClassroomDetailsService classroomDetailsService;
+
+    @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
 
@@ -51,5 +55,13 @@ public class ApiClassController {
     @GetMapping("/list-student-enrollment/{classDetailId}")
     public ResponseEntity<List<StudentResponse>> getEnrollment(@PathVariable("classDetailId") String classDetailId) {
         return ResponseEntity.ok(this.studentService.getAllStudentsByClass(classDetailId));
+    }
+
+    @GetMapping("/get-my-classes/{classDetailId}")
+    public ResponseEntity<ClassDetailsResponse> getClassDetails(@PathVariable("classDetailId")
+                                            String classDetailId, Principal principal) {
+        String name = principal.getName();
+        User student = userDetailsService.getUserByUsername(name);
+        return ResponseEntity.ok(this.classroomDetailsService.getClassDetailsById(classDetailId, student.getId().toString()));
     }
 }

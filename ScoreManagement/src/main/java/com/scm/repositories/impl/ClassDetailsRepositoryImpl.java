@@ -67,39 +67,18 @@ public class ClassDetailsRepositoryImpl implements ClassDetailsRepository {
         return null;
     }
 
-
-
-
     @Override
-    public int countStudentsInClassSubject(Integer classSubjectId) {
-        Session s = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Long> q = b.createQuery(Long.class);
-
-        Root<EnrollDetails> root = q.from(EnrollDetails.class);
-
-        q.select(b.count(root));
-        q.where(b.equal(root.get("classSubject").get("id"), classSubjectId));
-
-        Long result = s.createQuery(q).getSingleResult();
-        return result != null ? result.intValue() : 0;
-    }
-
-    @Override
-    public int countScoreTypesInClassSubject(Integer classSubjectId) {
-        if (classSubjectId == null) return 0;
-
-        Session session = factory.getObject().getCurrentSession();
+    public int countStudent(ClassDetails classDetails) {
+        Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        Root<EnrollDetails> root = query.from(EnrollDetails.class);
 
-        Root<Score> root = query.from(Score.class);
+        query.select(cb.count(root))
+                .where(cb.equal(root.get("classDetails"), classDetails));
 
-        query.select(cb.countDistinct(root.get("scoreType")));
-        query.where(cb.equal(root.get("classSubject").get("id"), classSubjectId));
-
-        Long result = session.createQuery(query).getSingleResult();
-        return result != null ? result.intValue() : 0;
+        Long count = session.createQuery(query).uniqueResult();
+        return count != null ? count.intValue() : 0;
     }
 
     @Override

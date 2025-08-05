@@ -14,8 +14,9 @@ import java.util.List;
  */
 public interface ClassDetailsRepository {
     List<ClassDetails> getClassroomSubjectsByTeacherId(String teacherId);
-    int countStudentsInClassSubject(Integer classSubjectId);
-    int countScoreTypesInClassSubject(Integer classSubjectId);
+
+    int countStudent(ClassDetails classDetails);
+
     ClassDetails findById(String classSubjectId);
 
     void create(ClassDetails classDetails);

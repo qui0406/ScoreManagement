@@ -50,7 +50,7 @@ public class SpringSecurityConfigs {
     private JwtFilter jwtFilter;
 
     private static final String[] PUBLIC_ENDPOINTS = {
-            "/api/auth/**","/api/test"
+            "/api/auth/**", "/email/**"
     };
 
     private static final String[] STAFF_ENDPOINTS = {
@@ -58,7 +58,7 @@ public class SpringSecurityConfigs {
     };
 
     private static final String[] TEACHER_ENDPOINTS = {
-        "/api/secure/teacher/**"
+        "/api/secure/teacher/**",
     };
 
     private static final String[] TEACHER_SUPER_ENDPOINTS = {
@@ -66,7 +66,7 @@ public class SpringSecurityConfigs {
     };
 
     private static final String[] USER_ENDPOINTS = {
-        "/api/secure/user/**"
+        "/api/secure/user/**",
     };
 
     @Bean

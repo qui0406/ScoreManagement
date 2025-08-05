@@ -14,6 +14,8 @@ public interface ConversationRepository {
 
     List<Conversation> getAllConversationsByUserId(String userId);
 
+    List<Conversation> getConversationsInClass(String classId);
+
     List<Conversation> findByTeacher(Teacher teacher);
     List<Conversation> findByStudent(Student teacher);
 

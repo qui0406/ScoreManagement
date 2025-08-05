@@ -17,10 +17,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClassDetailsResponse {
-    private Integer id;
+    private String id;
     private SubjectDTO subject;
     private ClassroomDTO classroom;
-
-    private Integer totalStudents;
-    private Integer countScoreType;
+    private int totalStudents;
 }
