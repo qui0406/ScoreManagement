@@ -93,7 +93,6 @@ public class SpringSecurityConfigs {
                 -> requests
                         .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers("/login", "/logout").permitAll()
-                        .requestMatchers("/ws/**", "/websocket/**").permitAll()
                         .requestMatchers(STAFF_ENDPOINTS).hasAnyRole("STAFF")
                         .requestMatchers(TEACHER_SUPER_ENDPOINTS).hasAnyRole("TEACHER")
                         .requestMatchers(TEACHER_ENDPOINTS).hasAnyRole("TEACHER")

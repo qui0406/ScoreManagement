@@ -40,7 +40,7 @@ public class ForumMapperDecorator implements ForumMapper {
 
         if (user instanceof Student) {
             Student student = (Student) user;
-            forumResponse.setStudentCreatedId(new StudentDTO(student.getId().toString(),student.getMssv(),
+            forumResponse.setStudentCreatedId(new StudentDTO(student.getId().toString() ,student.getMssv(),
                     student.getLastName() + " " + student.getFirstName()));
         } else if (user instanceof Teacher) {
             Teacher teacher = (Teacher) user;
