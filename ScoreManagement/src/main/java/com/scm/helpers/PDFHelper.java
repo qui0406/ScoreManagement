@@ -1,35 +1,26 @@
 package com.scm.helpers;
 
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfDocument;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.scm.dto.requests.ListScoreStudentRequest;
 import com.scm.dto.responses.WriteScoreStudentPDFResponse;
-import com.scm.pojo.enums.ScoreTypeEnum;
-import com.scm.services.ScoreTypeService;
-import jakarta.persistence.Table;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 public class PDFHelper {
     private static final int DEFAULT_COLUMNS = 4;
 
-    public static void exportScoreListToPDF(List<WriteScoreStudentPDFResponse> scoreList,
-                                            List<String> listScoreTypeName) throws Exception {
-        Document document = new Document(PageSize.A4, 36, 36, 54, 36); // lề trái, phải, trên, dưới
-        String path = "C:/Users/QUI/Desktop/iTextTable.pdf";
-        PdfWriter.getInstance(document, new FileOutputStream(path));
+    public static byte[] exportScoreListToPDFBytes(List<WriteScoreStudentPDFResponse> scoreList,
+                                                   List<String> listScoreTypeName) throws Exception {
+        Document document = new Document(PageSize.A4, 36, 36, 54, 36);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PdfWriter.getInstance(document, out);
 
         document.open();
 
@@ -39,7 +30,6 @@ public class PDFHelper {
         title.setSpacingAfter(20f);
         document.add(title);
 
-        // Font bảng
         Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.WHITE);
         Font cellFont = FontFactory.getFont(FontFactory.HELVETICA, 10, BaseColor.BLACK);
 
@@ -76,7 +66,10 @@ public class PDFHelper {
 
         document.add(table);
         document.close();
+
+        return out.toByteArray();
     }
+
 
     private static void addTableHeader(PdfPTable table, String headerTitle, Font font, BaseColor bgColor) {
         PdfPCell header = new PdfPCell(new Phrase(headerTitle, font));
