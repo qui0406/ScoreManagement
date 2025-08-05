@@ -21,8 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 @Slf4j
 public class CSVHelper {
-
-
     public static List<ReadFileCSVRequest> parseScoreCSV(MultipartFile inputFile) {
         try (CSVReader csvReader = new CSVReader(new InputStreamReader(inputFile.getInputStream()))) {
             String[] headers = csvReader.readNext();

@@ -12,8 +12,8 @@ import com.scm.services.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/secure/teacher-super")
+@RequestMapping("/api/secure/teacher")
 @Slf4j
 public class ApiTeacherSuperController {
     @Value("${spring.send_grid.from_email}")
@@ -47,6 +47,9 @@ public class ApiTeacherSuperController {
 
     @Autowired
     private ScoreStudentService scoreStudentService;
+
+    @Autowired
+    private WriteAndReadFileService  writeAndReadFileService;
 
     @PostMapping(path = "/upload-scores/{classDetailId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -90,25 +93,27 @@ public class ApiTeacherSuperController {
     }
 
     @PostMapping("/export-scores/{classDetailId}")
-    public ResponseEntity<String> exportScores(@PathVariable(value="classDetailId") String classDetailId,
+    public ResponseEntity<?> exportScores(@PathVariable("classDetailId") String classDetailId,
                                                Principal principal) throws Exception {
-        try{
+        try {
             String teacherName = principal.getName();
             User teacher = userDetailsService.getUserByUsername(teacherName);
-            List<WriteScoreStudentPDFResponse> request = this.scoreStudentService.listScorePDF(classDetailId, teacher.getId().toString());
+            byte[] pdfBytes = writeAndReadFileService.exportScoresToPDF(classDetailId, teacher.getId().toString());
 
-            List<ScoreTypeResponse> listScoreType = this.scoreTypeService.getScoreTypesByClassDetails(classDetailId);
-            List<String> listScoreTypeName = listScoreType.stream()
-                    .map(ScoreTypeResponse::getScoreTypeName)
-                    .collect(Collectors.toList());
+            ByteArrayResource resource = new ByteArrayResource(pdfBytes);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDisposition(ContentDisposition.attachment().filename("scores.pdf").build());
+            headers.setContentLength(pdfBytes.length);
 
-            PDFHelper.exportScoreListToPDF(request, listScoreTypeName);
-            return ResponseEntity.ok("value: Successfully");
-        }
-        catch (AppException ex){
-            return ResponseEntity.badRequest().body("value:" + ex.getErrorCode().getMessage());
+            return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+        } catch (AppException ex) {
+            return ResponseEntity.badRequest()
+                    .header("value", ex.getErrorCode().getMessage())
+                    .body(null);
         }
     }
+
 
     @PostMapping("/score/block-score/{classDetailId}")
     public ResponseEntity<?> blockScore(@PathVariable(value="classDetailId") String classDetailId,

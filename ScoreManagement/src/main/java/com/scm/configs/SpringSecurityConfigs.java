@@ -93,11 +93,10 @@ public class SpringSecurityConfigs {
                 -> requests
                         .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers("/login", "/logout").permitAll()
-                        .requestMatchers("/ws/**", "/websocket/**").permitAll()
                         .requestMatchers(STAFF_ENDPOINTS).hasAnyRole("STAFF")
-                        .requestMatchers(TEACHER_SUPER_ENDPOINTS).hasAnyRole("TEACHER_SUPER")
-                        .requestMatchers(TEACHER_ENDPOINTS).hasAnyRole("TEACHER", "TEACHER_SUPER")
-                        .requestMatchers(USER_ENDPOINTS).hasAnyRole("USER", "TEACHER", "TEACHER_SUPER")
+                        .requestMatchers(TEACHER_SUPER_ENDPOINTS).hasAnyRole("TEACHER")
+                        .requestMatchers(TEACHER_ENDPOINTS).hasAnyRole("TEACHER")
+                        .requestMatchers(USER_ENDPOINTS).hasAnyRole("USER", "TEACHER")
                         .anyRequest().authenticated())
 
                 .formLogin(form -> form.loginPage("/admin/login")

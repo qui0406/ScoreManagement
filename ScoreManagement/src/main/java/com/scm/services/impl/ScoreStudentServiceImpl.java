@@ -133,6 +133,7 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
 
         ScoreStudentResponse response = new ScoreStudentResponse();
         response.setStudent(new StudentDTO(
+                student.getId().toString(),
                 student.getMssv(),
                 student.getFirstName() + " " + student.getLastName()
         ));

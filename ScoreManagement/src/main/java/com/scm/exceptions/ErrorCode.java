@@ -33,6 +33,7 @@ public enum ErrorCode {
     FORUM_NOT_FOUND(1121, "Forum not found",  HttpStatus.NOT_FOUND),
     USER_NOT_FOUND(1122, "User not found",  HttpStatus.NOT_FOUND),
     UPLOAD_FILE_ERROR(1123, "Upload file error",  HttpStatus.BAD_REQUEST),
+    DOWNLOAD_FILE_ERROR(1124, "Download file error",  HttpStatus.BAD_REQUEST),
 
     // --- AUTHENTICATION & AUTHORIZATION ERRORS ---
     UNAUTHORIZED(1101, "Bạn không có quyền", HttpStatus.UNAUTHORIZED),
