@@ -4,6 +4,7 @@
  */
 package com.scm.services;
 
+import com.scm.dto.requests.Recipient;
 import com.scm.dto.responses.StudentResponse;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import java.util.List;
  */
 public interface StudentService {
     List<StudentResponse> getAllStudentsByClass(String classDetailId);
+
+    List<Recipient> getAllRecipientStudentsByClass(String classDetailId);
 
     String findIdByUsername(String username);
     String getIdByMssv(String mssv);

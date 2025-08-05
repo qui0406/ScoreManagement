@@ -53,6 +53,17 @@ public class ConversationRepositoryImpl implements ConversationRepository {
     }
 
     @Override
+    public List<Conversation> getConversationsInClass(String classId) {
+        Session s = factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Conversation> cq = b.createQuery(Conversation.class);
+        Root<Conversation> root = cq.from(Conversation.class);
+        cq.select(root);
+        cq.where(b.equal(root.get("classDetails").get("id"), classId)).orderBy(b.desc(root.get("createdAt")));;
+        return s.createQuery(cq).getResultList();
+    }
+
+    @Override
     public List<Conversation> findByTeacher(Teacher teacher) {
         Session s = factory.getObject().getCurrentSession();
         CriteriaBuilder cb = s.getCriteriaBuilder();
