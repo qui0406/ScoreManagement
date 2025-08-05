@@ -7,18 +7,18 @@ export const endpoints = {
     //Auth
     'register': '/api/auth/register',
     'login': '/api/auth/login',
-    'my-profile' :'/api/secure/user/my-profile',
+    'my-profile': '/api/secure/user/my-profile',
     'update-profile': '/api/secure/user/update-profile',
     'my-score': classDetailId => `/api/secure/user/my-score/${classDetailId}`,
 
     // Lớp học của giáo viên
     'my-classes': '/api/secure/teacher/my-classrooms',
     'classDetails': classId => `/api/secure/teacher/class-subject/${classId}/details`,
-    'studentList': classDetailId =>`/api/secure/user/list-student-enrollment/${classDetailId}`,
+    'studentList': classDetailId => `/api/secure/user/list-student-enrollment/${classDetailId}`,
 
     // Điểm
     'getScores': classSubjectId => `/api/secure/teacher/class-subject/${classSubjectId}/scores`,
-    'addScore': '/api/secure/teacher/add-list-score-all-student', 
+    'addScore': '/api/secure/teacher/add-list-scores-all-student',
     'blockScore': classDetailId => `/api/secure/teacher/score/block-score/${classDetailId}`,
     'statusScore': classDetailId => `/api/secure/teacher/score/get-status/${classDetailId}`,
 
@@ -35,7 +35,7 @@ export const endpoints = {
     'exportScore': classDetailId => `/api/secure/teacher/export-scores/${classDetailId}`,
 
     //Tim kiem sinh vien
-    'findExportListScoreBase': classDetailId =>`/api/secure/teacher/find-export-list-score/${classDetailId}`,
+    'findExportListScoreBase': classDetailId => `/api/secure/teacher/find-export-list-score/${classDetailId}`,
 
 
     'mySubjects': '/api/secure/user/get-all-classes-me-register',
@@ -64,7 +64,7 @@ export const endpoints = {
 };
 
 export const authApis = () => {
-    
+
     return axios.create({
         baseURL: BASE_URL,
         headers: {
