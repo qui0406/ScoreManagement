@@ -18,7 +18,6 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @DiscriminatorColumn(name="user_type",
         discriminatorType = DiscriminatorType.STRING)

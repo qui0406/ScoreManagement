@@ -23,6 +23,7 @@ public class DispatcherSerlvetInit extends AbstractAnnotationConfigDispatcherSer
             ThymeleafConfigs.class,
             SpringSecurityConfigs.class,
             CloudinaryConfig.class,
+            SendgridConfig.class,
             WebAppContextConfigs.class,
             RedisConfig.class,
             SocketIOConfig.class

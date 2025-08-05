@@ -4,6 +4,7 @@
  */
 package com.scm.services.impl;
 
+import com.scm.dto.requests.Recipient;
 import com.scm.dto.responses.StudentResponse;
 import com.scm.mapper.UserMapper;
 import com.scm.pojo.Student;
@@ -30,7 +31,6 @@ public class StudentServiceImpl implements StudentService {
     private UserMapper userMapper;
 
     @Override
-    @Cacheable(value = "studentsByClass", key = "#classDetailId")
     public List<StudentResponse> getAllStudentsByClass(String classDetailId) {
         List<Student> students = this.studentRepo.getAllStudentsByClass(classDetailId);
         List<StudentResponse> studentResponses = new ArrayList<>();
@@ -39,6 +39,19 @@ public class StudentServiceImpl implements StudentService {
             studentResponses.add(response);
         }
         return studentResponses;
+    }
+
+    @Override
+    public List<Recipient> getAllRecipientStudentsByClass(String classDetailId) {
+        List<Student> students = this.studentRepo.getAllStudentsByClass(classDetailId);
+        List<Recipient> recipients = new ArrayList<>();
+        for (Student student : students) {
+            Recipient recipient = new Recipient();
+            recipient.setEmail(student.getEmail());
+            recipient.setName(student.getFirstName());
+            recipients.add(recipient);
+        }
+        return recipients;
     }
 
     @Override

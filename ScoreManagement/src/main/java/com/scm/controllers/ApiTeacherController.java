@@ -47,6 +47,9 @@ public class ApiTeacherController {
     @Autowired
     private ScoreStudentService scoreStudentService;
 
+    @Autowired
+    private ConversationService conversationService;
+
 
     @GetMapping("/my-classrooms")
     public ResponseEntity<List<ClassResponse>> getMyClassrooms(Principal principal) {
@@ -91,4 +94,12 @@ public class ApiTeacherController {
         }
     }
 
+    @GetMapping("/list-conversation/{classDetailId}")
+    public ResponseEntity<?> getAllConversations(@PathVariable(value ="classDetailId") String classDetailId,
+                                                 Principal principal) {
+        String teacherName = principal.getName();
+        User teacher = userDetailsService.getUserByUsername(teacherName);
+        List<ConversationResponse> responses = this.conversationService.getAllConversationsByClassDetailId(classDetailId, teacher.getId().toString());
+        return ResponseEntity.status(HttpStatus.OK).body(responses);
+    }
 }

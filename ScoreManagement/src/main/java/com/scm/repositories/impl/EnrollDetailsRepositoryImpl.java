@@ -1,7 +1,9 @@
 package com.scm.repositories.impl;
 
+import com.scm.pojo.ClassDetails;
 import com.scm.pojo.EnrollDetails;
 import com.scm.repositories.EnrollDetailsRepository;
+import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -10,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Repository
 @Transactional
@@ -21,6 +25,17 @@ public class EnrollDetailsRepositoryImpl implements EnrollDetailsRepository {
     public EnrollDetails findById(String enrollDetailId) {
         Session s = this.factory.getObject().getCurrentSession();
         return s.get(EnrollDetails.class, enrollDetailId);
+    }
+
+    @Override
+    public List<ClassDetails> findAllClassDetailRegisterSemester(String studentId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = s.getCriteriaBuilder();
+        CriteriaQuery<ClassDetails> query = builder.createQuery(ClassDetails.class);
+        Root<ClassDetails> root = query.from(ClassDetails.class);
+        query.select(root);
+        query.where(builder.equal(root.get("studentId"), studentId));
+        return s.createQuery(query).getResultList();
     }
 
     @Override

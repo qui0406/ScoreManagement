@@ -14,4 +14,5 @@ import java.time.LocalDate;
 public class ConversationRequest {
     private String teacherId;
     private String studentId;
+    private String classDetailId;
 }

@@ -60,7 +60,7 @@ public class ClassDetailMapperDecorator implements ClassDetailMapper {
     public ClassDetailsResponse toClassDetailsResponse(ClassDetails dto) {
         ClassDetailsResponse cs = new ClassDetailsResponse();
 
-        cs.setId(dto.getId());
+        cs.setId(dto.getId().toString());
         cs.setSubject(subjectMapper.toSubjectDTO(dto.getSubject()));
         cs.setClassroom(classroomMapper.toClassroomDTO(dto.getClassroom()));
         return cs;

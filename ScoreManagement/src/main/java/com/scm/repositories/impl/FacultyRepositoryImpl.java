@@ -35,4 +35,16 @@ public class FacultyRepositoryImpl implements FacultyRepository {
         query.select(root);
         return session.createQuery(query).getResultList();
     }
+
+    @Override
+    public void create(Faculty faculty) {
+        Session session = factory.getObject().getCurrentSession();
+        session.persist(faculty);
+    }
+
+    @Override
+    public void delete(Faculty faculty) {
+        Session session = factory.getObject().getCurrentSession();
+        session.remove(faculty);
+    }
 }

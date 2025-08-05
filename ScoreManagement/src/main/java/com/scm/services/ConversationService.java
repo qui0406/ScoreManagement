@@ -13,4 +13,6 @@ public interface ConversationService {
     List<ConversationResponse> getAllConversationsByUserId(String userId);
 
     Conversation findById(String id);
+
+    List<ConversationResponse> getAllConversationsByClassDetailId(String classId, String userId);
 }

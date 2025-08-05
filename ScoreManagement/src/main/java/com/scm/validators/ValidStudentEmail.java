@@ -5,10 +5,10 @@ import jakarta.validation.Payload;
 
 import java.lang.annotation.*;
 
-@Documented
-@Constraint(validatedBy = StudentEmailValidator.class)
-@Target({ElementType.FIELD, ElementType.TYPE})
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = StudentEmailValidator.class)
+@Documented
 public @interface ValidStudentEmail {
 
     String message() default "Email không đúng định dạng MSSV + FirstName + @ou.edu.vn";

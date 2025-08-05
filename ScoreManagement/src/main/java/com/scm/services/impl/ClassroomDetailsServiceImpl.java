@@ -5,10 +5,15 @@
 package com.scm.services.impl;
 
 import com.scm.dto.requests.CreateClassDetailsRequest;
+import com.scm.dto.responses.ClassDetailsResponse;
 import com.scm.dto.responses.ClassResponse;
+import com.scm.exceptions.AppException;
+import com.scm.exceptions.ErrorCode;
 import com.scm.mapper.ClassDetailMapper;
 import com.scm.pojo.ClassDetails;
+import com.scm.pojo.EnrollDetails;
 import com.scm.repositories.ClassDetailsRepository;
+import com.scm.repositories.EnrollDetailsRepository;
 import com.scm.services.ClassroomDetailsService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +34,8 @@ public class ClassroomDetailsServiceImpl implements ClassroomDetailsService {
     private ClassDetailsRepository classDetailsRepository;
     @Autowired
     private ClassDetailMapper classDetailMapper;
+    @Autowired
+    private EnrollDetailsRepository enrollDetailsRepository;
 
 
     @Override
@@ -56,5 +63,18 @@ public class ClassroomDetailsServiceImpl implements ClassroomDetailsService {
     @Override
     public String getTeacherIdByClassDetailId(String classDetailId) {
         return this.classDetailsRepository.findById(classDetailId).getTeacher().getId().toString();
+    }
+
+    @Override
+    public ClassDetailsResponse getClassDetailsById(String classDetailsId, String studentId) {
+        //List<ClassDetails> e = this.enrollDetailsRepository.findAllClassDetailRegisterSemester(studentId);
+        ClassDetails classDetails = this.classDetailsRepository.findById(classDetailsId);
+//        if(!e.contains(classDetails)) {
+//            throw new AppException(ErrorCode.UNAUTHORIZED);
+//        }
+
+        ClassDetailsResponse response = classDetailMapper.toClassDetailsResponse(classDetails);
+        response.setTotalStudents(this.classDetailsRepository.countStudent(classDetails));
+        return response;
     }
 }
