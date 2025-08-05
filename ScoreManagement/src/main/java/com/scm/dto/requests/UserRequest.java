@@ -1,5 +1,8 @@
 package com.scm.dto.requests;
 
+import com.scm.validators.ValidStudentEmail;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,10 +14,15 @@ import java.time.LocalDate;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserRequest {
+    @NotBlank
     private String username;
+    @NotBlank
     private String password;
+    @NotBlank
     private String firstName;
     private String lastName;
+
+
     private String email;
     private String phone;
     private String address;
