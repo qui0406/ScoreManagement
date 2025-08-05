@@ -1,0 +1,77 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Trang chủ</title>
+    <th:block th:replace="base :: bootstrap"></th:block>
+</head>
+<body>
+<div th:replace="base :: header"></div>
+
+<main class="container">
+    <h1 class="mt-4 mb-4">Danh sách giảng viên</h1>
+    <a th:href="@{/admin/register-teacher}" class="btn btn-success mb-3">Thêm giảng viên</a>
+
+    <!-- Phần hiển thị giảng viên thường -->
+    <h2 class="mt-4 mb-3">Giảng viên thường</h2>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Mã GV</th>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Điện thoại</th>
+            <th>Kinh nghiệm</th>
+            <th>Chức vụ</th>
+            <th>Lớp</th>
+            <th>Khoa</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="t : ${teachersNormals}">
+            <td th:text="${t.msgv}"></td>
+            <td th:text="${t.firstName + ' ' + t.lastName}"></td>
+            <td th:text="${t.email}"></td>
+            <td th:text="${t.phone}"></td>
+            <td th:text="${t.experience}"></td>
+            <td th:text="${t.position}"></td>
+            <td th:text="${t.classroom != null ? t.classroom.name : ''}"></td>
+            <td th:text="${t.faculty != null ? t.faculty.name : ''}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Phần hiển thị giảng viên quản lý -->
+    <h2 class="mt-4 mb-3">Giảng viên quản lý</h2>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Mã GV</th>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Điện thoại</th>
+            <th>Kinh nghiệm</th>
+            <th>Chức vụ</th>
+            <th>Lớp</th>
+            <th>Khoa</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="t : ${teachersSupers}">
+            <td th:text="${t.msgv}"></td>
+            <td th:text="${t.firstName + ' ' + t.lastName}"></td>
+            <td th:text="${t.email}"></td>
+            <td th:text="${t.phone}"></td>
+            <td th:text="${t.experience}"></td>
+            <td th:text="${t.position}"></td>
+            <td th:text="${t.classroom != null ? t.classroom.name : ''}"></td>
+            <td th:text="${t.faculty != null ? t.faculty.name : ''}"></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<div th:replace="base :: footer"></div>
+
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
