@@ -28,7 +28,7 @@ public class PDFHelper {
     public static void exportScoreListToPDF(List<WriteScoreStudentPDFResponse> scoreList,
                                             List<String> listScoreTypeName) throws Exception {
         Document document = new Document(PageSize.A4, 36, 36, 54, 36); // lề trái, phải, trên, dưới
-        String path = "C:/Users/QUI/Desktop/iTextTable.pdf";
+        String path = "D:/Users/ttthu/Downloads/iTextTable.pdf";
         PdfWriter.getInstance(document, new FileOutputStream(path));
 
         document.open();

@@ -67,11 +67,11 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
 
     @Override
     public List<ScoreStudentResponse> getScoreByClassDetails(String classDetailId, String teacherId) {
-        String cacheKey = "classScore:" + classDetailId + "_" + teacherId;
-        Object cached = redisService.getValue(cacheKey);
-        if (cached != null) {
-            return (List<ScoreStudentResponse>) cached;
-        }
+//        String cacheKey = "classScore:" + classDetailId + "_" + teacherId;
+//        Object cached = redisService.getValue(cacheKey);
+//        if (cached != null) {
+//            return (List<ScoreStudentResponse>) cached;
+//        }
 
         ClassDetails classDetails = this.classDetailsRepository.findById(classDetailId);
         if(!classDetails.getTeacher().getId().toString().equals(teacherId)){
@@ -86,7 +86,7 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
             scoreStudentResponse.add(response);
         }
 
-        redisService.setValue(cacheKey, scoreStudentResponse);
+//        redisService.setValue(cacheKey, scoreStudentResponse);
         return scoreStudentResponse;
     }
 
@@ -133,6 +133,7 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
 
         ScoreStudentResponse response = new ScoreStudentResponse();
         response.setStudent(new StudentDTO(
+                student.getId().toString(),
                 student.getMssv(),
                 student.getFirstName() + " " + student.getLastName()
         ));

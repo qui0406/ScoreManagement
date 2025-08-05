@@ -41,7 +41,7 @@ public class ForumDetailsMapperDecorator implements ForumDetailsMapper {
 
         Student student = studentRepository.findById(user.getId().toString());
         if (student != null) {
-            response.setStudent(new StudentDTO(student.getMssv(),
+            response.setStudent(new StudentDTO(student.getId().toString(), student.getMssv(),
                     student.getLastName() + " " + student.getFirstName()));
         }
 

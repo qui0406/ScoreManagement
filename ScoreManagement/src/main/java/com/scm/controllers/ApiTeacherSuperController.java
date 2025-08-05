@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/secure/teacher-super")
+@RequestMapping("/api/secure/teacher")
 @Slf4j
 public class ApiTeacherSuperController {
     @Value("${spring.send_grid.from_email}")
@@ -110,7 +110,7 @@ public class ApiTeacherSuperController {
         }
     }
 
-    @PostMapping("/score/block-score/{classDetailId}")
+        @PostMapping("/score/block-score/{classDetailId}")
     public ResponseEntity<?> blockScore(@PathVariable(value="classDetailId") String classDetailId,
                                         Principal principal) {
         try {
