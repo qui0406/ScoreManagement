@@ -14,7 +14,7 @@ export const endpoints = {
     // Lớp học của giáo viên
     'my-classes': '/api/secure/teacher/my-classrooms',
     'classDetails': classId => `/api/secure/teacher/class-subject/${classId}/details`,
-    'studentList': classId =>`/api/secure/teacher/class-subject/${classId}/students`,
+    'studentList': classDetailId =>`/api/secure/user/list-student-enrollment/${classDetailId}`,
 
     // Điểm
     'getScores': classSubjectId => `/api/secure/teacher/class-subject/${classSubjectId}/scores`,
@@ -26,7 +26,7 @@ export const endpoints = {
 
     // Loại điểm
     'allScoreTypes': '/api/secure/teacher/class-subject/score-types',
-    'getScoreTypes': classDetailId => `/api/secure/teacher/class-subject/score-type/${classDetailId}`,
+    'getScoreTypes': classDetailId => `/api/secure/teacher/class-subject/score-types/${classDetailId}`,
     'addScoreType': (classDetailId, scoreTypeId) =>`/api/secure/teacher/class-subject/score-type/${classDetailId}/add?scoreTypeId=${scoreTypeId}`,
     'deleteScoreType': (classDetailId, scoreTypeId) => `/api/secure/teacher/class-subject/score-type/${classDetailId}/delete?scoreTypeId=${scoreTypeId}`,
 

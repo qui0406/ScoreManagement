@@ -39,19 +39,20 @@ const AddScore = () => {
 
                 res.data.forEach(item => {
                     studentsData.push({
-                        mssv: item.student.mssv,
-                        name: item.student.name,
-                        id: item.student.mssv, 
+                        mssv: item.mssv,
+                        name: item.name,
+                        id: item.mssv, 
                     });
                     // scores
-                    scoresData[item.student.mssv] = {};
+                    scoresData[item.mssv] = {};
                     (item.scores || []).forEach(type => {
-                        scoresData[item.student.mssv][type.id] = type.scores[0] || "";
+                        scoresData[item.mssv][type.id] = type.scores[0] || "";
                     });
                 });
                 setStudents(studentsData);
                 setScores(scoresData);
-
+                console.log("Dữ liệu sinh viên:", studentsData);
+                console.log("Dữ liệu điểm:", scoresData);
                 let scoreTypeArr = [];
                 if (res.data.length > 0) {
                     scoreTypeArr = res.data[0].scores.map(type => ({
@@ -60,6 +61,7 @@ const AddScore = () => {
                     }));
                 }
                 setScoreTypes(scoreTypeArr);
+                console.log(res.data);
 
                 setMsg("");
             } catch (err) {
@@ -153,12 +155,12 @@ const AddScore = () => {
 
 
 
-    const closeScore = async () => {
+    const blockScore = async () => {
         if (!window.confirm("Bạn có chắc chắn muốn đóng điểm? Sau khi đóng, không thể chỉnh sửa nữa!"))
             return;
         setLoading(true);
         try {
-            const res = await authApis().post(endpoints['closeScore'](classSubjectId));
+            const res = await authApis().post(endpoints['blockScore'](classSubjectId));
 
             if (res.status === 200 && res.data === true) {
                 setIsClose(true);
@@ -215,7 +217,7 @@ const AddScore = () => {
 
                 <Button
                     variant="danger"
-                    onClick={closeScore}
+                    onClick={blockScore}
                     disabled={loading || isClose}
                 >
                     {loading ? <Spinner size="sm" /> : null} Khóa điểm

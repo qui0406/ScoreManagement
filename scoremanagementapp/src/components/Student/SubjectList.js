@@ -43,9 +43,9 @@ const SubjectList = () => {
                             <Card.Title>{sub.subjectName}</Card.Title>
                             <Card.Text>
                                 <b>Mã môn học:</b> {sub.id}<br />
-                                {/* Thêm các thông tin khác nếu cần */}
+                                <b>Tên môn học:</b> {sub.subjectName}<br />
+
                             </Card.Text>
-                            {/* <Button variant="primary">Xem chi tiết</Button> */}
                         </Card.Body>
                     </Card>
                 </Col>
