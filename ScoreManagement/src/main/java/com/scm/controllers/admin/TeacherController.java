@@ -45,4 +45,10 @@ public class TeacherController {
         return "dashboard";
     }
 
+    @PostMapping("/update-role-teacher/{teacherId}")
+    public String updateRoleTeacher(Model model, @PathVariable(value="teacherId") String teacherId){
+        this.teacherService.updateRoleTeacher(teacherId);
+        return "dashboard";
+    }
+
 }

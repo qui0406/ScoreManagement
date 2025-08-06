@@ -10,20 +10,20 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "websocket_session")
 public class WebSocketSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Integer id;
 
-    @Column(name="websocket_sesssion_id")
-    private String webSocketSessionId;
+    @Column(name = "websocket_session_id")
+    private String websocketSessionId;
 
     @Column(name= "user_id")
     private String userId;
 
     private LocalDateTime timestamp;
-
 }

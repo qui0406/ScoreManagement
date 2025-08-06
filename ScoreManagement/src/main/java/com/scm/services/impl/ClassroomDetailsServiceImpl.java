@@ -77,4 +77,15 @@ public class ClassroomDetailsServiceImpl implements ClassroomDetailsService {
         response.setTotalStudents(this.classDetailsRepository.countStudent(classDetails));
         return response;
     }
+
+    @Override
+    public List<ClassDetailsResponse> getClassroomByStudentId(String studentId) {
+        List<ClassDetails> classrooms = this.classDetailsRepository.getClassroomByStudentId(studentId);
+        List<ClassDetailsResponse> responses = new ArrayList<>();
+        for (ClassDetails classroom : classrooms) {
+            ClassDetailsResponse response = classDetailMapper.toClassDetailsResponse(classroom);
+            responses.add(response);
+        }
+        return responses;
+    }
 }

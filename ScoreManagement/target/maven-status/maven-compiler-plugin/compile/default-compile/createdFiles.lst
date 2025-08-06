@@ -59,6 +59,7 @@ com\scm\pojo\Forum.class
 com\scm\services\MessageService.class
 com\scm\mapper\FacultyMapper.class
 com\scm\mapper\ScoreTypeMapper.class
+com\scm\controllers\ApiMessageController.class
 com\scm\repositories\impl\ClassDetailsScoreTypeRepositoryImpl.class
 com\scm\services\impl\ForumServiceImpl.class
 com\scm\dto\requests\CreateClassDetailsRequest.class
@@ -131,6 +132,7 @@ com\scm\dto\SenderDTO.class
 com\scm\repositories\ForumRepository.class
 com\scm\services\SemesterService.class
 com\scm\pojo\ScoreType.class
+com\scm\services\impl\MessageServiceImpl.class
 com\scm\services\impl\ScoreTypeServiceImpl.class
 com\scm\dto\responses\PDFRequest.class
 com\scm\repositories\ScoreTableRepository.class

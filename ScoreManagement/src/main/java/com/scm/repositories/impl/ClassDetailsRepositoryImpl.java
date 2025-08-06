@@ -12,6 +12,7 @@ import com.scm.repositories.ScoreTypeRepository;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Root;
 import java.util.List;
 
@@ -65,6 +66,17 @@ public class ClassDetailsRepositoryImpl implements ClassDetailsRepository {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<ClassDetails> getClassroomByStudentId(String studentId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<ClassDetails> q = b.createQuery(ClassDetails.class);
+        Root<EnrollDetails> root = q.from(EnrollDetails.class);
+        Join<EnrollDetails, ClassDetails>  join = root.join("classDetails");
+        q.select(join).where(b.equal(root.get("student").get("id"), studentId));
+        return s.createQuery(q).getResultList();
     }
 
     @Override

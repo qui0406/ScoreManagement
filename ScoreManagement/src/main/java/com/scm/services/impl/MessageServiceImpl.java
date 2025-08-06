@@ -44,7 +44,8 @@
 //
 //
 //    @Override
-//    public ChatMessageResponse create(ChatMessageRequest request, String userId) throws JsonProcessingException {
+//    public ChatMessageResponse create(ChatMessageRequest request, String conversationId, String userId) throws JsonProcessingException {
+//        request.setConversationId(conversationId);
 //        Message message = toChatMessage(request);
 //        this.messageRepository.create(message);
 //
@@ -65,12 +66,12 @@
 //        listSocketSessions.addAll(webSocketSessionsTeacher);
 //
 //
-//        Set<String> socketSessionIds = listSocketSessions.stream()
+//        Set<Integer> socketSessionIds = listSocketSessions.stream()
 //                .map(WebSocketSession::getId)
 //                .collect(Collectors.toSet());
 //
 //
-//        Set<String> websocketMe = webSocketSessionRepository
+//        Set<Integer> websocketMe = webSocketSessionRepository
 //                .findAllSocketSessionsById(userId).stream().map(WebSocketSession::getId)
 //                .collect(Collectors.toSet());
 //

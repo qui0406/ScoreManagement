@@ -15,6 +15,5 @@ public class TeacherResponse extends UserResponse{
     String experience;
     String position;
     String msgv;
-    Classroom classroom;
     Faculty faculty;
 }

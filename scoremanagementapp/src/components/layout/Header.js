@@ -38,6 +38,8 @@ const Header = () => {
                                                 <Link to="/registerclass" className="nav-link">Đăng kí môn học</Link>
 
                                                 <Link to="/student/profile" className="nav-link">Hồ sơ</Link>
+                                                <Link to="/student/chat" className="nav-link">Chat</Link>
+
                                             </>
                                             : null}
 
