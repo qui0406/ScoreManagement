@@ -36,20 +36,29 @@ public class SocketHandler {
     public void clientConnected(SocketIOClient socketIOClient) throws Exception {
         String token = socketIOClient.getHandshakeData().getSingleUrlParam("token");
 
-        String username = JwtUtils.validateTokenAndGetUsername(token);
-        if (username == null) {
-            log.error("Invalid token");
-            socketIOClient.disconnect();
-        } else {
-            User u = userService.getUserByUsername(username);
+        log.info("Client connected with token {}", token);
+        try{
+            String username = JwtUtils.validateTokenAndGetUsername(token);
 
-            WebSocketSession webSocketSession = new WebSocketSession();
-            webSocketSession.setWebSocketSessionId(socketIOClient.getSessionId().toString());
-            webSocketSession.setTimestamp(LocalDateTime.now());
-            webSocketSession.setUserId(u.getId().toString());
-            webSocketSessionService.create(webSocketSession);
-            socketIOClient.set("username", username);
+            log.info("Client connected with username {}", username);
+            if (username == null) {
+                log.error("Invalid token");
+                socketIOClient.disconnect();
+            } else {
+                User u = userService.getUserByUsername(username);
+
+                WebSocketSession webSocketSession = new WebSocketSession();
+                webSocketSession.setWebsocketSessionId(socketIOClient.getSessionId().toString());
+                webSocketSession.setTimestamp(LocalDateTime.now());
+                webSocketSession.setUserId(u.getId().toString());
+                webSocketSessionService.create(webSocketSession);
+                socketIOClient.set("username", username);
+            }
+        }catch (Exception e){
+            socketIOClient.disconnect();
+            e.printStackTrace();
         }
+
     }
 
     @OnDisconnect

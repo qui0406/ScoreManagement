@@ -37,9 +37,9 @@ public class WebsocketSessionRepositoryImpl implements WebSocketSessionRepositor
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<WebSocketSession> query = builder.createQuery(WebSocketSession.class);
         Root<WebSocketSession> root = query.from(WebSocketSession.class);
-        query.select(root).where(builder.equal(root.get("webSocketSessionId"), socketSessionId));
+        query.select(root).where(builder.equal(root.get("websocketSessionId"), socketSessionId));
 
-        return  session.createQuery(query).uniqueResult();
+        return session.createQuery(query).uniqueResult();
     }
 
     @Override

@@ -101,6 +101,7 @@ public class ApiTeacherSuperController {
             byte[] pdfBytes = writeAndReadFileService.exportScoresToPDF(classDetailId, teacher.getId().toString());
 
             ByteArrayResource resource = new ByteArrayResource(pdfBytes);
+
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setContentDisposition(ContentDisposition.attachment().filename("scores.pdf").build());
@@ -131,6 +132,7 @@ public class ApiTeacherSuperController {
             emailRequest.setSender(new Sender(
                     teacherName, sendGridFromEmail
             ));
+
             emailRequest.setTo(listRecipients);
             this.sendGridMailService.sendMail(emailRequest);
 

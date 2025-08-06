@@ -24,4 +24,6 @@ public interface ClassroomDetailsService {
 
     ClassDetailsResponse getClassDetailsById(String classDetailsId, String studentId);
 
+    List<ClassDetailsResponse> getClassroomByStudentId(String studentId);
+
 }

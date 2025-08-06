@@ -29,11 +29,11 @@ public class ApiSubjectController {
     @Autowired
     private SubjectService subjectService;
 
-    @GetMapping("/get-all-classes-me-register")
-    public ResponseEntity<List<SubjectResponse>> getAllSubjects(Principal principal,
-                                                                @RequestParam Map<String, String> params) {
-        String username = principal.getName();
-        User student = userDetailsService.getUserByUsername(username);
-        return ResponseEntity.ok(this.subjectService.getAllSubjectsByStudent(student.getId().toString(), params));
-    }
+//    @GetMapping("/get-all-classes-me-register")
+//    public ResponseEntity<List<SubjectResponse>> getAllSubjects(Principal principal,
+//                                                                @RequestParam Map<String, String> params) {
+//        String username = principal.getName();
+//        User student = userDetailsService.getUserByUsername(username);
+//        return ResponseEntity.ok(this.subjectService.getAllSubjectsByStudent(student.getId().toString(), params));
+//    }
 }

@@ -1,6 +1,7 @@
 package com.scm.services;
 
 import com.scm.dto.requests.SubjectRequest;
+import com.scm.dto.responses.ClassDetailsResponse;
 import com.scm.dto.responses.SubjectResponse;
 import com.scm.pojo.Subject;
 
@@ -12,7 +13,7 @@ public interface SubjectService {
 
     void delete(String subjectId);
 
-    List<SubjectResponse> getAllSubjectsByStudent(String studentId, Map<String, String> params);
+    List<ClassDetailsResponse> getAllSubjectsByStudent(String studentId, Map<String, String> params);
 
     List<SubjectResponse> getAllSubjectsBySemester(String studentId, String semesterId);
 
