@@ -61,6 +61,8 @@ export const endpoints = {
     'replyForumUpdate': forumDetailId => `/forum-reply/update/${forumDetailId}`,
     'replyForumDelete': forumDetailId => `/forum-reply/delete/${forumDetailId}`,
     'getAllForums': forumId => `/get-all-reply-forum/${forumId}`,
+
+    
 };
 
 export const authApis = () => {

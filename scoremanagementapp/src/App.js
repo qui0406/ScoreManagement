@@ -9,6 +9,7 @@ import Profile from "./components/Profile";
 import StudentList from "./components/Teacher/StudentList";
 import AddScore from "./components/Teacher/AddScore";
 import SubjectList from "./components/Student/SubjectList";
+import Chat from "./components/Student/Chat";
 import { MyDispatchContext, MyUserContext } from "./configs/MyContexts";
 import { useReducer } from "react";
 import MyUserReducer from "./reducers/MyUserReducer";
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/studentlist/:classId" element={<StudentList />} />
             <Route path="/addscore/:classSubjectId" element={<AddScore />} />
+            <Route path="/student/chat" element={<Chat />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/" element={<Navigate to="/login" />} />

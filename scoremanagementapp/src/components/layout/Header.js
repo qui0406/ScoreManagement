@@ -34,6 +34,8 @@ const Header = () => {
                                                 <Link to="/student/home" className="nav-link">Trang chủ</Link>
                                                 <Link to="/subjects" className="nav-link">Khóa học của tôi</Link>
                                                 <Link to="/student/profile" className="nav-link">Hồ sơ</Link>
+                                                <Link to="/student/chat" className="nav-link">Chat</Link>
+
                                             </>
                                             : null}
 

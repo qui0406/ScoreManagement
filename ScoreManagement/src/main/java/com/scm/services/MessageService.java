@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface MessageService {
     List<ChatMessageResponse> getMessages(String conversationId, String userId);
-    ChatMessageResponse create(ChatMessageRequest request, String userId) throws JsonProcessingException;
+    ChatMessageResponse create(ChatMessageRequest request, String conversationId, String userId) throws JsonProcessingException;
 }

@@ -1,8 +1,10 @@
 package com.scm.services.impl;
 
 import com.scm.dto.requests.SubjectRequest;
+import com.scm.dto.responses.ClassDetailsResponse;
 import com.scm.dto.responses.SubjectResponse;
 import com.scm.mapper.SubjectMapper;
+import com.scm.pojo.ClassDetails;
 import com.scm.pojo.Subject;
 import com.scm.repositories.SubjectRepository;
 import com.scm.services.SubjectService;
@@ -32,14 +34,15 @@ public class SubjectServiceImpl implements SubjectService {
         this.subjectRepository.delete(this.subjectRepository.findById(id));
     }
 
+//    @Override
+//    public List<ClassDetailsResponse> getAllSubjectsByStudent(String studentId, Map<String, String> params) {
+//        List<ClassDetails> classDetailsList =
+//    }
+
+
     @Override
-    public List<SubjectResponse> getAllSubjectsByStudent(String studentId, Map<String, String> params) {
-        List<Subject> subjects = this.subjectRepository.getAllSubjectsByStudentId(studentId, params);
-        List<SubjectResponse> subjectResponses = new ArrayList<>();
-        for(Subject subject: subjects){
-            subjectResponses.add(subjectMapper.toSubjectResponse(subject));
-        }
-        return subjectResponses;
+    public List<ClassDetailsResponse> getAllSubjectsByStudent(String studentId, Map<String, String> params) {
+        return List.of();
     }
 
     @Override
