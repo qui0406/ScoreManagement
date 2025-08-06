@@ -1,19 +1,21 @@
 import { authApis, endpoints } from "../../configs/Apis";
 import { useEffect, useState, useContext } from "react";
 import { Container, Card, Row, Col, Alert } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const SubjectList = () => {
     const [subjects, setSubjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [msg, setMsg] = useState(null);
 
+     const nav = useNavigate(); 
     useEffect(() => {
         const loadSubject = async () => {
             try {
                 const response = await authApis().get(endpoints['mySubjects']);
                 setSubjects(response.data);
             } catch (msg) {
-                setMsg(msg.message || "Failed to fetch subjects");
+                setMsg("Lỗi tải danh sách môn học");
             } finally {
                 setLoading(false);
             }
@@ -38,7 +40,7 @@ const SubjectList = () => {
         <Row>
             {subjects.map((sub, idx) => (
                 <Col key={sub.id} md={4} xs={12} className="mb-3">
-                    <Card>
+                    <Card onClick={() => nav(`/myscore/${sub.id}`)} style={{ cursor: "pointer" }}>
                         <Card.Body>
                             <Card.Title>{sub.subjectName}</Card.Title>
                             <Card.Text>

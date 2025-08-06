@@ -9,6 +9,7 @@ export const endpoints = {
     'login': '/api/auth/login',
     'my-profile': '/api/secure/user/my-profile',
     'update-profile': '/api/secure/user/update-profile',
+    //điểm sinh viên
     'my-score': classDetailId => `/api/secure/user/my-score/${classDetailId}`,
 
     // Lớp học của giáo viên

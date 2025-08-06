@@ -32,19 +32,21 @@ const Header = () => {
                                         : user.role === "ROLE_USER" ?
                                             <>
                                                 <Link to="/student/home" className="nav-link">Trang chủ</Link>
-                                                <Link to="/subjects" className="nav-link">Khóa học của tôi</Link>
+                                                <Link to="/subjects" className="nav-link">Khóa học</Link>
+                                                <Link to="/myclasses" className="nav-link">Lớp học</Link>
+
                                                 <Link to="/registerclass" className="nav-link">Đăng kí môn học</Link>
 
                                                 <Link to="/student/profile" className="nav-link">Hồ sơ</Link>
                                             </>
                                             : null}
 
-                                    
+
                                     <Link to="/profile" className="nav-link text-info">
                                         <img src={user.avatar} width={30} className="rounded" />
-                                         <span className="ms-2">{user.username}!</span>
+                                        <span className="ms-2">{user.username}!</span>
                                     </Link>
-                                    <Button  className="btn btn-danger ms-2" onClick={() => dispatch({ type: "logout" })}>
+                                    <Button className="btn btn-danger ms-2" onClick={() => dispatch({ type: "logout" })}>
                                         Đăng xuất
                                     </Button>
                                 </>}
