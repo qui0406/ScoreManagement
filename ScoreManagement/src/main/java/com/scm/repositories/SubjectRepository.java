@@ -12,7 +12,7 @@ public interface SubjectRepository {
 
     List<Subject> getAllSubjectsInFacultySemester(String facultyId, String semesterId);
 
-    void create(Subject subject);
+    Subject create(Subject subject);
 
     void delete(Subject subject);
 

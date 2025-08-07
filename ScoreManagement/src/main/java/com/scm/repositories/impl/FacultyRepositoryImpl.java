@@ -37,9 +37,10 @@ public class FacultyRepositoryImpl implements FacultyRepository {
     }
 
     @Override
-    public void create(Faculty faculty) {
+    public Faculty create(Faculty faculty) {
         Session session = factory.getObject().getCurrentSession();
         session.persist(faculty);
+        return faculty;
     }
 
     @Override

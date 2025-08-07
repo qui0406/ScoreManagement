@@ -47,11 +47,10 @@ public class ApiUserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        log.info("login");
         if (this.userDetailsService.authenticate(request.getUsername(), request.getPassword())) {
             try {
                 User student = userDetailsService.getUserByUsername(request.getUsername());
-                String getRole = student.getRole().toString();
+                String getRole = student.getRole();
                 String token = JwtUtils.generateToken(request.getUsername(), getRole);
                 return ResponseEntity.ok().body(Collections.singletonMap("token", token));
             } catch (Exception e) {
@@ -66,19 +65,13 @@ public class ApiUserController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> create(@ModelAttribute @Valid StudentRegisterRequest request,
-                                    @RequestParam(value = "avatar", required = false)
-                                    MultipartFile avatar,
-                                    BindingResult bindingResult) {
+                                    @RequestParam(value = "avatar")
+                                    MultipartFile avatar) {
         try{
-            if (bindingResult.hasErrors()) {
-                return ResponseEntity.badRequest()
-                        .body(ApiResponse.error("Validation error", bindingResult));
-            }
             StudentResponse studentResponse = userDetailsService.registerStudent(request, avatar);
             return ResponseEntity.ok(studentResponse);
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-
     }
 }

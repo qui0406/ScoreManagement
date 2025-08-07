@@ -6,7 +6,7 @@ import com.scm.dto.responses.FacultyResponse;
 import java.util.List;
 
 public interface FacultyService {
-    void create(FacultyRequest request);
+    FacultyResponse create(FacultyRequest request);
     void delete(String id);
 
     List<FacultyResponse> getAllFaculties();

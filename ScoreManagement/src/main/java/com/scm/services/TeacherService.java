@@ -15,4 +15,7 @@ public interface TeacherService {
     List<TeacherResponse> getAllTeachersByRole(String role, String page);
 
     void updateRoleTeacher(String teacherId);
+    void downRoleTeacher(String teacherId);
+
+    void delete(String teacherId);
 }

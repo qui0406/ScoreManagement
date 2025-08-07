@@ -26,4 +26,6 @@ public interface ClassroomDetailsService {
 
     List<ClassDetailsResponse> getClassroomByStudentId(String studentId);
 
+    List<ClassDetailsResponse> getAllClassDetails();
+
 }

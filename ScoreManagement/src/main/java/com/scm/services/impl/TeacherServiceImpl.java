@@ -47,4 +47,14 @@ public class TeacherServiceImpl implements TeacherService {
     public void updateRoleTeacher(String teacherId) {
         this.teacherRepo.updateRoleTeacher(teacherId);
     }
+
+    @Override
+    public void downRoleTeacher(String teacherId) {
+        this.teacherRepo.downRoleTeacher(teacherId);
+    }
+
+    @Override
+    public void delete(String teacherId) {
+        this.teacherRepo.delete(this.teacherRepo.findById(teacherId));
+    }
 }

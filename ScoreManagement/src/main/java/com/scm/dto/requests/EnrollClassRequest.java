@@ -12,4 +12,5 @@ import lombok.Setter;
 public class EnrollClassRequest {
     private String studentId;
     private String classDetailId;
+    private String semesterId;
 }

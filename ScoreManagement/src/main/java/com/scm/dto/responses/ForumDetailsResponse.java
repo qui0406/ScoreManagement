@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ForumDetailsResponse {
-    private Forum forum;
+    private String forumId;
     private StudentDTO student;
     private TeacherDTO teacher;
     private String message;

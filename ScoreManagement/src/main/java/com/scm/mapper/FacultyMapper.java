@@ -11,4 +11,6 @@ import java.util.List;
 public interface FacultyMapper {
     List<FacultyResponse> toFacultyRequest(List<Faculty> faculty);
     Faculty toFaculty(FacultyRequest facultyRequest);
+
+    FacultyResponse toFacultyResponse(Faculty faculty);
 }

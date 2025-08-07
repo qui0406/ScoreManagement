@@ -8,6 +8,4 @@ import java.security.Principal;
 public interface EnrollDetailsService {
     void create(EnrollClassRequest request,  String studentId);
     void delete(String enrollId);
-
-
 }

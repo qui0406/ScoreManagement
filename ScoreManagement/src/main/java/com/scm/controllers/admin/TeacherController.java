@@ -50,5 +50,4 @@ public class TeacherController {
         this.teacherService.updateRoleTeacher(teacherId);
         return "dashboard";
     }
-
 }
