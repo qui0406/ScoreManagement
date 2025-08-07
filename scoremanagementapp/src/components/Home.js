@@ -33,6 +33,7 @@ const Home = () => {
     );
     return (
         <Container className="mt-5" >
+            <h2 className="text-center">Danh sách lớp học </h2>
         {(!classes || classes.length === 0) && <Alert variant="info">Không có lớp nào!</Alert>}
         <Row>
             {classes.map(c => (

@@ -1,40 +1,54 @@
-import { use } from "react";
-import { Container, Tab, Table, Alert,Button ,Spinner} from "react-bootstrap";
+import { Container, Table, Alert, Button, Spinner } from "react-bootstrap";
 import { authApis, endpoints } from "../../configs/Apis";
 import { useEffect, useState, useContext } from "react";
-import MySpinner from "../layout/MySpinner";
+import { MyUserContext } from "../../configs/MyContexts";
+
 const RegisterClass = () => {
     const [loading, setLoading] = useState(false);
-    const [subjects, setSubjects] = useState([]);
+    const [allClasses, setAllClasses] = useState([]);
+    const [registeredClasses, setRegisteredClasses] = useState([]);
     const [msg, setMsg] = useState("");
-    const [semesterId, setSemesterId] = useState("");
+    const user = useContext(MyUserContext);
 
     useEffect(() => {
-        const loadSubjects = async () => {
+        const loadAllClasses = async () => {
             setLoading(true);
             try {
-                let res = await authApis().get(endpoints['getClassesInSemester'](semesterId));
-                setSubjects(res.data);
+                let res = await authApis().get(endpoints['get-all-class-details']);
+                setAllClasses(res.data || []);
             } catch (err) {
-                console.error("Lỗi khi gọi API:", err.response?.status, err.response?.data);
-                setMsg("Lỗi tải danh sách môn học");
+                setMsg("Lỗi tải danh sách lớp học");
             } finally {
                 setLoading(false);
             }
         }
-        loadSubjects();
-    }, [semesterId]);
+        loadAllClasses();
+    }, []);
 
+    useEffect(() => {
+        const loadRegistered = async () => {
+            try {
+                let res = await authApis().get(endpoints['get-all-my-class']);
+                setRegisteredClasses(res.data || []);
+            } catch {
+                setRegisteredClasses([]);
+            }
+        };
+        loadRegistered();
+    }, []);
 
-    const registerClass = async (subjectId) => {
+    const registerClass = async (classId) => {
         setLoading(true);
+        setMsg("");
         try {
             await authApis().post(endpoints['registerClass'], {
-                classId: subjectId
+                studentId: user.id,
+                classDetailId: classId,
+                semesterId: 1
             });
             setMsg("Đăng ký thành công!");
-            let res = await authApis().get(endpoints['getClassesInSemester'](semesterId));
-            setMySubjects(res.data || []);
+            let res = await authApis().get(endpoints['get-all-my-class']);
+            setRegisteredClasses(res.data || []);
         } catch {
             setMsg("Đăng ký không thành công!");
         } finally {
@@ -42,38 +56,41 @@ const RegisterClass = () => {
         }
     };
 
+    const isRegistered = (classId) =>
+        registeredClasses.some((cls) => cls.id === classId);
+
     return (
         <Container className="mt-5">
-            <h2>Đăng ký môn học</h2>
+            <h2>Đăng ký lớp học</h2>
             {msg && <Alert variant="info">{msg}</Alert>}
             {loading ? <Spinner animation="border" /> : (
                 <Table striped bordered hover>
                     <thead>
                         <tr>
                             <th>Mã lớp</th>
-                            <th>Tên lớp/môn học</th>
-                            <th>Giảng viên</th>
-                            <th>Thời gian</th>
+                            <th>Tên lớp</th>
+                            <th>Môn học</th>
+                            <th>Số lượng</th>
                             <th>Đăng ký</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {subjects.length === 0 ? (
-                            <tr><th>Chưa có môn học nào</th></tr>
+                        {allClasses.length === 0 ? (
+                            <tr><td colSpan={5}>Chưa có lớp học nào</td></tr>
                         ) : (
-                            subjects.map(subject => (
-                                <tr>
-                                    <td>{subject.id}</td>
-                                    <td>{subject.subjectName}</td>
-                                    <td>{subject.teacher?.name}</td>
-                                    <td>{subject.schedule}</td>
+                            allClasses.map(classItem => (
+                                <tr key={classItem.id}>
+                                    <td>{classItem.classroom?.id}</td>
+                                    <td>{classItem.classroom?.name}</td>
+                                    <td>{classItem.subject?.subjectName}</td>
+                                    <td>{classItem.totalStudents}</td>
                                     <td>
                                         <Button
                                             variant="primary"
-                                            onClick={() => registerClass(subject.id)}
-                                            disabled={loading}
+                                            disabled={loading || isRegistered(classItem.id)}
+                                            onClick={() => registerClass(classItem.id)}
                                         >
-                                            Đăng ký
+                                            {isRegistered(classItem.id) ? "Đã đăng ký" : "Đăng ký"}
                                         </Button>
                                     </td>
                                 </tr>
@@ -82,7 +99,31 @@ const RegisterClass = () => {
                     </tbody>
                 </Table>
             )}
+
+            <h3 className="mt-4">Lớp đã đăng ký</h3>
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>Mã lớp</th>
+                        <th>Tên lớp</th>
+                        <th>Môn học</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {registeredClasses.length === 0 ? (
+                        <tr><td colSpan={3}>Chưa có lớp học nào</td></tr>
+                    ) : (
+                        registeredClasses.map(cls => (
+                            <tr key={cls.id}>
+                                <td>{cls.classroom?.id}</td>
+                                <td>{cls.classroom?.name}</td>
+                                <td>{cls.subject?.subjectName}</td>
+                            </tr>
+                        ))
+                    )}
+                </tbody>
+            </Table>
         </Container>
-    )
+    );
 };
 export default RegisterClass;

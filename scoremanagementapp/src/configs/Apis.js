@@ -12,6 +12,9 @@ export const endpoints = {
     //điểm sinh viên
     'my-score': classDetailId => `/api/secure/user/my-score/${classDetailId}`,
 
+    'get-all-my-class': '/api/secure/user/get-all-my-class',
+
+    'semesters':'/api/secure/user/semesters',
     // Lớp học của giáo viên
     'my-classes': '/api/secure/teacher/my-classrooms',
     'classDetails': classId => `/api/secure/teacher/class-subject/${classId}/details`,
@@ -45,8 +48,10 @@ export const endpoints = {
     //Dang ky mon hoc, lop hoc
     'registerClass': '/api/secure/user/register-class',
     'deleteClass': enrollId => `/api/secure/user/delete-class/${enrollId}`,
-    'getClassesInSemester': semesterId => `/api/secure/user/list-subject/semester/${semesterId}`,
-
+    // 'getClassesInSemester': semesterId => `/api/secure/user/list-subject/semester/${semesterId}`,
+    'getClassesInSemester': semesterId => `/api/secure/user/list-subject/semester/${1}`,
+    'get-all-subject':'/api/secure/user/get-all-subject',
+    'get-all-class-details':'/api/secure/user/get-all-class-details',
     // Sinh vien trong lop
     'getAllStudentsInClass': classDetailId => `/list-student-enrollment/${classDetailId}`,
 

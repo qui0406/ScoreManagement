@@ -32,7 +32,6 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/subjects" element={<SubjectList />} />
             <Route path="/myscore/:classSubjectId" element={<MyScore />} />
             <Route path="/myclasses" element={<MyClasses />} />
             <Route path="/registerclass" element={<RegisterClass />} />

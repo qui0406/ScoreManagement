@@ -48,7 +48,7 @@ const AddScore = () => {
                 });
                 setStudents(studentsData);
                 setScores(scoresData);
-                // Tạo list loại điểm
+
                 let scoreTypeArr = [];
                 if (res.data.length > 0) {
                     scoreTypeArr = res.data[0].scores.map(type => ({
@@ -82,7 +82,6 @@ const AddScore = () => {
         loadAllScoreTypes();
     }, []);
 
-    // Thêm cột điểm 
     const addScoreTypes = async (e) => {
         e.preventDefault();
         if (!selectedScoreTypeId) {
@@ -117,7 +116,6 @@ const AddScore = () => {
     };
 
 
-    // Lưu tất cả điểm
 
     const saveScore = async () => {
         setLoading(true);
@@ -244,11 +242,22 @@ const AddScore = () => {
         }
     };
 
+    useEffect(() => {
+        const showStatus = async () => {
+            try {
+                const res = await authApis().get(endpoints['statusScore'](classSubjectId));
+                setIsClose(res.data === true); 
+            } catch {
+                setIsClose(false);
+            }
+        };
+        if (classSubjectId) showStatus();
+    }, [classSubjectId]);
 
     return (
         < Container className="mt-5">
 
-            <h2>Nhập điểm lớp học</h2>
+            <h2 className="text-center">Nhập điểm lớp học</h2>
             {msg && <Alert variant="danger">{msg}</Alert>}
 
 
@@ -257,7 +266,7 @@ const AddScore = () => {
                     {loading ? <Spinner size="sm" /> : null} Lưu nháp
                 </Button>
 
-                <Button variant="danger" onClick={blockScore} disabled={loading || isClose}>
+                <Button variant="danger" onClick={blockScore} disabled={loading || isClose} className="me-2">
                     {loading ? <Spinner size="sm" /> : null} Khóa điểm
                 </Button>
 
@@ -298,7 +307,7 @@ const AddScore = () => {
                 e.preventDefault();
                 searchStudentScores(q);
             }}>
-                <Form.Group className="mb-3 mt-2 d-flex">
+                <Form.Group className="mb-3 mt-2 d-flex" style={{ maxWidth: 475 }}>
                     <Form.Control
                         value={q}
                         onChange={e => setQ(e.target.value)}
@@ -352,6 +361,7 @@ const AddScore = () => {
                                             min={0}
                                             max={10}
                                             step={0.01}
+                                            disabled={isClose}
                                         />
                                     </td>
                                 ))}

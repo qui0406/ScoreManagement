@@ -11,8 +11,10 @@ const MyClasses = () => {
     const { user } = useContext(MyUserContext);
     const [semesterId, setSemesterId] = useState("");
     const nav = useNavigate();
-    
+
     //tạm thời khi chưa có api lấy danh sách học kỳ
+    // const [allSemesters, setAllSemesters] = useState([]);
+
     const [allSemesters, setAllSemesters] = useState([
         { id: "1", name: "HK1 2024-2025" },
         { id: "2", name: "HK2 2024-2025" }
@@ -25,7 +27,10 @@ const MyClasses = () => {
         const loadClasses = async () => {
             setLoading(true);
             try {
-                const response = await authApis().get(endpoints['getClassesInSemester'](semesterId));
+                const response = await authApis().get(endpoints['get-all-my-class']);
+                // const listSemesters = await authApis().get(endpoints['semesters']);
+                // setAllSemesters(listSemesters.data || []);
+                // console.log("Danh sách học kỳ:", listSemesters.data);
                 setClasses(response.data);
             } catch (error) {
                 setMsg("Lỗi tải danh sách lớp học");
@@ -39,10 +44,9 @@ const MyClasses = () => {
 
     return (
         <Container className="mt-5">
-            <h2>Danh sách lớp học</h2>
+            <h2 className="text-center">Danh sách lớp học</h2>
 
-            {/* Chọn học kỳ */}
-            <Form.Group className="mb-4">
+            <Form.Group className="mb-4" style={{ maxWidth: 250 }}>
                 <Form.Label>Chọn học kỳ</Form.Label>
                 <Form.Select
                     value={semesterId}
@@ -69,12 +73,12 @@ const MyClasses = () => {
                             onClick={() => nav(`/myscore/${classItem.id}`)}
                         >
                             <Card.Body>
-                                <Card.Title>{classItem.className || classItem.subjectName}</Card.Title>
+                                <Card.Title>
+                                    {classItem.classroom?.name}
+                                </Card.Title>
                                 <Card.Text>
-                                    <b>Mã lớp:</b> {classItem.id}<br />
-                                    <b>Môn học:</b> {classItem.subjectName}<br />
-                                    <b>Giảng viên:</b> {classItem.teacherName || "Chưa rõ"}<br />
-                                    <b>Thời gian:</b> {classItem.time || "Chưa rõ"}
+                                    <b>Mã lớp:</b> {classItem.classroom?.id}<br />
+                                    <b>Môn học:</b> {classItem.subject?.subjectName}<br />
                                 </Card.Text>
                             </Card.Body>
                         </Card>

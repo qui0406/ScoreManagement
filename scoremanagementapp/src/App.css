@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+.active-tab {
+    color: #fff !important;
+    background: #cfe2ff !important; 
+    border-radius: 6px;
+}
