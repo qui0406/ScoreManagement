@@ -5,6 +5,7 @@ import com.scm.dto.responses.ForumResponse;
 import com.scm.exceptions.AppException;
 import com.scm.exceptions.ErrorCode;
 import com.scm.mapper.ForumMapper;
+import com.scm.pojo.ClassDetails;
 import com.scm.pojo.Forum;
 import com.scm.pojo.ForumDetails;
 import com.scm.repositories.ForumRepository;
@@ -45,7 +46,8 @@ public class ForumServiceImpl implements ForumService {
     }
 
     @Override
-    public List<ForumResponse> getAllForumsByClassDetailId(String classDetailId) {
+    public List<ForumResponse> getAllForumsByClassDetailId(String classDetailId, String  userId) {
+
         List<Forum> forums = this.forumRepository.getAllForumsByClassDetailId(classDetailId);
         List<ForumResponse> responses = new ArrayList<>();
 

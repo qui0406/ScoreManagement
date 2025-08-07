@@ -10,5 +10,5 @@ public interface ForumService {
     void create(ForumRequest request, String userCreatedId);
     void delete(String id, String userCreatedId);
     void update(String id);
-    List<ForumResponse> getAllForumsByClassDetailId(String classDetailId);
+    List<ForumResponse> getAllForumsByClassDetailId(String classDetailId, String userId);
 }
