@@ -21,7 +21,7 @@ const Header = () => {
                             {user === null ? <>
                                 <NavLink to="/login" className={({ isActive }) => "nav-link" + (isActive ? " active-tab" : "")}>
                                     Đăng nhập
-                                </NavLink>                                
+                                </NavLink>
                                 <Link to="/register" className="nav-link">Đăng ký</Link>
                             </> :
                                 <>
@@ -34,12 +34,14 @@ const Header = () => {
                                         : user.role === "ROLE_USER" ?
                                             <>
                                                 <Link to="/student/home" className="nav-link">Trang chủ</Link>
-                                                <Link to="/myclasses" className="nav-link">Lớp học</Link>
+                                                <Link to="/myclasses" className="nav-link">Xem Điểm</Link>
 
                                                 <Link to="/registerclass" className="nav-link">Đăng kí môn học</Link>
 
-                                                <Link to="/student/profile" className="nav-link">Hồ sơ</Link>
                                                 <Link to="/student/chat" className="nav-link">Chat</Link>
+                                                <Link to="/subjectlist" className="nav-link">Lớp học</Link>
+                                                <Link to="/student/profile" className="nav-link">Hồ sơ</Link>
+
 
                                             </>
                                             : null}

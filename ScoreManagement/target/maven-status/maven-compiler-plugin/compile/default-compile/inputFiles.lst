@@ -1,13 +1,14 @@
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\CloudinaryConfig.java
+D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\CustomAuthenticationSuccessHandler.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\DispatcherSerlvetInit.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\HibernateConfigs.java
+D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\KafkaConfig.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\RedisConfig.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SecurityWebApplicationInitializer.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SendgridConfig.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SocketIOConfig.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SpringSecurityConfigs.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\ThymeleafConfigs.java
-D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\ValidatorConfig.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\WebAppContextConfigs.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\admin\FacultyController.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\admin\SemesterController.java
@@ -179,6 +180,7 @@ D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\WebSo
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\responses\ApiResponse.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\scoremanagement\JakartaRestConfiguration.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\scoremanagement\resources\JakartaEE11Resource.java
+D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\AdminService.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ClassroomDetailsService.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ClassroomService.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ConversationService.java
@@ -186,6 +188,7 @@ D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\EnrollDet
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\FacultyService.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ForumDetailsService.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ForumService.java
+D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\AdminServiceImpl.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\ClassroomDetailsServiceImpl.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\ClassroomServiceImpl.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\ConversationServiceImpl.java

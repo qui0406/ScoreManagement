@@ -9,13 +9,14 @@ import Profile from "./components/Profile";
 import StudentList from "./components/Teacher/StudentList";
 import AddScore from "./components/Teacher/AddScore";
 import SubjectList from "./components/Student/SubjectList";
-import MyScore from "./components/Student/MyScore";   
+import MyScore from "./components/Student/MyScore";
 import MyClasses from "./components/Student/MyClasses";
 import { MyDispatchContext, MyUserContext } from "./configs/MyContexts";
 import { useReducer } from "react";
 import MyUserReducer from "./reducers/MyUserReducer";
 import { Navigate } from "react-router-dom";
 import RegisterClass from "./components/Student/RegisterClass";
+
 const App = () => {
   const [user, dispatch] = useReducer(MyUserReducer, null);
 
@@ -35,11 +36,13 @@ const App = () => {
             <Route path="/myscore/:classSubjectId" element={<MyScore />} />
             <Route path="/myclasses" element={<MyClasses />} />
             <Route path="/registerclass" element={<RegisterClass />} />
-          </Routes>
-          <Footer />
-        </BrowserRouter>
-      </MyDispatchContext.Provider>
-    </MyUserContext.Provider>
+            {/* <Route path="/forumlist" element={<ForumList />} /> */}
+            <Route path="/subjectlist" element={<SubjectList />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </MyDispatchContext.Provider>
+    </MyUserContext.Provider >
   );
 }
 export default App;

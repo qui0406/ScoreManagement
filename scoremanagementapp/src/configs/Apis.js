@@ -14,7 +14,7 @@ export const endpoints = {
 
     'get-all-my-class': '/api/secure/user/get-all-my-class',
 
-    'semesters':'/api/secure/user/semesters',
+    'semesters': '/api/secure/user/semesters',
     // Lớp học của giáo viên
     'my-classes': '/api/secure/teacher/my-classrooms',
     'classDetails': classId => `/api/secure/teacher/class-subject/${classId}/details`,
@@ -31,7 +31,7 @@ export const endpoints = {
     // Loại điểm
     'allScoreTypes': '/api/secure/teacher/class-subject/score-types',
     'getScoreTypes': classDetailId => `/api/secure/teacher/class-subject/score-types/${classDetailId}`,
-    'addScoreType': (classDetailId, scoreTypeId) =>`/api/secure/teacher/class-subject/score-type/${classDetailId}/add?scoreTypeId=${scoreTypeId}`,
+    'addScoreType': (classDetailId, scoreTypeId) => `/api/secure/teacher/class-subject/score-type/${classDetailId}/add?scoreTypeId=${scoreTypeId}`,
     'deleteScoreType': (classDetailId, scoreTypeId) => `/api/secure/teacher/class-subject/score-type/${classDetailId}/delete?scoreTypeId=${scoreTypeId}`,
 
     //Doc diem tu file
@@ -50,8 +50,9 @@ export const endpoints = {
     'deleteClass': enrollId => `/api/secure/user/delete-class/${enrollId}`,
     // 'getClassesInSemester': semesterId => `/api/secure/user/list-subject/semester/${semesterId}`,
     'getClassesInSemester': semesterId => `/api/secure/user/list-subject/semester/${1}`,
-    'get-all-subject':'/api/secure/user/get-all-subject',
-    'get-all-class-details':'/api/secure/user/get-all-class-details',
+    'get-all-subject': '/api/secure/user/get-all-subject',
+    'get-all-class-details': '/api/secure/user/get-all-class-details',
+
     // Sinh vien trong lop
     'getAllStudentsInClass': classDetailId => `/list-student-enrollment/${classDetailId}`,
 
@@ -59,6 +60,7 @@ export const endpoints = {
     'createConversation': classDetailId => `/create-conversation/${classDetailId}`,
     'deleteConversation': conversationId => `/delete-conversation/${conversationId}`,
     'getAllConversations': classDetailId => `/list-conversation/${classDetailId}`,
+    'get-message': conversationId => `/get-message/${conversationId}`,
 
     // Tao forum
     'createForum': '/create-forum',
@@ -68,7 +70,7 @@ export const endpoints = {
     'replyForumDelete': forumDetailId => `/forum-reply/delete/${forumDetailId}`,
     'getAllForums': forumId => `/get-all-reply-forum/${forumId}`,
 
-    
+
 };
 
 export const authApis = () => {
