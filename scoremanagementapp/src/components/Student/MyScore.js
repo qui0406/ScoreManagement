@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { authApis, endpoints } from "../configs/Apis";
+import { authApis, endpoints } from "../../configs/Apis";
+import { MyUserContext } from "../../configs/MyContexts";
 import { Card, Container, Spinner, Alert, Table } from "react-bootstrap";
-import { MyUserContext } from "../configs/MyContexts";
 
 const MyScore = () => {
     const { classSubjectId } = useParams();
@@ -17,8 +17,9 @@ const MyScore = () => {
             setLoading(true);
             setMsg("");
             try {
-                let res = await authApis().get(endpoints.getMyScore(user.id, classSubjectId));
+                let res = await authApis().get(endpoints["my-score"](classSubjectId));
                 setScoreData(res.data);
+                console.log("🔎 Điểm của bạn:", res.data);
             } catch (error) {
                 setMsg("Không thể tải điểm.");
             } finally {
@@ -54,13 +55,13 @@ const MyScore = () => {
                     <thead>
                         <tr>
                             <th>Loại điểm</th>
-                            <th colSpan={4}>Các lần chấm</th>
+                            <th colSpan={4}>Số điểm</th>
                         </tr>
                     </thead>
                     <tbody>
                         {scoreData.scores && scoreData.scores.length > 0 ? (
                             scoreData.scores.map((item, idx) => (
-                                <tr key={item.id || idx}>
+                                <tr>
                                     <td>{item.scoreTypeName}</td>
                                     {item.scores && item.scores.length > 0 ? (
                                         item.scores.map((val, i) => (

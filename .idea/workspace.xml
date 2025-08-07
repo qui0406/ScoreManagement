@@ -2,14 +2,81 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="ScoreManagement:war exploded" />
+      <artifact name="unnamed" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e40a971e-6bcf-42ad-bb09-aa2bedee0213" name="Changes" comment="" />
+    <list default="true" id="e40a971e-6bcf-42ad-bb09-aa2bedee0213" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/src/main/resources/databases.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ScoreManagement/src/main/resources/databases.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/META-INF/context.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/applicationContext.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/beans.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/META-INF/persistence.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/data/score.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/databases.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/static/css/styles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/static/js/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/static/js/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/templates/account.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/templates/base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/templates/chat.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/templates/dashboard.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/templates/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/templates/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/templates/register-teacher.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/templates/subject-form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/templates/subject.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/classes/templates/users.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/ScoreManagement-1.0-SNAPSHOT/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/META-INF/persistence.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/data/score.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/databases.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/static/css/styles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/static/js/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/static/js/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/templates/account.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/templates/base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/templates/chat.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/templates/dashboard.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/templates/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/templates/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/templates/register-teacher.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/templates/subject-form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/templates/subject.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/classes/templates/users.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/ClassDetailMapperImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/ClassDetailMapperImpl_.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/ClassroomMapperImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/ConversationMapperImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/ConversationMapperImpl_.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/EnrollDetailsMapperImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/EnrollDetailsMapperImpl_.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/ForumDetailsMapperImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/ForumDetailsMapperImpl_.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/ForumMapperImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/ForumMapperImpl_.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/ScoreMapperImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/ScoreMapperImpl_.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/ScoreStudentMapperImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/ScoreTypeMapperImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/SemesterMapperImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/SubjectMapperImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/SubjectMapperImpl_.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/UserMapperImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/generated-sources/annotations/com/scm/mapper/UserMapperImpl_.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoreManagement/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scoremanagementapp/src/components/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/scoremanagementapp/src/components/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scoremanagementapp/src/components/Student/SubjectList.js" beforeDir="false" afterPath="$PROJECT_DIR$/scoremanagementapp/src/components/Student/SubjectList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scoremanagementapp/src/components/Teacher/AddScore.js" beforeDir="false" afterPath="$PROJECT_DIR$/scoremanagementapp/src/components/Teacher/AddScore.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,18 +85,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "qui0406"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;qui0406&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/qui0406/ScoreManagement.git",
-    "accountId": "8ec8f83e-730e-474b-a3d8-80d5de2f3751"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/qui0406/ScoreManagement.git&quot;,
+    &quot;accountId&quot;: &quot;8ec8f83e-730e-474b-a3d8-80d5de2f3751&quot;
   }
-}]]></component>
+}</component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
@@ -46,33 +113,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.ScoreManagement [clean].executor": "Run",
-    "Maven.ScoreManagement [install].executor": "Run",
-    "Maven.ScoreManagement [package].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "TomEE Server.ScoreManagement.executor": "Run",
-    "TomEE Server.TomEE 11.0.8.executor": "Run",
-    "Tomcat Server.ScoreManagement .executor": "Run",
-    "Tomcat Server.Tomcat 11.0.81.executor": "Run",
-    "git-widget-placeholder": "feature-forum",
-    "last_opened_file_path": "E:/ScoreManagement",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "MavenSettings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.ScoreManagement [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ScoreManagement [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ScoreManagement [package].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;TomEE Server.ScoreManagement.executor&quot;: &quot;Run&quot;,
+    &quot;TomEE Server.TomEE 11.0.8.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.ScoreManagement .executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.Tomcat 11.0.81.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;frontend&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/K3N3/ScoreManagement&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunDashboard">
     <option name="excludedTypes">
       <set>
@@ -81,18 +148,18 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="ScoreManagement " type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 11.0.81" ALTERNATIVE_JRE_ENABLED="false">
+    <configuration name="Tomcat 11.0.81" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 11.0.81" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
-        <artifact name="ScoreManagement:war exploded">
+        <artifact name="unnamed">
           <settings>
             <option name="CONTEXT_PATH" value="/ScoreManagement" />
           </settings>
         </artifact>
       </deployment>
       <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="f3faf406-871a-4915-a25c-212d725cd5bc" />
+        <option name="BASE_DIRECTORY_NAME" value="dec07bb1-9980-4037-b48e-03a75fa11f47" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -165,7 +232,7 @@
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
-          <artifact name="ScoreManagement:war exploded" />
+          <artifact name="unnamed" />
         </option>
       </method>
     </configuration>
@@ -283,8 +350,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26094.121" />
-        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-IU-251.26094.121" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
       </set>
     </attachedChunks>
   </component>
@@ -303,6 +370,8 @@
       <workItem from="1753457537172" duration="6316000" />
       <workItem from="1753514660810" duration="35000" />
       <workItem from="1754203140928" duration="17000" />
+      <workItem from="1754320683410" duration="148000" />
+      <workItem from="1754320869499" duration="1723000" />
     </task>
     <servers />
   </component>

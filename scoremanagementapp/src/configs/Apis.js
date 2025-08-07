@@ -7,18 +7,22 @@ export const endpoints = {
     //Auth
     'register': '/api/auth/register',
     'login': '/api/auth/login',
-    'my-profile' :'/api/secure/user/my-profile',
+    'my-profile': '/api/secure/user/my-profile',
     'update-profile': '/api/secure/user/update-profile',
+    //điểm sinh viên
     'my-score': classDetailId => `/api/secure/user/my-score/${classDetailId}`,
 
+    'get-all-my-class': '/api/secure/user/get-all-my-class',
+
+    'semesters': '/api/secure/user/semesters',
     // Lớp học của giáo viên
     'my-classes': '/api/secure/teacher/my-classrooms',
     'classDetails': classId => `/api/secure/teacher/class-subject/${classId}/details`,
-    'studentList': classId =>`/api/secure/teacher/class-subject/${classId}/students`,
+    'studentList': classDetailId => `/api/secure/user/list-student-enrollment/${classDetailId}`,
 
     // Điểm
     'getScores': classSubjectId => `/api/secure/teacher/class-subject/${classSubjectId}/scores`,
-    'addScore': '/api/secure/teacher/add-list-score-all-student', 
+    'addScore': '/api/secure/teacher/add-list-scores-all-student',
     'blockScore': classDetailId => `/api/secure/teacher/score/block-score/${classDetailId}`,
     'statusScore': classDetailId => `/api/secure/teacher/score/get-status/${classDetailId}`,
 
@@ -26,8 +30,8 @@ export const endpoints = {
 
     // Loại điểm
     'allScoreTypes': '/api/secure/teacher/class-subject/score-types',
-    'getScoreTypes': classDetailId => `/api/secure/teacher/class-subject/score-type/${classDetailId}`,
-    'addScoreType': (classDetailId, scoreTypeId) =>`/api/secure/teacher/class-subject/score-type/${classDetailId}/add?scoreTypeId=${scoreTypeId}`,
+    'getScoreTypes': classDetailId => `/api/secure/teacher/class-subject/score-types/${classDetailId}`,
+    'addScoreType': (classDetailId, scoreTypeId) => `/api/secure/teacher/class-subject/score-type/${classDetailId}/add?scoreTypeId=${scoreTypeId}`,
     'deleteScoreType': (classDetailId, scoreTypeId) => `/api/secure/teacher/class-subject/score-type/${classDetailId}/delete?scoreTypeId=${scoreTypeId}`,
 
     //Doc diem tu file
@@ -35,7 +39,7 @@ export const endpoints = {
     'exportScore': classDetailId => `/api/secure/teacher/export-scores/${classDetailId}`,
 
     //Tim kiem sinh vien
-    'findExportListScoreBase': classDetailId =>`/api/secure/teacher/find-export-list-score/${classDetailId}`,
+    'findExportListScoreBase': classDetailId => `/api/secure/teacher/find-export-list-score/${classDetailId}`,
 
 
     'mySubjects': '/api/secure/user/get-all-classes-me-register',
@@ -44,7 +48,10 @@ export const endpoints = {
     //Dang ky mon hoc, lop hoc
     'registerClass': '/api/secure/user/register-class',
     'deleteClass': enrollId => `/api/secure/user/delete-class/${enrollId}`,
-    'getClassesInSemester': semesterId => `/api/secure/user/list-subject/semester/${semesterId}`,
+    // 'getClassesInSemester': semesterId => `/api/secure/user/list-subject/semester/${semesterId}`,
+    'getClassesInSemester': semesterId => `/api/secure/user/list-subject/semester/${1}`,
+    'get-all-subject': '/api/secure/user/get-all-subject',
+    'get-all-class-details': '/api/secure/user/get-all-class-details',
 
     // Sinh vien trong lop
     'getAllStudentsInClass': classDetailId => `/list-student-enrollment/${classDetailId}`,
@@ -53,8 +60,10 @@ export const endpoints = {
     'createConversation': classDetailId => `/create-conversation/${classDetailId}`,
     'deleteConversation': conversationId => `/delete-conversation/${conversationId}`,
     'getAllConversations': classDetailId => `/list-conversation/${classDetailId}`,
+    'get-message': conversationId => `/get-message/${conversationId}`,
 
     // Tao forum
+    'get-all-forum':classDetailId => `api/secure/get-all-forum/${classDetailId}`,
     'createForum': '/create-forum',
     'deleteForum': forumId => `/delete-forum/${forumId}`,
     'replyForum': forumId => `/forum-reply/${forumId}`,
@@ -62,11 +71,11 @@ export const endpoints = {
     'replyForumDelete': forumDetailId => `/forum-reply/delete/${forumDetailId}`,
     'getAllForums': forumId => `/get-all-reply-forum/${forumId}`,
 
-    
+
 };
 
 export const authApis = () => {
-    
+
     return axios.create({
         baseURL: BASE_URL,
         headers: {

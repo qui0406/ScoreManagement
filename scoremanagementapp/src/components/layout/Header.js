@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Navbar, Container, Nav, NavDropdown, Form, Button } from "react-bootstrap";
 import { MyUserContext, MyDispatchContext } from "../../configs/MyContexts";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
     const user = useContext(MyUserContext);
@@ -19,7 +19,9 @@ const Header = () => {
                             navbarScroll
                         >
                             {user === null ? <>
-                                <Link to="/login" className="nav-link">Đăng nhập</Link>
+                                <NavLink to="/login" className={({ isActive }) => "nav-link" + (isActive ? " active-tab" : "")}>
+                                    Đăng nhập
+                                </NavLink>
                                 <Link to="/register" className="nav-link">Đăng ký</Link>
                             </> :
                                 <>
@@ -32,19 +34,24 @@ const Header = () => {
                                         : user.role === "ROLE_USER" ?
                                             <>
                                                 <Link to="/student/home" className="nav-link">Trang chủ</Link>
-                                                <Link to="/subjects" className="nav-link">Khóa học của tôi</Link>
-                                                <Link to="/student/profile" className="nav-link">Hồ sơ</Link>
+                                                <Link to="/myclasses" className="nav-link">Xem Điểm</Link>
+
+                                                <Link to="/registerclass" className="nav-link">Đăng kí môn học</Link>
+
                                                 <Link to="/student/chat" className="nav-link">Chat</Link>
+                                                <Link to="/subjectlist" className="nav-link">Lớp học</Link>
+                                                <Link to="/student/profile" className="nav-link">Hồ sơ</Link>
+
 
                                             </>
                                             : null}
 
-                                    
+
                                     <Link to="/profile" className="nav-link text-info">
                                         <img src={user.avatar} width={30} className="rounded" />
-                                         <span className="ms-2">{user.username}!</span>
+                                        <span className="ms-2">{user.username}!</span>
                                     </Link>
-                                    <Button  className="btn btn-danger ms-2" onClick={() => dispatch({ type: "logout" })}>
+                                    <Button className="btn btn-danger ms-2" onClick={() => dispatch({ type: "logout" })}>
                                         Đăng xuất
                                     </Button>
                                 </>}
@@ -52,7 +59,7 @@ const Header = () => {
                                 Link
                             </Nav.Link> */}
                         </Nav>
-                        <Form className="d-flex">
+                        {/* <Form className="d-flex">
                             <Form.Control
                                 type="search"
                                 placeholder="Search"
@@ -60,7 +67,7 @@ const Header = () => {
                                 aria-label="Search"
                             />
                             <Button variant="outline-success">Search</Button>
-                        </Form>
+                        </Form> */}
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

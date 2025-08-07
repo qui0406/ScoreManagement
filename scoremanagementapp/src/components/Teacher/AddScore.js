@@ -20,17 +20,15 @@ const AddScore = () => {
 
     const [isClose, setIsClose] = useState(false);
 
+    const [selectedFile, setSelectedFile] = useState(null);
 
-    // const [q, setQ] = useState(""); 
-    // const [searching, setSearching] = useState(false);
-    // const [searchResults, setSearchResults] = useState([]);
+    const [q, setQ] = useState("");
+    const [searching, setSearching] = useState(false);
+    const [searchResults, setSearchResults] = useState([]);
 
 
     useEffect(() => {
-        const fetchData = async () => {
-            console.log("Token FE:", cookie.load('token'));
-            console.log("Headers:", authApis().defaults.headers);
-
+        const loadStudents = async () => {
             setLoading(true);
             try {
                 const res = await authApis().get(endpoints['getExportScores'](classSubjectId));
@@ -39,14 +37,13 @@ const AddScore = () => {
 
                 res.data.forEach(item => {
                     studentsData.push({
+                        id: item.student.id,
                         mssv: item.student.mssv,
                         name: item.student.name,
-                        id: item.student.mssv, 
                     });
-                    // scores
-                    scoresData[item.student.mssv] = {};
+                    scoresData[item.student.id] = {};
                     (item.scores || []).forEach(type => {
-                        scoresData[item.student.mssv][type.id] = type.scores[0] || "";
+                        scoresData[item.student.id][type.id] = type.scores[0] || "";
                     });
                 });
                 setStudents(studentsData);
@@ -68,8 +65,9 @@ const AddScore = () => {
                 setLoading(false);
             }
         };
-        fetchData();
+        loadStudents();
     }, [classSubjectId]);
+
 
 
     useEffect(() => {
@@ -84,7 +82,6 @@ const AddScore = () => {
         loadAllScoreTypes();
     }, []);
 
-    // Thêm cột điểm 
     const addScoreTypes = async (e) => {
         e.preventDefault();
         if (!selectedScoreTypeId) {
@@ -108,18 +105,6 @@ const AddScore = () => {
     };
 
 
-
-    // // Cập nhật điểm từng ô
-    // const addScore = (studentId, key, value) => {
-    //     setScores(prev => ({
-    //         ...prev,
-    //         [studentId]: {
-    //             ...prev[studentId],
-    //             [key]: value
-    //         }
-    //     }));
-    // };
-
     const addScore = (studentId, scoreTypeId, value) => {
         setScores(prev => ({
             ...prev,
@@ -131,16 +116,17 @@ const AddScore = () => {
     };
 
 
-    // Lưu tất cả điểm
 
     const saveScore = async () => {
         setLoading(true);
+        console.log("Dữ liệu điểm trước khi lưu:", students);
         try {
             const payload = students.map(stu => ({
                 studentId: stu.id,
-                classSubjectId: classSubjectId,
+                classDetailId: classSubjectId,
                 scores: scores[stu.id] || {}
             }));
+            console.log("Dữ liệu điểm trước khi gửi:", payload);
             await authApis().post(endpoints['addScore'], payload);
             alert("Lưu nháp thành công!");
         } catch (err) {
@@ -151,18 +137,42 @@ const AddScore = () => {
     };
 
 
+    const exportScore = async () => {
+        setLoading(true);
+        try {
+            const res = await authApis().post(
+                endpoints['exportScore'](classSubjectId),
+                {},
+                { responseType: 'blob' }
+            );
+            const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `scores_${classSubjectId}.pdf`);
+            document.body.appendChild(link);
+            link.click();
+
+            link.remove();
+            setMsg("Xuất điểm thành công! File PDF đã được tải về.");
+        } catch (err) {
+            alert("Lỗi khi xuất điểm!");
+        } finally {
+            setLoading(false);
+        }
+    };
 
 
-    const closeScore = async () => {
+
+    const blockScore = async () => {
         if (!window.confirm("Bạn có chắc chắn muốn đóng điểm? Sau khi đóng, không thể chỉnh sửa nữa!"))
             return;
         setLoading(true);
         try {
-            const res = await authApis().post(endpoints['closeScore'](classSubjectId));
+            const res = await authApis().post(endpoints['blockScore'](classSubjectId));
 
-            if (res.status === 200 && res.data === true) {
-                setIsClose(true);
+            if (res.status === 200) {
                 alert("Đóng điểm thành công!");
+                setIsClose(true);
             } else {
                 alert("Lỗi khi đóng điểm!");
             }
@@ -172,53 +182,96 @@ const AddScore = () => {
             setLoading(false);
         }
     };
+
+    const uploadScoreFromCSV = async (e) => {
+        const file = e.target.files[0];
+        if (!file) {
+            alert("Vui lòng chọn file CSV để tải lên!");
+            return;
+        }
+        setSelectedFile(file);
+        const formData = new FormData();
+        formData.append("file", file);
+        setLoading(true);
+        try {
+            const res = await authApis().post(endpoints['importScore'](classSubjectId), formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+            setMsg("upload thành công!");
+            window.location.reload();
+        } catch (err) {
+            console.error("Lỗi khi tải lên file CSV:", err);
+        } finally {
+            setLoading(false);
+            setSelectedFile(null);
+        }
+    };
+
+    //tìm kiếm sinh viên
     // useEffect(() => {
     //     if (!q || q.trim() === "") {
     //         setSearchResults([]);
     //         return;
     //     }
-    //     setSearching(true);
     //     const timer = setTimeout(() => {
     //         searchStudentScores(q);
     //     }, 500);
     //     return () => clearTimeout(timer);
     // }, [q]);
 
-    // const searchStudentScores = async (keyword) => {
-    //     let url = endpoints['findExportListScoreBase'](classSubjectId) + `?mssv=${encodeURIComponent(keyword)}&fullName=${encodeURIComponent(keyword)}`;
-    //     try {
-    //         let res = await authApis().get(url);
-    //         setSearchResults(res.data || []);
-    //     } catch (err) {
-    //         setSearchResults([]);
-    //     } finally {
-    //         setSearching(false);
-    //     }
-    // };
+    const searchStudentScores = async (keyword) => {
+        if (!keyword || !keyword.trim()) {
+            setSearchResults([]);
+            return;
+        }
+        let url;
+        if (/^\d+$/.test(keyword.trim())) {
+            url = endpoints['findExportListScoreBase'](classSubjectId) + `?mssv=${encodeURIComponent(keyword)}`;
+        } else {
+            url = endpoints['findExportListScoreBase'](classSubjectId) + `?fullName=${encodeURIComponent(keyword)}`;
+        } setSearching(true);
+        try {
+            let res = await authApis().get(url);
+            setSearchResults(res.data || []);
+        } catch (err) {
+            setSearchResults([]);
+        } finally {
+            setSearching(false);
+        }
+    };
+
+    // useEffect(() => {
+    //     const showStatus = async () => {
+    //         try {
+    //             const res = await authApis().get(endpoints['statusScore'](classSubjectId));
+    //             setIsClose(res.data === true); 
+    //         } catch {
+    //             setIsClose(false);
+    //         }
+    //     };
+    //     if (classSubjectId) showStatus();
+    // }, [classSubjectId]);
 
     return (
         < Container className="mt-5">
 
-            <h2>Nhập điểm lớp học</h2>
+            <h2 className="text-center">Nhập điểm lớp học</h2>
             {msg && <Alert variant="danger">{msg}</Alert>}
 
 
             <div className="mb-3 d-flex align-items-center">
-                <Button
-                    variant="success"
-                    className="me-2"
-                    onClick={saveScore}
-                    disabled={loading || isClose}
-                >
+                <Button variant="success" className="me-2" onClick={saveScore} disabled={loading || isClose}>
                     {loading ? <Spinner size="sm" /> : null} Lưu nháp
                 </Button>
 
-                <Button
-                    variant="danger"
-                    onClick={closeScore}
-                    disabled={loading || isClose}
-                >
+                <Button variant="danger" onClick={blockScore} disabled={loading || isClose} className="me-2">
                     {loading ? <Spinner size="sm" /> : null} Khóa điểm
+                </Button>
+
+                <Button variant="primary" onClick={exportScore} disabled={loading}>
+                    {loading ? <Spinner size="sm" /> : null} Xuất điểm
                 </Button>
 
                 <Button variant="info" onClick={() => setShowAddCol(!showAddCol)} className="ms-2" disabled={isClose}>
@@ -231,7 +284,7 @@ const AddScore = () => {
                             className="me-2"
                             value={selectedScoreTypeId}
                             onChange={e => setSelectedScoreTypeId(e.target.value)}
-                            disabled={isClose}
+                            // disabled={isClose}
                         >
                             <option value="">-- Chọn loại điểm --</option>
                             {allScoreTypes.map(type => (
@@ -250,16 +303,26 @@ const AddScore = () => {
 
 
             </div>
-            {/* <Form > 
-                <Form.Group className="mb-3 mt-2">
+            <Form onSubmit={e => {
+                e.preventDefault();
+                searchStudentScores(q);
+            }}>
+                <Form.Group className="mb-3 mt-2 d-flex" style={{ maxWidth: 475 }}>
                     <Form.Control
                         value={q}
                         onChange={e => setQ(e.target.value)}
                         type="text"
-                        placeholder="Tìm kiếm theo MSSV, họ hoặc tên sinh viên..."
+                        placeholder="Nhập MSSV hoặc họ tên sinh viên..."
                     />
+                    <Button
+                        variant="primary"
+                        className="ms-2"
+                        onClick={() => searchStudentScores(q)}
+                        disabled={loading || !q.trim()}
+                    >Tìm</Button>
                 </Form.Group>
-            </Form> */}
+            </Form>
+
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -271,27 +334,52 @@ const AddScore = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {students.map(stu => (
-                        <tr key={stu.id}>
-                            <td>{stu.mssv}</td>
-                            <td>{stu.name}</td>
-                            {scoreTypes.map(col => (
-                                <td key={col.id}>
-                                    <input
-                                        type="number"
-                                        value={scores[stu.id]?.[col.id] ?? ""}
-                                        onChange={e => addScore(stu.id, col.id, e.target.value)}
-                                        style={{ width: 60 }}
-                                        min={0}
-                                        max={10}
-                                        step={0.01}
-                                    />
-                                </td>
-                            ))}
+                    {q && searchResults.length === 0 ? (
+                        <tr>
+                            <td colSpan={2 + scoreTypes.length} className="text-center">
+                                Không tìm thấy sinh viên nào!
+                            </td>
                         </tr>
-                    ))}
+                    ) : (
+                        (q && searchResults.length > 0 ? searchResults : students).map(stu => (
+                            <tr key={stu.student ? stu.student.mssv : stu.id}>
+                                <td>{stu.student ? stu.student.mssv : stu.mssv}</td>
+                                <td>{stu.student ? stu.student.name : stu.name}</td>
+                                {scoreTypes.map(col => (
+                                    <td key={col.id}>
+                                        <input
+                                            type="number"
+                                            value={
+                                                scores[stu.student ? stu.student.mssv : stu.id]?.[col.id] ?? ""
+                                            }
+                                            onChange={e => addScore(
+                                                stu.student ? stu.student.mssv : stu.id,
+                                                col.id,
+                                                e.target.value
+                                            )}
+                                            style={{ width: 60 }}
+                                            min={0}
+                                            max={10}
+                                            step={0.01}
+                                            // disabled={isClose}
+                                        />
+                                    </td>
+                                ))}
+                            </tr>
+                        ))
+                    )}
                 </tbody>
+
+
             </Table>
+            <input
+                type="file" accept=".csv" style={{ display: "none" }} id="upload-score-csv" onChange={uploadScoreFromCSV}
+            />
+            <label htmlFor="upload-score-csv">
+                <Button as="span" variant="warning" className="ms-2" disabled={loading || isClose}>
+                    Nhập điểm từ CSV
+                </Button>
+            </label>
 
 
         </Container>

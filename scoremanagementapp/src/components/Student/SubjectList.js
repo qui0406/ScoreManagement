@@ -1,57 +1,57 @@
+import { Container, Card, Row, Col, Alert, Spinner, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { authApis, endpoints } from "../../configs/Apis";
 import { useEffect, useState, useContext } from "react";
-import { Container, Card, Row, Col, Alert } from "react-bootstrap";
-
+import { MyUserContext } from "../../configs/MyContexts";
 const SubjectList = () => {
-    const [subjects, setSubjects] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [msg, setMsg] = useState(null);
+    const [classes, setClasses] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [msg, setMsg] = useState("");
+    const nav = useNavigate();
 
     useEffect(() => {
-        const loadSubject = async () => {
+        const load = async () => {
+            setLoading(true);
             try {
-                const response = await authApis().get(endpoints['mySubjects']);
-                setSubjects(response.data);
-            } catch (msg) {
-                setMsg(msg.message || "Failed to fetch subjects");
+                let res = await authApis().get(endpoints['get-all-my-class']);
+                setClasses(res.data || []);
+            } catch {
+                setMsg("Không tải được danh sách lớp!");
             } finally {
                 setLoading(false);
             }
         };
-
-        loadSubject();
+        load();
     }, []);
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <Spinner animation="border" />;
+    if (msg) return <Alert variant="danger">{msg}</Alert>;
 
     return (
-    <Container className="mt-5">
-        <Card className="mb-4">
-            <Card.Body>
-                <Card.Title>📚 Danh sách môn học của bạn</Card.Title>
-            </Card.Body>
-        </Card>
+        <div className="container mt-5" style={{ maxWidth: 900, width: "100%" }}>
+            <h4 className="mb-4">💬 Danh sách lớp môn </h4>
+            <Row>
+                {classes.map(classItem => (
+                    <Col key={classItem.id} md={4} xs={12} className="mb-3">
+                        <Card
+                            style={{ cursor: "pointer" }}
+                            onClick={() => nav(`/forumlist/${classItem.id}`)}
+                        >
+                            <Card.Body>
+                                <Card.Title>
+                                    {classItem.classroom?.name}
+                                </Card.Title>
+                                <Card.Text>
+                                    <b>Mã lớp:</b> {classItem.classroom?.id}<br />
+                                    <b>Môn học:</b> {classItem.subject?.subjectName}<br />
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                ))}
+            </Row>
 
-        {msg && <Alert variant="danger">{msg}</Alert>}
-
-        {(!subjects || subjects.length === 0) && <Alert variant="info">Không có môn học nào!</Alert>}
-        <Row>
-            {subjects.map((sub, idx) => (
-                <Col key={sub.id} md={4} xs={12} className="mb-3">
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>{sub.subjectName}</Card.Title>
-                            <Card.Text>
-                                <b>Mã môn học:</b> {sub.id}<br />
-                                {/* Thêm các thông tin khác nếu cần */}
-                            </Card.Text>
-                            {/* <Button variant="primary">Xem chi tiết</Button> */}
-                        </Card.Body>
-                    </Card>
-                </Col>
-            ))}
-        </Row>
-    </Container>
-);
-}
+        </div>
+    );
+};
 export default SubjectList;

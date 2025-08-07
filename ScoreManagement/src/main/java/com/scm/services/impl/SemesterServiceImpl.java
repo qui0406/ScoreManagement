@@ -38,12 +38,16 @@ public class SemesterServiceImpl implements SemesterService {
 
     @Override
     public List<SemesterResponse> getAllSemesters() {
-        List<Semester> semesters = this.semesterRepository.getAllSemesters();
-        List<SemesterResponse> semesterResponses = new ArrayList<>();
-        for (Semester semester : semesters) {
-            SemesterResponse semesterResponse = this.semesterMapper.toSemesterResponse(semester);
-            semesterResponses.add(semesterResponse);
+        try{ List<Semester> semesters = this.semesterRepository.getAllSemesters();
+            List<SemesterResponse> semesterResponses = new ArrayList<>();
+            for (Semester semester : semesters) {
+                SemesterResponse semesterResponse = this.semesterMapper.toSemesterResponse(semester);
+                semesterResponses.add(semesterResponse);
+            }
+            return semesterResponses;}catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException("Error fetching semesters: " + e.getMessage());
         }
-        return semesterResponses;
+
     }
 }
