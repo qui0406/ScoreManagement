@@ -1,7 +1,7 @@
 import axios from "axios";
 import cookie from "react-cookies";
 
-const BASE_URL = "http://localhost:8080/ScoreManagement";
+const BASE_URL = "https://c8a533fd232c.ngrok-free.app/ScoreManagement";
 
 export const endpoints = {
     //Auth
@@ -63,6 +63,7 @@ export const endpoints = {
     'get-message': conversationId => `/get-message/${conversationId}`,
 
     // Tao forum
+    'get-all-forum':classDetailId => `api/secure/get-all-forum/${classDetailId}`,
     'createForum': '/create-forum',
     'deleteForum': forumId => `/delete-forum/${forumId}`,
     'replyForum': forumId => `/forum-reply/${forumId}`,

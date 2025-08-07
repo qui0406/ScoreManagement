@@ -242,17 +242,17 @@ const AddScore = () => {
         }
     };
 
-    useEffect(() => {
-        const showStatus = async () => {
-            try {
-                const res = await authApis().get(endpoints['statusScore'](classSubjectId));
-                setIsClose(res.data === true); 
-            } catch {
-                setIsClose(false);
-            }
-        };
-        if (classSubjectId) showStatus();
-    }, [classSubjectId]);
+    // useEffect(() => {
+    //     const showStatus = async () => {
+    //         try {
+    //             const res = await authApis().get(endpoints['statusScore'](classSubjectId));
+    //             setIsClose(res.data === true); 
+    //         } catch {
+    //             setIsClose(false);
+    //         }
+    //     };
+    //     if (classSubjectId) showStatus();
+    // }, [classSubjectId]);
 
     return (
         < Container className="mt-5">
@@ -284,7 +284,7 @@ const AddScore = () => {
                             className="me-2"
                             value={selectedScoreTypeId}
                             onChange={e => setSelectedScoreTypeId(e.target.value)}
-                            disabled={isClose}
+                            // disabled={isClose}
                         >
                             <option value="">-- Chọn loại điểm --</option>
                             {allScoreTypes.map(type => (
@@ -361,7 +361,7 @@ const AddScore = () => {
                                             min={0}
                                             max={10}
                                             step={0.01}
-                                            disabled={isClose}
+                                            // disabled={isClose}
                                         />
                                     </td>
                                 ))}
