@@ -136,6 +136,9 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     public void addListScoreAllStudents(List<ListScoreStudentRequest> requests, String teacherId) {
         for (ListScoreStudentRequest studentRequest : requests) {
+            for(ListScoreStudentRequest studentRequest1 : requests) {
+                log.info(studentRequest1.getStudentId() +" " + studentRequest1.getScores());
+            }
             this.addListScore(studentRequest, teacherId);
         }
     }

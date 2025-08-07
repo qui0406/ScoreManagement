@@ -1,7 +1,6 @@
 package com.scm.controllers.admin;
 
 import com.scm.dto.requests.FacultyRequest;
-import com.scm.dto.requests.SubjectRequest;
 import com.scm.dto.responses.FacultyResponse;
 import com.scm.services.FacultyService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -42,6 +42,4 @@ public class ApiConversationController {
         this.conversationService.delete(conversationId, user.getId().toString());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
-
 }
