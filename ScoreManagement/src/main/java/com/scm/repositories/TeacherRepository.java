@@ -12,5 +12,9 @@ public interface TeacherRepository {
 
     void updateRoleTeacher(String teacherId);
 
+    void downRoleTeacher(String teacherId);
+
     List<Teacher> getAllTeachersByRole(String role, String page);
+
+    void delete(Teacher teacher);
 }

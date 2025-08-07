@@ -31,9 +31,9 @@ public class ForumDetailsMapperDecorator implements ForumDetailsMapper {
 
     @Override
     public ForumDetailsResponse toForumDetailsResponse(ForumDetails forumDetails) {
-        ForumDetailsResponse response = new ForumDetailsResponse();
 
-        response.setForum(forumDetails.getForum());
+        ForumDetailsResponse response = new ForumDetailsResponse();
+        response.setForumId(forumDetails.getId().toString());
         response.setMessage(forumDetails.getMessage());
         response.setCreatedAt(forumDetails.getCreatedAt());
 

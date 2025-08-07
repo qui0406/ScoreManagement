@@ -29,6 +29,7 @@ public class ApiSubjectController {
     @Autowired
     private SubjectService subjectService;
 
+
     @GetMapping("/get-all-subject")
     public ResponseEntity<?> getAllSubjects(@RequestParam(value="page", defaultValue = "1") String page) {
         return ResponseEntity.ok(subjectService.getAllSubjects(page));

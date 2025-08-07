@@ -47,7 +47,15 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     public void updateRoleTeacher(String teacherId) {
         Session s = factory.getObject().getCurrentSession();
         Teacher teacher =  s.get(Teacher.class, teacherId);
-        teacher.setRole("TEACHER_SUPER");
+        teacher.setRole("ROLE_TEACHER_SUPER");
+        s.merge(teacher);
+    }
+
+    @Override
+    public void downRoleTeacher(String teacherId) {
+        Session s = factory.getObject().getCurrentSession();
+        Teacher teacher =  s.get(Teacher.class, teacherId);
+        teacher.setRole("ROLE_TEACHER");
         s.merge(teacher);
     }
 
@@ -73,4 +81,9 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     }
 
 
+    @Override
+    public void delete(Teacher teacher) {
+        Session s = factory.getObject().getCurrentSession();
+        s.remove(teacher);
+    }
 }

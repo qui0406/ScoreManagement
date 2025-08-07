@@ -28,9 +28,10 @@ public class SemesterRepositoryImpl implements SemesterRepository {
     }
 
     @Override
-    public void create(Semester semester) {
+    public Semester create(Semester semester) {
         Session s = factory.getObject().getCurrentSession();
         s.persist(semester);
+        return semester;
     }
 
     @Override

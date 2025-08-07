@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -42,12 +44,16 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
         "com.scm.mapper",
         "com.scm.services",
         "com.scm.repositories",
-        "com.scm.validators"
+        "com.scm.validators",
+        "com.scm.configs"
 })
 @EnableTransactionManagement
 public class SpringSecurityConfigs {
     @Autowired
     private JwtFilter jwtFilter;
+
+    @Autowired
+    private CustomAuthenticationSuccessHandler successHandler;
 
     private static final String[] PUBLIC_ENDPOINTS = {
             "/api/auth/**", "/email/**"
@@ -84,7 +90,6 @@ public class SpringSecurityConfigs {
         return new StandardServletMultipartResolver();
     }
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
             Exception {
@@ -101,7 +106,7 @@ public class SpringSecurityConfigs {
 
                 .formLogin(form -> form.loginPage("/admin/login")
                         .loginProcessingUrl("/admin/login")
-                        .defaultSuccessUrl("/admin/dashboard", true)
+                        .successHandler(successHandler)
                         .failureUrl("/admin/login?error=true").permitAll())
                 .logout(logout ->
                         logout.logoutSuccessUrl("/admin/login").permitAll());

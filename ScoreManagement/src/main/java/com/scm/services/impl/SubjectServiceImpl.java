@@ -2,6 +2,7 @@ package com.scm.services.impl;
 
 import com.scm.dto.requests.SubjectRequest;
 import com.scm.dto.responses.ClassDetailsResponse;
+import com.scm.dto.responses.SemesterResponse;
 import com.scm.dto.responses.SubjectResponse;
 import com.scm.mapper.SubjectMapper;
 import com.scm.pojo.ClassDetails;
@@ -25,8 +26,8 @@ public class SubjectServiceImpl implements SubjectService {
     private SubjectMapper subjectMapper;
 
     @Override
-    public void create(SubjectRequest subject) {
-        this.subjectRepository.create(subjectMapper.toSubject(subject));
+    public SubjectResponse create(SubjectRequest subject) {
+        return subjectMapper.toSubjectResponse(this.subjectRepository.create(subjectMapper.toSubject(subject)));
     }
 
     @Override

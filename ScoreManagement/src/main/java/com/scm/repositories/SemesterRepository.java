@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface SemesterRepository {
     Semester findById(String id);
-    void create(Semester semester);
+    Semester create(Semester semester);
     void delete(Semester semester);
 
     List<Semester> getAllSemesters();

@@ -30,6 +30,7 @@ public class EnrollDetailsMapperDecorator implements EnrollDetailsMapper {
 
     @Autowired
     private SemesterRepository semesterRepository;
+
     @Override
     public EnrollDetails toEnrollDetails(EnrollClassRequest request) {
         EnrollDetails enrollDetails = new EnrollDetails();
@@ -37,6 +38,7 @@ public class EnrollDetailsMapperDecorator implements EnrollDetailsMapper {
         Student student = studentRepository.findById(request.getStudentId());
         ClassDetails classDetails = classDetailsRepository.findById(request.getClassDetailId());
         Semester semester = semesterRepository.findById(request.getSemesterId());
+
         enrollDetails.setStudent(student);
         enrollDetails.setClassDetails(classDetails);
         enrollDetails.setSemester(semester);

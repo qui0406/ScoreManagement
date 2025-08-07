@@ -88,6 +88,7 @@ public class ClassroomDetailsServiceImpl implements ClassroomDetailsService {
         }
         return responses;
     }
+
     @Override
     public List<ClassDetailsResponse> getAllClassDetails() {
         List<ClassDetails> classDetails = this.classDetailsRepository.getAllClassDetails();

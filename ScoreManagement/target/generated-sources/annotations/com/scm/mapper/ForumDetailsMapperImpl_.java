@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-08-06T14:35:28+0700",
+    date = "2025-08-07T07:35:10+0700",
     comments = "version: 1.6.0.Beta1, compiler: javac, environment: Java 21.0.7 (Microsoft)"
 )
 @Component
@@ -24,7 +24,6 @@ public class ForumDetailsMapperImpl_ implements ForumDetailsMapper {
 
         ForumDetailsResponse forumDetailsResponse = new ForumDetailsResponse();
 
-        forumDetailsResponse.setForum( forum.getForum() );
         forumDetailsResponse.setMessage( forum.getMessage() );
         forumDetailsResponse.setCreatedAt( forum.getCreatedAt() );
 

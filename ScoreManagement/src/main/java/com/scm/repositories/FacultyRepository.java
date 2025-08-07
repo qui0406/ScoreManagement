@@ -9,6 +9,6 @@ public interface FacultyRepository {
 
     List<Faculty> findAllFaculties();
 
-    void create(Faculty faculty);
+    Faculty create(Faculty faculty);
     void delete(Faculty faculty);
 }

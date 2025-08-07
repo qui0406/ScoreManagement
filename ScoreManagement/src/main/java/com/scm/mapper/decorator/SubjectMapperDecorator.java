@@ -47,6 +47,7 @@ public abstract class SubjectMapperDecorator implements SubjectMapper {
         SubjectResponse subjectResponse = new SubjectResponse();
         subjectResponse.setId(subject.getId().toString());
         subjectResponse.setSubjectName(subject.getSubjectName());
+
         return subjectResponse;
     }
 }
