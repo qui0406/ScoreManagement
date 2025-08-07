@@ -49,27 +49,31 @@ const Login = () => {
     };
 
     return (
-        <div className="container mt-5">
-            <h1>Đăng nhập</h1>
+        <div className="container mt-5 d-flex justify-content-center">
+        <div style={{ minWidth: 350, maxWidth: 400, width: "100%" }}>
+            <h1 className="text-center mb-4">Đăng nhập</h1>
             <Form onSubmit={login}>
                 {info.map(f =>
-                    <FloatingLabel key={f.field} controlId="floatingInput" label={f.label} className="mb-3">
+                    <FloatingLabel key={f.field} controlId={f.field} label={f.label} className="mb-3">
                         <Form.Control
                             type={f.type}
                             placeholder={f.label}
                             value={user[f.field] || ""}
                             onChange={e => setState(e.target.value, f.field)}
+                            style={{ background: "#f7f7f9" }}
                         />
                     </FloatingLabel>
                 )}
-                <Button variant="primary" type="submit" disabled={loading}>
+                <Button variant="primary" type="submit" disabled={loading} className="w-100 py-2 mt-1"
+                        style={{ fontWeight: 400, fontSize: 17, letterSpacing: 1 }}>
                     {loading ? "Đang đăng nhập..." : "Đăng nhập"}
                 </Button>
             </Form>
-            <div className="mt-3">
-                Bạn chưa có tài khoản? <Link to="/register">Đăng ký</Link>
+            <div className="mt-3 text-center">
+                Bạn chưa có tài khoản? <Link to="/register" style={{ color: "#0d6efd", fontWeight: 400 }}>Đăng ký</Link>
             </div>
         </div>
+    </div>
     );
 };
 

@@ -101,39 +101,55 @@ const Register = () => {
     };
 
     return (
-        <div className="container mt-5">
-            <h1>Đăng ký</h1>
+         <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ minHeight: "150vh", background: "#f6f8fa" }}
+        >
+        <div
+            style={{
+                width: 650,
+                padding: "32px 28px",
+                background: "#fff",
+                borderRadius: 18,
+                boxShadow: "0 4px 24px 0 rgba(0,0,0,.08)",
+            }}
+        >
+            <h2 className="mb-2 mt-2 text-center">Đăng ký tài khoản</h2>
             {msg && <Alert variant="danger">{msg}</Alert>}
             <Form onSubmit={register}>
-                {info.map(f => {
-                    if (f.type === "file") return null;
-                    if (f.type === "select") {
+                    {info.map(f => {
+                        if (f.type === "file") return null;
+                        if (f.type === "select") {
+                            return (
+                                <FloatingLabel key={f.field} controlId={`floating-${f.field}`} label={f.label} className="mb-3">
+                                    <Form.Select
+                                        required
+                                        value={user[f.field] || ""}
+                                        onChange={e => setState(e.target.value, f.field)}
+                                        style={{ background: "#f7f7f9" }}
+                                    >
+                                        <option value="">Chọn</option>
+                                        {f.options.map(opt =>
+                                            <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                        )}
+                                    </Form.Select>
+                                </FloatingLabel>
+                            );
+                        }
                         return (
-                            <FloatingLabel key={f.field} controlId={`floating-${f.field}`} label={f.label} className="mb-3">
-                                <Form.Select
-                                    required
-                                    value={user[f.field] || ""}
-                                    onChange={e => setState(e.target.value, f.field)}
-                                >
-                                    <option value="">Chọn</option>
-                                    {f.options.map(opt =>
-                                        <option key={opt.value} value={opt.value}>{opt.label}</option>
-                                    )}
-                                </Form.Select>
+                            <FloatingLabel key={f.field} controlId="floatingInput" label={f.label} className="mb-3">
+                                <Form.Control type={f.type} placeholder={f.label} required value={user[f.field]} onChange={e => setState(e.target.value, f.field)} style={{ background: "#f7f7f9" }}
+                                />
                             </FloatingLabel>
                         );
-                    }
-                    return (
-                        <FloatingLabel key={f.field} controlId="floatingInput" label={f.label} className="mb-3">
-                            <Form.Control type={f.type} placeholder={f.label} required value={user[f.field]} onChange={e => setState(e.target.value, f.field)} />
-                        </FloatingLabel>
-                    );
-                })}
-                <FloatingLabel controlId="floatingInput" label="Ảnh đại diện" className="mb-3">
-                    <Form.Control type="file" placeholder="Ảnh đại diện" ref={avatar} onChange={(e) => setState(e.target.files[0], "avatar")} />
-                </FloatingLabel>
-                {loading ? <MySpinner /> : <Button type="submit" variant="success" className="mt-3">Đăng ký</Button>}
-            </Form>
+                    })}
+                    <FloatingLabel controlId="floatingInput" label="Ảnh đại diện" className="mb-3">
+                        <Form.Control style={{ background: "#f7f7f9" }} type="file" placeholder="Ảnh đại diện" ref={avatar} onChange={(e) => setState(e.target.files[0], "avatar")} />
+                    </FloatingLabel>
+                    {loading ? <MySpinner /> : <Button type="submit" variant="success" className="mt-2 w-100 py-2" style={{ fontWeight: 600, fontSize: 17, letterSpacing: 1 }}>
+                        Đăng ký</Button>}
+                </Form>
+            </div>
         </div>
     );
 };

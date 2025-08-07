@@ -9,11 +9,15 @@ import Profile from "./components/Profile";
 import StudentList from "./components/Teacher/StudentList";
 import AddScore from "./components/Teacher/AddScore";
 import SubjectList from "./components/Student/SubjectList";
-import Chat from "./components/Student/Chat";
+import MyScore from "./components/Student/MyScore";
+import MyClasses from "./components/Student/MyClasses";
 import { MyDispatchContext, MyUserContext } from "./configs/MyContexts";
 import { useReducer } from "react";
 import MyUserReducer from "./reducers/MyUserReducer";
 import { Navigate } from "react-router-dom";
+import RegisterClass from "./components/Student/RegisterClass";
+import ChatForum from "./components/Student/ChatForum";
+import ForumList from "./components/Student/ForumList"
 const App = () => {
   const [user, dispatch] = useReducer(MyUserReducer, null);
 
@@ -27,17 +31,20 @@ const App = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/studentlist/:classId" element={<StudentList />} />
             <Route path="/addscore/:classSubjectId" element={<AddScore />} />
-            <Route path="/student/chat" element={<Chat />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/subjects" element={<SubjectList />} />
-
+            <Route path="/myscore/:classSubjectId" element={<MyScore />} />
+            <Route path="/myclasses" element={<MyClasses />} />
+            <Route path="/registerclass" element={<RegisterClass />} />
+            <Route path="/forumlist/:forumId" element={<ForumList/>} />
+            <Route path="/chatforum/:classDetailId/:forumId" element={<ChatForum />} />            
+            <Route path="/subjectlist" element={<SubjectList />} />
           </Routes>
           <Footer />
         </BrowserRouter>
       </MyDispatchContext.Provider>
-    </MyUserContext.Provider>
+    </MyUserContext.Provider >
   );
 }
 export default App;
