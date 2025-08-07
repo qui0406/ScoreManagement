@@ -35,7 +35,7 @@ public class ForumMapperDecorator implements ForumMapper {
 
         forumResponse.setContent(forum.getContent());
         forumResponse.setCreatedAt(forum.getCreatedAt());
-        forumResponse.setClassDetailId(forum.getClassDetails());
+        forumResponse.setClassDetailId(forum.getClassDetails().getId().toString());
         User user = forum.getUser();
 
         if (user instanceof Student) {
