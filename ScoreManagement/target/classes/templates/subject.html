@@ -16,19 +16,28 @@
         <tr>
             <th>Mã Môn học</th>
             <th>Tên môn học</th>
-
+            <th>Chức năng</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="s : ${subjects}">
             <td th:text="${s.id}"></td>
             <td th:text="${s.subjectName}"></td>
-
+            <td>
+                <button class="btn btn-danger"
+                        th:data-endpoint="@{/api/secure/staff/delete-subject/}"
+                        th:data-id="${s.id}"
+                        th:data-token="${token}"
+                        onclick="deleteSubject(this.dataset.endpoint, this.dataset.id, this.dataset.token)">
+                    Xóa
+                </button>
+            </td>
         </tr>
         </tbody>
     </table>
 </main>
 <div th:replace="base :: footer"></div>
+<script th:src="@{/js/main.js}"></script>
 
 </body>
 </html>

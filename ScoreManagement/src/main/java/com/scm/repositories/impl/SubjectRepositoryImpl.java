@@ -82,9 +82,10 @@ public class SubjectRepositoryImpl implements SubjectRepository {
     }
 
     @Override
-    public void create(Subject subject) {
+    public Subject create(Subject subject) {
         Session s = factory.getObject().getCurrentSession();
         s.persist(subject);
+        return subject;
     }
 
     @Override

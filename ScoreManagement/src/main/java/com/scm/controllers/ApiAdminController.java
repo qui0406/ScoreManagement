@@ -5,10 +5,7 @@ import com.scm.dto.requests.CreateClassDetailsRequest;
 import com.scm.dto.requests.SubjectRequest;
 import com.scm.exceptions.AppException;
 import com.scm.pojo.User;
-import com.scm.services.ClassroomDetailsService;
-import com.scm.services.ClassroomService;
-import com.scm.services.SubjectService;
-import com.scm.services.UserService;
+import com.scm.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +27,9 @@ public class ApiAdminController {
 
     @Autowired
     private SubjectService subjectService;
+
+    @Autowired
+    private TeacherService teacherService;
 
     //Tao lop hoc
     @PostMapping("/create/classroom")
@@ -83,6 +83,21 @@ public class ApiAdminController {
         return ResponseEntity.ok(HttpStatus.NO_CONTENT);
     }
 
+    @DeleteMapping("/delete-teacher/{teacherId}")
+    public ResponseEntity<?> deleteTeacher(@PathVariable(value= "teacherId") String teacherId) {
+        this.teacherService.delete(teacherId);
+        return ResponseEntity.ok(HttpStatus.NO_CONTENT);
+    }
 
+    @PostMapping("/update-role/{teacherId}")
+    public ResponseEntity<?> updateRoleTeacher(@PathVariable(value = "teacherId") String teacherId){
+        this.teacherService.updateRoleTeacher(teacherId);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 
+    @PostMapping("/down-role/{teacherId}")
+    public ResponseEntity<?> downRoleTeacher(@PathVariable(value = "teacherId") String teacherId){
+        this.teacherService.downRoleTeacher(teacherId);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 }

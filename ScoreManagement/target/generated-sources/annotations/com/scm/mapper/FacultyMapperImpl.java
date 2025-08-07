@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-08-06T12:49:26+0700",
+    date = "2025-08-07T07:35:29+0700",
     comments = "version: 1.6.0.Beta1, compiler: javac, environment: Java 21.0.7 (Microsoft)"
 )
 @Component
@@ -24,7 +24,7 @@ public class FacultyMapperImpl implements FacultyMapper {
 
         List<FacultyResponse> list = new ArrayList<FacultyResponse>( faculty.size() );
         for ( Faculty faculty1 : faculty ) {
-            list.add( facultyToFacultyResponse( faculty1 ) );
+            list.add( toFacultyResponse( faculty1 ) );
         }
 
         return list;
@@ -44,7 +44,8 @@ public class FacultyMapperImpl implements FacultyMapper {
         return faculty;
     }
 
-    protected FacultyResponse facultyToFacultyResponse(Faculty faculty) {
+    @Override
+    public FacultyResponse toFacultyResponse(Faculty faculty) {
         if ( faculty == null ) {
             return null;
         }

@@ -186,9 +186,16 @@ public class ClassDetailsRepositoryImpl implements ClassDetailsRepository {
                 builder.equal(root.get("teacher").get("id"), teacherId),
                 builder.equal(root.get("semester").get("id"), semesterId)
         );
-
-        List<ClassDetails> responses = session.createQuery(query).getResultList();
-        return responses;
+        return  session.createQuery(query).getResultList();
     }
 
+    @Override
+    public List<ClassDetails> getAllClassDetails() {
+        Session session = factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<ClassDetails> query = builder.createQuery(ClassDetails.class);
+        Root<ClassDetails> root = query.from(ClassDetails.class);
+        query.select(root);
+        return session.createQuery(query).getResultList();
+    }
 }

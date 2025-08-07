@@ -26,8 +26,9 @@ public class SemesterServiceImpl implements SemesterService {
     }
 
     @Override
-    public void create(SemesterRequest semester) {
-        this.semesterRepository.create(this.semesterMapper.toSemester(semester));
+    public SemesterResponse create(SemesterRequest semester) {
+        Semester s = semesterMapper.toSemester(semester);
+        return semesterMapper.toSemesterResponse(this.semesterRepository.create(s));
     }
 
     @Override

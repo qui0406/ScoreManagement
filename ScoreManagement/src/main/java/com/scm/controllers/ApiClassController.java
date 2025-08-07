@@ -71,4 +71,11 @@ public class ApiClassController {
         User student = userDetailsService.getUserByUsername(name);
         return ResponseEntity.ok(this.classroomDetailsService.getClassroomByStudentId(student.getId().toString()));
     }
+
+    @GetMapping("/get-all-class-details")
+    public ResponseEntity<List<ClassDetailsResponse>> getAllClassDetails() {
+        return ResponseEntity.ok(this.classroomDetailsService.getAllClassDetails());
+    }
+
+
 }

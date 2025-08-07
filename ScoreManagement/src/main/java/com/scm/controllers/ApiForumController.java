@@ -74,8 +74,8 @@ public class ApiForumController {
     @GetMapping("/get-all-reply-forum/{forumId}")
     public ResponseEntity<?> getAllReplyForum(@PathVariable(value = "forumId") String forumId,
                                               Principal principal) {
-        String name =  principal.getName();
-        String userId = userDetailsService.findIdByUserName(name);
+        String name = principal.getName();
+        User u = userDetailsService.getUserByUsername(name);
         return ResponseEntity.ok(this.forumDetailsService.getAllForumByForumId(forumId));
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface SubjectService {
-    void create(SubjectRequest subject);
+    SubjectResponse create(SubjectRequest subject);
 
     void delete(String subjectId);
 

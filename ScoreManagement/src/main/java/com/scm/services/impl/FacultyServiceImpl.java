@@ -20,8 +20,9 @@ public class FacultyServiceImpl implements FacultyService {
     private FacultyMapper facultyMapper;
 
     @Override
-    public void create(FacultyRequest request) {
-        this.facultyRepository.create(this.facultyMapper.toFaculty(request));
+    public FacultyResponse create(FacultyRequest request) {
+        Faculty faculty = facultyMapper.toFaculty(request);
+        return facultyMapper.toFacultyResponse(this.facultyRepository.create(faculty));
     }
 
     @Override

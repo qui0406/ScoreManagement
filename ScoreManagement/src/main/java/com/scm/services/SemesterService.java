@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SemesterService {
     SemesterResponse getSemesterById(String id);
-    void create(SemesterRequest semester);
+    SemesterResponse create(SemesterRequest semester);
     void delete(SemesterRequest semester);
 
     List<SemesterResponse>  getAllSemesters();

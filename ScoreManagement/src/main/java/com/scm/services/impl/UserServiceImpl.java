@@ -28,6 +28,7 @@ import java.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -60,12 +61,6 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private StudentRepository studentRepo;
-
-    @Autowired
-    private TeacherRepository teacherRepo;
-
     @Override
     public UserResponse getProfile(Principal principal) {
         try{
@@ -83,7 +78,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User u = this.getUserByUsername(username);
         if(u == null){
@@ -96,6 +91,7 @@ public class UserServiceImpl implements UserService{
                 u.getUsername(), u.getPassword(), authorities);
     }
 
+
     @Override
     public StudentResponse registerStudent(StudentRegisterRequest request, MultipartFile avatar) {
         if(checkExistUsername(request.getUsername())){
@@ -104,6 +100,16 @@ public class UserServiceImpl implements UserService{
 
         if(checkExistEmail(request.getEmail())){
             throw new AppException(ErrorCode.EMAIL_EXISTED);
+        }
+
+        String firstName = request.getFirstName();
+        String mssv = request.getMssv();
+        String email = request.getEmail();
+
+        String expectedEmail = mssv + firstName + "@ou.edu.vn";
+
+        if(!email.equals(expectedEmail)){
+            throw new AppException(ErrorCode.EMAIL_NO_FORRMAT);
         }
 
         Student u = userMapper.toStudent(request);
