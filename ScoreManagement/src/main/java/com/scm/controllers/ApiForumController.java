@@ -2,21 +2,25 @@ package com.scm.controllers;
 
 import com.scm.dto.requests.ForumDetailsRequest;
 import com.scm.dto.requests.ForumRequest;
+import com.scm.dto.responses.ForumDetailsResponse;
 import com.scm.mapper.ForumDetailsMapper;
 import com.scm.pojo.User;
 import com.scm.repositories.ForumDetailsRepository;
 import com.scm.services.ForumDetailsService;
 import com.scm.services.ForumService;
 import com.scm.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/secure/")
+@Slf4j
 public class ApiForumController {
     @Autowired
     private UserService userDetailsService;
@@ -72,10 +76,14 @@ public class ApiForumController {
     }
 
     @GetMapping("/get-all-reply-forum/{forumId}")
-    public ResponseEntity<?> getAllReplyForum(@PathVariable(value = "forumId") String forumId,
+    public ResponseEntity<List<ForumDetailsResponse>> getAllReplyForum(@PathVariable(value = "forumId") String forumId,
                                               Principal principal) {
         String name =  principal.getName();
-        String userId = userDetailsService.findIdByUserName(name);
-        return ResponseEntity.ok(this.forumDetailsService.getAllForumByForumId(forumId));
+        User u = userDetailsService.getUserByUsername(name);
+        List<ForumDetailsResponse> forumDetailsResponses = this.forumDetailsService.getAllForumByForumId(forumId);
+        for (ForumDetailsResponse response : forumDetailsResponses) {
+            log.info("forumDetailsResponses:{}", response.getMessage());
+        }
+        return ResponseEntity.ok(forumDetailsResponses);
     }
 }
