@@ -31,4 +31,5 @@ public interface ClassDetailsRepository {
     List<ClassDetails> getClassroomsByTeacherId(String teacherId);
 
     List<ClassDetails> getClassroomByStudentId(String studentId);
+    List<ClassDetails> getAllClassDetails();
 }

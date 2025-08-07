@@ -5,8 +5,10 @@ import com.scm.mapper.ClassDetailMapper;
 import com.scm.mapper.EnrollDetailsMapper;
 import com.scm.pojo.ClassDetails;
 import com.scm.pojo.EnrollDetails;
+import com.scm.pojo.Semester;
 import com.scm.pojo.Student;
 import com.scm.repositories.ClassDetailsRepository;
+import com.scm.repositories.SemesterRepository;
 import com.scm.repositories.StudentRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +28,18 @@ public class EnrollDetailsMapperDecorator implements EnrollDetailsMapper {
     @Autowired
     private ClassDetailsRepository classDetailsRepository;
 
+    @Autowired
+    private SemesterRepository semesterRepository;
     @Override
     public EnrollDetails toEnrollDetails(EnrollClassRequest request) {
         EnrollDetails enrollDetails = new EnrollDetails();
 
         Student student = studentRepository.findById(request.getStudentId());
         ClassDetails classDetails = classDetailsRepository.findById(request.getClassDetailId());
-
+        Semester semester = semesterRepository.findById(request.getSemesterId());
         enrollDetails.setStudent(student);
         enrollDetails.setClassDetails(classDetails);
+        enrollDetails.setSemester(semester);
         return enrollDetails;
     }
 }

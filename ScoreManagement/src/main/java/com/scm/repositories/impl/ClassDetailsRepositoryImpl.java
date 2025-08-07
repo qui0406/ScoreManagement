@@ -190,5 +190,13 @@ public class ClassDetailsRepositoryImpl implements ClassDetailsRepository {
         List<ClassDetails> responses = session.createQuery(query).getResultList();
         return responses;
     }
-
+    @Override
+    public List<ClassDetails> getAllClassDetails() {
+        Session session = factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<ClassDetails> query = builder.createQuery(ClassDetails.class);
+        Root<ClassDetails> root = query.from(ClassDetails.class);
+        query.select(root);
+        return session.createQuery(query).getResultList();
+    }
 }

@@ -47,6 +47,8 @@ public class SemesterRepositoryImpl implements SemesterRepository {
 
         Root<Semester> root = query.from(Semester.class);
         query.select(root);
+//         Semester sememes = session.createQuery(query).getSingleResult();
+//        log.info("Semester: {}", sememes.getName());
         return session.createQuery(query).getResultList();
     }
 }

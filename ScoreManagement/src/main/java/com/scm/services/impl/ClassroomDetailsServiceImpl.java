@@ -88,4 +88,15 @@ public class ClassroomDetailsServiceImpl implements ClassroomDetailsService {
         }
         return responses;
     }
+    @Override
+    public List<ClassDetailsResponse> getAllClassDetails() {
+        List<ClassDetails> classDetails = this.classDetailsRepository.getAllClassDetails();
+
+        List<ClassDetailsResponse> responses = new ArrayList<>();
+        for (ClassDetails classDetail : classDetails) {
+            ClassDetailsResponse response = classDetailMapper.toClassDetailsResponse(classDetail);
+            responses.add(response);
+        }
+        return responses;
+    }
 }
