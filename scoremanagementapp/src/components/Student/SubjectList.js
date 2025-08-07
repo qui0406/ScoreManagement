@@ -13,7 +13,6 @@ const SubjectList = () => {
         const load = async () => {
             setLoading(true);
             try {
-                // Lấy tất cả lớp mà user có thể chat
                 let res = await authApis().get(endpoints['get-all-my-class']);
                 setClasses(res.data || []);
             } catch {
@@ -36,7 +35,7 @@ const SubjectList = () => {
                     <Col key={classItem.id} md={4} xs={12} className="mb-3">
                         <Card
                             style={{ cursor: "pointer" }}
-                            onClick={() => nav(`/chatbox/${classItem.id}`)}
+                            onClick={() => nav(`/forumlist/${classItem.id}`)}
                         >
                             <Card.Body>
                                 <Card.Title>

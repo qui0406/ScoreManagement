@@ -1,7 +1,7 @@
 import axios from "axios";
 import cookie from "react-cookies";
 
-const BASE_URL = "https://c8a533fd232c.ngrok-free.app/ScoreManagement";
+const BASE_URL = "http://localhost:8080/ScoreManagement";
 
 export const endpoints = {
     //Auth
