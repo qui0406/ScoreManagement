@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:replace="base :: bootstrap"></th:block>
+
+</head>
+<body>
+<div th:replace="base :: header"></div>
+<main class="container">
+    <h1 class="text-center text-info mt-4 mb-3">THÊM GIẢNG VIÊN MỚI</h1>
+    <form method="post" th:action="@{/admin/register-teacher}" th:object="${teacher}" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label class="form-label">Tên đăng nhập:</label>
+            <input type="text" class="form-control" th:field="*{username}" placeholder="Tên đăng nhập"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Mật khẩu:</label>
+            <input type="password" class="form-control" th:field="*{password}" placeholder="Mật khẩu"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Họ:</label>
+            <input type="text" class="form-control" th:field="*{lastName}" placeholder="Họ"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Tên:</label>
+            <input type="text" class="form-control" th:field="*{firstName}" placeholder="Tên"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email:</label>
+            <input type="email" class="form-control" th:field="*{email}" placeholder="Email"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Ngày sinh:</label>
+            <input type="date" class="form-control" th:field="*{dob}"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Số điện thoại:</label>
+            <input type="text" class="form-control" th:field="*{phone}" placeholder="Số điện thoại"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Địa chỉ:</label>
+            <input type="text" class="form-control" th:field="*{address}" placeholder="Địa chỉ"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Giới tính:</label>
+            <select class="form-select" th:field="*{gender}">
+                <option value="true">Nam</option>
+                <option value="false">Nữ</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Trạng thái:</label>
+            <select class="form-select" th:field="*{active}">
+                <option value="true">Kích hoạt</option>
+                <option value="false">Khóa</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">MSGV:</label>
+            <input type="text" class="form-control" th:field="*{msgv}" placeholder="Mã giảng viên"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Chức vụ:</label>
+            <input type="text" class="form-control" th:field="*{position}" placeholder="Chức vụ"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Kinh nghiệm (năm):</label>
+            <input type="number" class="form-control" th:field="*{experience}" placeholder="Số năm kinh nghiệm"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Ảnh đại diện:</label>
+            <input type="file" class="form-control" name="avatar"/>
+        </div>
+        <!-- Nếu có lỗi validate, hiện lỗi ở đây -->
+        <div class="mb-3 text-danger" th:if="${#fields.hasErrors('*')}" th:each="err : ${#fields.errors('*')}">
+            <span th:text="${err}"></span>
+        </div>
+        <div class="mb-3 mt-4 text-center">
+            <button class="btn btn-success" type="submit">Thêm giảng viên</button>
+        </div>
+    </form>
+</main>
+<div th:replace="base :: footer"></div>
+
+</body>
+</html>
