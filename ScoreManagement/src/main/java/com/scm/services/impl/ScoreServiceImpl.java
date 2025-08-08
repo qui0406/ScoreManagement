@@ -101,7 +101,12 @@ public class ScoreServiceImpl implements ScoreService {
             scoreRequest.setStudentId(request.getStudentId());
             scoreRequest.setClassDetailId(request.getClassDetailId());
             scoreRequest.setScoreTypeId(type.toString());
-            this.addOrUpdateScore(scoreRequest, teacherId);
+            try{
+                this.addOrUpdateScore(scoreRequest, teacherId);
+
+            }catch(AppException e){
+                e.printStackTrace();
+            }
         }
     }
 

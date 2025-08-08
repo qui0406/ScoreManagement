@@ -75,6 +75,4 @@ public class ApiClassController {
     public ResponseEntity<List<ClassDetailsResponse>> getAllClassDetails() {
         return ResponseEntity.ok(this.classroomDetailsService.getAllClassDetails());
     }
-
-
 }

@@ -85,10 +85,13 @@ public class ApiTeacherSuperController {
                 request.add(tmp);
             }
             this.scoreService.addListScoreAllStudents(request, teacher.getId().toString());
+
+            ;
         }
         catch (AppException ex){
             throw new AppException(ErrorCode.READ_FILE_ERROR);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok("value: Successfully");

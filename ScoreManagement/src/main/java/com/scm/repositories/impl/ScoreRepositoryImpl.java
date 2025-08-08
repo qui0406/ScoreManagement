@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -121,19 +122,22 @@ public class ScoreRepositoryImpl implements ScoreRepository {
 
     @Override
     public Score getScoreByClassDetailIdAndStudentAndScoreType(String classDetailId, String studentId, String scoreTypeId) {
-        Session session = factory.getObject().getCurrentSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Score> query = builder.createQuery(Score.class);
-        Root<Score> root = query.from(Score.class);
-        query.select(root).where(
-                builder.equal(root.get("student").get("id"), studentId),
-                builder.equal(root.get("classDetails").get("id"), classDetailId),
-                builder.equal(root.get("scoreType").get("id"), scoreTypeId),
-                builder.equal(root.get("active"), false)
-        );
         try {
+            Session session = factory.getObject().getCurrentSession();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Score> query = builder.createQuery(Score.class);
+            Root<Score> root = query.from(Score.class);
+
+            query.select(root).where(
+                    builder.equal(root.get("student").get("id"), studentId),
+                    builder.equal(root.get("classDetails").get("id"), classDetailId),
+                    builder.equal(root.get("scoreType").get("id"), scoreTypeId)
+            );
+
             return session.createQuery(query).getSingleResult();
         } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException e) {
             throw new AppException(ErrorCode.INVALID_DATA);
         }
     }

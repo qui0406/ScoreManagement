@@ -54,7 +54,8 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
     @Override
     public ScoreStudentResponse getScoreByStudentAndClass(String studentId, String classDetailId) {
         List<Score> scores = scoreStudentRepository.getScoresByStudentAndClass(studentId, classDetailId);
-        return toScoreResponseList(scores);
+        Student student= studentRepository.findById(studentId);
+        return toScoreResponseList(scores, student);
     }
 
 
@@ -65,11 +66,11 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
 
     @Override
     public List<ScoreStudentResponse> getScoreByClassDetails(String classDetailId, String teacherId) {
-        String cacheKey = "classScore:" + classDetailId + "_" + teacherId;
-        Object cached = redisService.getValue(cacheKey);
-        if (cached != null) {
-            return (List<ScoreStudentResponse>) cached;
-        }
+//        String cacheKey = "classScore:" + classDetailId + "_" + teacherId;
+//        Object cached = redisService.getValue(cacheKey);
+//        if (cached != null) {
+//            return (List<ScoreStudentResponse>) cached;
+//        }
 
         ClassDetails classDetails = this.classDetailsRepository.findById(classDetailId);
         if(!classDetails.getTeacher().getId().toString().equals(teacherId)){
@@ -80,11 +81,13 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
         List<ScoreStudentResponse> scoreStudentResponse = new ArrayList<>();
 
         for (Student student : students) {
-            ScoreStudentResponse response = scoreStudentService.getScoreByStudentAndClass(student.getId().toString(), classDetailId);
+            ScoreStudentResponse response = getScoreByStudentAndClass(student.getId().toString(), classDetailId);
             scoreStudentResponse.add(response);
         }
 
-        redisService.setValue(cacheKey, scoreStudentResponse);
+
+
+//        redisService.setValue(cacheKey, scoreStudentResponse);
         return scoreStudentResponse;
     }
 
@@ -118,10 +121,19 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
         return null;
     }
 
-    private ScoreStudentResponse toScoreResponseList(List<Score> scores) {
-        Score score = scores.get(0);
+    private ScoreStudentResponse toScoreResponseList(List<Score> scores, Student student) {
+        if (scores == null || scores.isEmpty()) {
+            ScoreStudentResponse emptyResponse = new ScoreStudentResponse();
+            emptyResponse.setStudent(new StudentDTO(
+                    student.getId().toString(),
+                    student.getMssv(),
+                    student.getLastName() + " " + student.getFirstName()
+            ));
+            emptyResponse.setScores(new ArrayList<>());
+            return emptyResponse;
+        }
 
-        Student student = score.getStudent();
+        Score score = scores.get(0);
         ClassDetails classDetails = score.getClassDetails();
         TeacherDTO teacherDTO = teacherService.getTeacherDTOById(score.getClassDetails().getTeacher().getId().toString());
         Map<Integer, ScoreByTypeDTO> scoresMap = scoreService.getGroupedScores(scores);
@@ -130,7 +142,7 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
         response.setStudent(new StudentDTO(
                 student.getId().toString(),
                 student.getMssv(),
-                student.getFirstName() + " " + student.getLastName()
+                student.getLastName() + " " + student.getFirstName()
         ));
 
         response.setSubject(new SubjectDTO(
