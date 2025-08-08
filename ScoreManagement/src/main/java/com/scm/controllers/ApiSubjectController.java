@@ -18,15 +18,6 @@ import java.util.Map;
 @RequestMapping("/api/secure/user")
 public class ApiSubjectController {
     @Autowired
-    private UserService userDetailsService;
-
-    @Autowired
-    private ClassroomDetailsService classroomDetailsService;
-
-    @Autowired
-    private ScoreStudentService scoreStudentService;
-
-    @Autowired
     private SubjectService subjectService;
 
 
@@ -34,5 +25,4 @@ public class ApiSubjectController {
     public ResponseEntity<?> getAllSubjects(@RequestParam(value="page", defaultValue = "1") String page) {
         return ResponseEntity.ok(subjectService.getAllSubjects(page));
     }
-
 }

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("api/secure/")
+@RequestMapping("api/secure/common")
 public class ApiForumController {
     @Autowired
     private UserService userDetailsService;
@@ -27,7 +27,6 @@ public class ApiForumController {
     @Autowired
     private ForumDetailsService forumDetailsService;
 
-    // Tao forum
     @PostMapping("/create-forum")
     public ResponseEntity<?> createForum(@RequestBody ForumRequest request, Principal principal) {
         String name =  principal.getName();
@@ -36,7 +35,6 @@ public class ApiForumController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    // Lay danh sach tat ca forum trong lop da co
     @GetMapping("/get-all-forum/{classDetailId}")
     public ResponseEntity<?> getAllForum(@PathVariable(value ="classDetailId") String classDetailId,  Principal principal) {
         String name =   principal.getName();
@@ -44,7 +42,6 @@ public class ApiForumController {
         return ResponseEntity.ok(this.forumService.getAllForumsByClassDetailId(classDetailId, u.getId().toString()));
     }
 
-    // Xoa forum da chon
     @DeleteMapping("/delete-forum/{forumId}")
     public ResponseEntity<?> deleteForum(@PathVariable(value = "forumId") String forumId,
                                          Principal principal) {
@@ -54,7 +51,6 @@ public class ApiForumController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    // Reply 1 forum trong lop
     @PostMapping("/forum-reply/{forumId}")
     public ResponseEntity<?> replyForum(@RequestBody ForumDetailsRequest request,
                                         @PathVariable(value="forumId") String forumId,
@@ -65,7 +61,6 @@ public class ApiForumController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    // Sua thong tin da reply forum do
     @PutMapping("/forum-reply/update/{forumDetailId}")
     public ResponseEntity<?> updateForum(@RequestBody ForumDetailsRequest request,
                                          Principal principal, @PathVariable(value="forumDetailId") String forumId) {
@@ -75,7 +70,6 @@ public class ApiForumController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    // Xoa thong tin reply forum
     @DeleteMapping("/forum-reply/delete/{forumDetailId}")
     public ResponseEntity<?> deleteReplyForum(@PathVariable(value ="forumDetailId") String forumId, Principal principal) {
         String name =  principal.getName();
@@ -84,7 +78,6 @@ public class ApiForumController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    // Lay tat ca reply cua forum do
     @GetMapping("/get-all-reply-forum/{forumId}")
     public ResponseEntity<?> getAllReplyForum(@PathVariable(value = "forumId") String forumId,
                                               Principal principal) {

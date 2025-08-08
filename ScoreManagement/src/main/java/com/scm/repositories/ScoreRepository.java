@@ -20,15 +20,10 @@ public interface ScoreRepository {
     boolean checkTestExisted(String classDetailId, String scoreTypeId, String studentId);
     boolean checkOver5TestExisted(String classDetailId, String scoreTypeId, String studentId);
 
-    List<Score> getScoreSubjectByStudentId(Integer studentId,  Integer subjectId);
 
     void blockScore(String classSubjectId);
 
-    void saveAll(Set<Score> scores);
-    void save(Score score);
-
     boolean getStatusBlock(String classDetailId);
 
-    List<Score> findScoreByStudentIdAndClassSubjectId(Integer studentId, Integer classSubjectId);
     Score getScoreByClassDetailIdAndStudentAndScoreType(String classDetailId, String studentId, String scoreTypeId);
 }

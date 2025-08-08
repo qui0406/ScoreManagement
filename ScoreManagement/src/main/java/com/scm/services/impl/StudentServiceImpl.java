@@ -5,10 +5,12 @@
 package com.scm.services.impl;
 
 import com.scm.dto.requests.Recipient;
+import com.scm.dto.responses.ScoreStudentResponse;
 import com.scm.dto.responses.StudentResponse;
 import com.scm.mapper.UserMapper;
 import com.scm.pojo.Student;
 import com.scm.repositories.StudentRepository;
+import com.scm.services.RedisService;
 import com.scm.services.StudentService;
 
 import java.util.ArrayList;
@@ -30,14 +32,25 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private RedisService redisService;
+
     @Override
     public List<StudentResponse> getAllStudentsByClass(String classDetailId) {
+        String cacheKey = "classDetailsAllStudents:" + classDetailId;
+        Object cached = redisService.getValue(cacheKey);
+        if (cached != null) {
+            return (List<StudentResponse>) cached;
+        }
+
         List<Student> students = this.studentRepo.getAllStudentsByClass(classDetailId);
         List<StudentResponse> studentResponses = new ArrayList<>();
         for (Student student : students) {
             StudentResponse response = userMapper.toStudentResponse(student);
             studentResponses.add(response);
         }
+
+        redisService.setValue(cacheKey, studentResponses);
         return studentResponses;
     }
 

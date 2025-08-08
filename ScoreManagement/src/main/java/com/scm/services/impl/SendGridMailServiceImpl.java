@@ -72,13 +72,9 @@ public class SendGridMailServiceImpl implements SendGridMailService {
         Email fromEmail = new Email();
         fromEmail.setName(sendGridFromName);
         fromEmail.setEmail(sendGridFromEmail);
-
         mail.setFrom(fromEmail);
-
         mail.setSubject(emailRequest.getSubject());
-
         Personalization personalization = new Personalization();
-
         List<Recipient> toRecipients = emailRequest.getTo();
 
         if (toRecipients != null) {
@@ -88,7 +84,6 @@ public class SendGridMailServiceImpl implements SendGridMailService {
             }
         }
         mail.addPersonalization(personalization);
-
         Content content = new Content();
         content.setType(CONTENT_TYPE_TEXT_PLAIN);
         content.setValue(emailRequest.getContent().toString());

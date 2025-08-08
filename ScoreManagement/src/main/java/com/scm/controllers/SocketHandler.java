@@ -26,11 +26,15 @@ import java.time.LocalDateTime;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SocketHandler {
-    SocketIOServer socketIOServer;
-    WebSocketSessionService webSocketSessionService;
-    UserService userService;
+    @Autowired
+    private SocketIOServer socketIOServer;
+
+    @Autowired
+    private WebSocketSessionService webSocketSessionService;
+
+    @Autowired
+    private UserService userService;
 
     @OnConnect
     public void clientConnected(SocketIOClient socketIOClient) throws Exception {

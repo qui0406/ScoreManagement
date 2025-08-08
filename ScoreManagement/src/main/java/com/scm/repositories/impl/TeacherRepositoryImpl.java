@@ -2,11 +2,14 @@ package com.scm.repositories.impl;
 
 import com.scm.exceptions.AppException;
 import com.scm.exceptions.ErrorCode;
+import com.scm.pojo.ClassDetails;
 import com.scm.pojo.Teacher;
 import com.scm.repositories.TeacherRepository;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +41,6 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 
         CriteriaQuery<String> cq = cb.createQuery(String.class);
         Root<Teacher> root = cq.from(Teacher.class);
-
         cq.select(root.get("id")).where(cb.equal(root.get("username"), username));
         return s.createQuery(cq).uniqueResult();
     }
@@ -72,7 +74,6 @@ public class TeacherRepositoryImpl implements TeacherRepository {
         if (page != null) {
             int p = Integer.parseInt(page);
             int start = (p - 1) * PAGE_SIZE;
-
             q.setMaxResults(PAGE_SIZE);
             q.setFirstResult(start);
         }
@@ -85,5 +86,25 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     public void delete(Teacher teacher) {
         Session s = factory.getObject().getCurrentSession();
         s.remove(teacher);
+    }
+
+    @Override
+    public Teacher getTeacherByClassDetailId(String classDetailId) {
+        try {
+            Session session = factory.getObject().getCurrentSession();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Teacher> query = cb.createQuery(Teacher.class);
+
+            Root<ClassDetails> root = query.from(ClassDetails.class);
+            Join<ClassDetails, Teacher> join = root.join("teacher");
+
+            query.select(join).where(cb.equal(root.get("id"), classDetailId));
+
+            return session.createQuery(query).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (Exception e) {
+            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
+        }
     }
 }

@@ -10,6 +10,5 @@ public interface SemesterService {
     SemesterResponse getSemesterById(String id);
     SemesterResponse create(SemesterRequest semester);
     void delete(SemesterRequest semester);
-
     List<SemesterResponse>  getAllSemesters();
 }

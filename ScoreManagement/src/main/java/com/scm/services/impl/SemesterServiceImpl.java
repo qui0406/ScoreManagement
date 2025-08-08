@@ -2,6 +2,8 @@ package com.scm.services.impl;
 
 import com.scm.dto.requests.SemesterRequest;
 import com.scm.dto.responses.SemesterResponse;
+import com.scm.exceptions.AppException;
+import com.scm.exceptions.ErrorCode;
 import com.scm.mapper.SemesterMapper;
 import com.scm.pojo.Semester;
 import com.scm.repositories.SemesterRepository;
@@ -46,8 +48,7 @@ public class SemesterServiceImpl implements SemesterService {
             }
             return semesterResponses;}catch (Exception e){
             e.printStackTrace();
-            throw new RuntimeException("Error fetching semesters: " + e.getMessage());
+            throw new AppException(ErrorCode.INVALID_DATA);
         }
-
     }
 }

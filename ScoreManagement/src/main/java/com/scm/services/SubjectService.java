@@ -10,12 +10,8 @@ import java.util.Map;
 
 public interface SubjectService {
     SubjectResponse create(SubjectRequest subject);
-
     void delete(String subjectId);
-
     List<ClassDetailsResponse> getAllSubjectsByStudent(String studentId, Map<String, String> params);
-
     List<SubjectResponse> getAllSubjectsBySemester(String studentId, String semesterId);
-
     List<SubjectResponse> getAllSubjects(String page);
 }

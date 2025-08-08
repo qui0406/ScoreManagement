@@ -49,35 +49,6 @@ public class ScoreStudentRepositoryImpl implements ScoreStudentRepository {
 
 
     @Override
-    public List<Student> getAllStudentsInClassSubject(String classSubjectId) {
-        Session session = factory.getObject().getCurrentSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Student> cq = cb.createQuery(Student.class);
-
-        Root<Score> root = cq.from(Score.class);
-        cq.select(root.get("student")).distinct(true)
-                .where(cb.equal(root.get("classSubject").get("id"), classSubjectId));
-
-        return session.createQuery(cq).getResultList();
-    }
-
-
-    @Override
-    public List<Score> getAllScoreByStudentAndClassSubject(String studentId, String classDetailId) {
-        Session session = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-
-        CriteriaQuery<Score> query = builder.createQuery(Score.class);
-        Root<Score> root = query.from(Score.class);
-
-        query.select(root).where(
-                builder.equal(root.get("student").get("id"), studentId),
-                builder.equal(root.get("classDetails").get("id"), classDetailId)
-        );
-        return session.createQuery(query).getResultList();
-    }
-
-    @Override
     public List<Student> findScoreStudentByMSSVOrName(Map<String, String> params, String  classDetailId) {
         try {
             Session session = factory.getObject().getCurrentSession();

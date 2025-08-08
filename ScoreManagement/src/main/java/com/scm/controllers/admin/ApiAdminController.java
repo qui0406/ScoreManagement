@@ -1,4 +1,4 @@
-package com.scm.controllers;
+package com.scm.controllers.admin;
 
 import com.scm.dto.requests.ClassroomRequest;
 import com.scm.dto.requests.CreateClassDetailsRequest;
@@ -31,20 +31,17 @@ public class ApiAdminController {
     @Autowired
     private TeacherService teacherService;
 
-    //Tao lop hoc
     @PostMapping("/create/classroom")
     public ResponseEntity<?> createClassroom(@RequestBody ClassroomRequest request) {
         return ResponseEntity.ok(classroomService.create(request));
     }
 
-    //Xoa lop hoc
     @DeleteMapping("/delete/{classroomId}")
     public ResponseEntity<?> deleteClassroom(@PathVariable(value= "classroomId") String classroomId) {
         this.classroomService.delete(classroomId);
         return ResponseEntity.ok(HttpStatus.NO_CONTENT);
     }
 
-    //Tao mon hoc cho lop hoc do
     @PostMapping("/class-details/create")
     public ResponseEntity<?> registerSubject(@RequestBody CreateClassDetailsRequest request, Principal principal) {
         try{
@@ -56,7 +53,6 @@ public class ApiAdminController {
         }
     }
 
-    //Xoa mon hoc cho lop hoc do
     @DeleteMapping("/class-details/delete/{classDetailId}")
     public ResponseEntity<?> registerSubject(@PathVariable(value = "classDetailId")
                    String classDetailId, Principal principal) {

@@ -25,11 +25,7 @@ public class ForumRepositoryImpl implements ForumRepository {
     @Override
     public void create(Forum forum) {
         Session s = factory.getObject().getCurrentSession();
-        try{
-            s.persist(forum);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        s.persist(forum);
     }
 
     @Override
