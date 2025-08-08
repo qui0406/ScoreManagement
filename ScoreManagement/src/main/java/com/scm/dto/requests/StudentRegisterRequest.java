@@ -1,7 +1,5 @@
 package com.scm.dto.requests;
 
-import com.scm.validators.ValidStudentEmail;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,9 +19,6 @@ public class StudentRegisterRequest {
     @NotBlank
     private String password;
     private String role;
-//    @ValidStudentEmail
-//    @Email(message = "Email không đúng định dạng")
-//    @NotBlank(message = "Email không được để trống")
     private String email;
     @NotBlank
     private String firstName;

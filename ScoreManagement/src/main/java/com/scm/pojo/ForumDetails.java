@@ -20,7 +20,7 @@ public class ForumDetails implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name= "forum_id", nullable = false)
     private Forum forum;
 

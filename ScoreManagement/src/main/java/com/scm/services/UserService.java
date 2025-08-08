@@ -10,6 +10,7 @@ import com.scm.dto.requests.UpdateUserRequest;
 import com.scm.dto.responses.StudentResponse;
 import com.scm.dto.responses.TeacherResponse;
 import com.scm.dto.responses.UserResponse;
+import com.scm.pojo.Student;
 import com.scm.pojo.Teacher;
 import com.scm.pojo.User;
 
@@ -28,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService extends UserDetailsService{
     User getUserByUsername(String username);
-    StudentResponse registerStudent(StudentRegisterRequest request, MultipartFile avatar);
+    Student registerStudent(Map<String, String> params, MultipartFile avatar);
     TeacherResponse registerTeacher(TeacherRegisterRequest request, MultipartFile avatar);
     boolean authenticate(String username, String password);
     List<User> getAllUsers();

@@ -23,6 +23,9 @@ import com.scm.services.StudentService;
 import com.scm.services.UserService;
 import java.io.IOException;
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import lombok.extern.slf4j.Slf4j;
@@ -90,38 +93,55 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public StudentResponse registerStudent(StudentRegisterRequest request, MultipartFile avatar) {
-        if(checkExistUsername(request.getUsername())){
+    public Student registerStudent(Map<String, String> params, MultipartFile avatar) {
+        if(checkExistUsername(params.get("username"))){
             throw new AppException(ErrorCode.USER_EXISTED);
         }
 
-        if(checkExistEmail(request.getEmail())){
+        if(checkExistEmail(params.get("email"))){
             throw new AppException(ErrorCode.EMAIL_EXISTED);
         }
+        Student u = new Student();
+        String mssv = params.get("mssv");
+        String name=params.get("firstName").toLowerCase();
+        String email=params.get("email");
 
-        String firstName = request.getFirstName();
-        String mssv = request.getMssv();
-        String email = request.getEmail();
+        u.setFirstName(name);
+        u.setLastName(params.get("lastName"));
+        u.setUsername(params.get("username"));
 
-        String expectedEmail = mssv + firstName + "@ou.edu.vn";
-
-        if(!email.equals(expectedEmail)){
+        String expectedEmail = mssv + name+ "@ou.edu.vn";
+        if (!email.equalsIgnoreCase(expectedEmail)) {
             throw new AppException(ErrorCode.EMAIL_NO_FORRMAT);
         }
 
-        Student u = userMapper.toStudent(request);
-        u.setPassword(this.passwordEncoder.encode(request.getPassword()));
-        u.setRole("ROLE_USER");
+        u.setEmail(params.get("email"));
+        u.setPhone(params.get("phone"));
+        u.setMssv(mssv);
 
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date schoolYear = null;
+        try {
+            String rawDate = params.get("schoolYear");
+            if (rawDate != null && !rawDate.isBlank()) {
+                schoolYear = df.parse(rawDate);
+            }
+        } catch (ParseException e) {
+            throw new RuntimeException("Invalid date format for schoolYear", e);
+        }
+        u.setSchoolYear(schoolYear);
+
+        u.setPassword(this.passwordEncoder.encode(params.get("password")));
+        u.setRole("ROLE_USER");
         if (!avatar.isEmpty()) {
             try {
                 Map res = cloudinary.uploader().upload(avatar.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
                 u.setAvatar(res.get("secure_url").toString());
             } catch (IOException ex) {
-                throw new AppException(ErrorCode.INVALID_DATA);
+                return null;
             }
         }
-        return this.userMapper.toStudentResponse(this.userRepo.studentRegister(u));
+        return this.userRepo.studentRegister(u);
     }
 
     @Override

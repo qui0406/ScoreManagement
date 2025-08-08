@@ -27,6 +27,11 @@ const Register = () => {
         type: "text",
         field: "lastName"
     }, {
+        label: "Mã số sinh viên",
+        type: "text",
+        field: "mssv"
+    }, 
+    {
         label: "Email address",
         type: "email",
         field: "email"
@@ -79,11 +84,14 @@ const Register = () => {
                 }
                 formData.append("avatar", avatar.current.files[0]);
 
+
                 let res = await Apis.post(endpoints['register'], formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 });
+
+                
                 if (res.status === 200) {
                     setMsg("Đăng ký thành công");
                     nav("/login");

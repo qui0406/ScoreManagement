@@ -47,6 +47,27 @@ public class ScoreStudentRepositoryImpl implements ScoreStudentRepository {
         return Collections.emptyList();
     }
 
+    @Override
+    public List<Score> getScoresByStudentAndClassWhenBlockScore(String studentId, String classDetailId) {
+        try {
+            Session session = this.factory.getObject().getCurrentSession();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Score> query = builder.createQuery(Score.class);
+            Root<Score> root = query.from(Score.class);
+
+            query.select(root).where(
+                    builder.equal(root.get("student").get("id"), studentId),
+                    builder.equal(root.get("classDetails").get("id"), classDetailId),
+                    builder.equal(root.get("active"), false)
+            );
+            List<Score> result = session.createQuery(query).getResultList();
+            return result != null ? result : Collections.emptyList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
 
     @Override
     public List<Student> findScoreStudentByMSSVOrName(Map<String, String> params, String  classDetailId) {
@@ -70,7 +91,7 @@ public class ScoreStudentRepositoryImpl implements ScoreStudentRepository {
 
                 String fullName = params.get("fullName");
                 if (fullName != null && !fullName.trim().isEmpty()) {
-                    fullName = fullName.replaceAll("\\s+", "").toLowerCase();
+                    fullName = fullName.replaceAll("\\s+", "").toLowerCase().trim();
                     Expression<String> lastName = b.lower(studentJoin.get("lastName"));
                     Expression<String> firstName = b.lower(studentJoin.get("firstName"));
                     Expression<String> fullNameExpr = b.concat(lastName, firstName);

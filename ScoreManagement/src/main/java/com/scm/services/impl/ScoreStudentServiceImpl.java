@@ -58,6 +58,12 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
         return toScoreResponseList(scores, student);
     }
 
+    @Override
+    public ScoreStudentResponse getScoreByStudentAndClassWhenBlockScore(String studentId, String classDetailId) {
+        List<Score> scores = scoreStudentRepository.getScoresByStudentAndClassWhenBlockScore(studentId, classDetailId);
+        Student student= studentRepository.findById(studentId);
+        return toScoreResponseList(scores, student);
+    }
 
     private WriteScoreStudentPDFResponse scorePDF(String studentId, String classDetailId) {
         List<Score> scores = scoreStudentRepository.getScoresByStudentAndClass(studentId, classDetailId);
