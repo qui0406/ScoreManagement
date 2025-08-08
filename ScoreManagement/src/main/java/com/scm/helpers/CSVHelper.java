@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.scm.pojo.enums.ScoreTypeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,20 +40,19 @@ public class CSVHelper {
                 request.setClassName(rowMap.get("className"));
 
                 Map<Integer, BigDecimal> scores = new HashMap<>();
-                for (int i = 1; i <= 7; i++) {
-                    String col = "score" + i;
-                    if (rowMap.containsKey(col)) {
-                        String val = rowMap.get(col);
-                        if (val != null && !val.isEmpty()) {
+                for (ScoreTypeEnum scoreType : ScoreTypeEnum.values()) {
+                    String columnName = scoreType.name(); // Sử dụng trực tiếp tên enum
+                    if (rowMap.containsKey(columnName)) {
+                        String scoreValue = rowMap.get(columnName);
+                        if (scoreValue != null && !scoreValue.isEmpty()) {
                             try {
-                                scores.put(i, new BigDecimal(val));
+                                scores.put(scoreType.getValue(), new BigDecimal(scoreValue));
                             } catch (NumberFormatException e) {
-                                // skip invalid score
+                                e.printStackTrace();
                             }
                         }
                     }
                 }
-
                 request.setScores(scores);
                 resultList.add(request);
             }

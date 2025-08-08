@@ -45,57 +45,55 @@ public class ConversationRepositoryImpl implements ConversationRepository {
     public List<Conversation> getAllConversationsByUserId(String userId) {
         Session s = factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Conversation> cq = b.createQuery(Conversation.class);
-        Root<Conversation> root = cq.from(Conversation.class);
-        cq.select(root);
-        cq.where(b.equal(root.get("userId"), userId)).orderBy(b.desc(root.get("createdAt")));;
-        return s.createQuery(cq).getResultList();
+        CriteriaQuery<Conversation> query = b.createQuery(Conversation.class);
+        Root<Conversation> root = query.from(Conversation.class);
+        query.select(root);
+        query.where(b.equal(root.get("userId"), userId)).orderBy(b.desc(root.get("createdAt")));;
+        return s.createQuery(query).getResultList();
     }
 
     @Override
     public List<Conversation> getConversationsInClass(String classId) {
         Session s = factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Conversation> cq = b.createQuery(Conversation.class);
-        Root<Conversation> root = cq.from(Conversation.class);
-        cq.select(root);
-        cq.where(b.equal(root.get("classDetails").get("id"), classId)).orderBy(b.desc(root.get("createdAt")));;
-        return s.createQuery(cq).getResultList();
+        CriteriaQuery<Conversation> query = b.createQuery(Conversation.class);
+        Root<Conversation> root = query.from(Conversation.class);
+        query.select(root);
+        query.where(b.equal(root.get("classDetails").get("id"), classId)).orderBy(b.desc(root.get("createdAt")));;
+        return s.createQuery(query).getResultList();
     }
 
     @Override
     public List<Conversation> findByTeacher(Teacher teacher) {
         Session s = factory.getObject().getCurrentSession();
         CriteriaBuilder cb = s.getCriteriaBuilder();
-        CriteriaQuery<Conversation> cq = cb.createQuery(Conversation.class);
-        Root<Conversation> root = cq.from(Conversation.class);
-
-        cq.select(root).where(cb.equal(root.get("teacher"), teacher));
-        return s.createQuery(cq).getResultList();
+        CriteriaQuery<Conversation> query = cb.createQuery(Conversation.class);
+        Root<Conversation> root = query.from(Conversation.class);
+        query.select(root).where(cb.equal(root.get("teacher"), teacher));
+        return s.createQuery(query).getResultList();
     }
 
     @Override
     public List<Conversation> findByStudent(Student student) {
         Session s = factory.getObject().getCurrentSession();
-        CriteriaBuilder cb = s.getCriteriaBuilder();
-        CriteriaQuery<Conversation> cq = cb.createQuery(Conversation.class);
-        Root<Conversation> root = cq.from(Conversation.class);
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Conversation> query = b.createQuery(Conversation.class);
+        Root<Conversation> root = query.from(Conversation.class);
 
-        cq.select(root).where(cb.equal(root.get("student"), student));
-        return s.createQuery(cq).getResultList();
+        query.select(root).where(b.equal(root.get("student"), student));
+        return s.createQuery(query).getResultList();
     }
 
     @Override
     public List<Conversation> findByTeacherOrStudent(Teacher teacher, Student student) {
         Session s = factory.getObject().getCurrentSession();
-        CriteriaBuilder cb = s.getCriteriaBuilder();
-        CriteriaQuery<Conversation> cq = cb.createQuery(Conversation.class);
-        Root<Conversation> root = cq.from(Conversation.class);
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Conversation> query = b.createQuery(Conversation.class);
+        Root<Conversation> root = query.from(Conversation.class);
 
-        Predicate teacherPredicate = cb.equal(root.get("teacher"), teacher);
-        Predicate studentPredicate = cb.equal(root.get("student"), student);
-        cq.select(root).where(cb.or(teacherPredicate, studentPredicate));
-
-        return s.createQuery(cq).getResultList();
+        query.select(root)
+                .where(b.or(b.equal(root.get("teacher"), teacher),
+                b.equal(root.get("student"), student)));
+        return s.createQuery(query).getResultList();
     }
 }

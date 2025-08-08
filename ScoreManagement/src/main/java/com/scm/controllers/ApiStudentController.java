@@ -78,7 +78,4 @@ public class ApiStudentController {
         User user = this.userDetailsService.getUserByUsername(name);
         return ResponseEntity.ok(this.subjectService.getAllSubjectsBySemester(user.getId().toString(), semesterId));
     }
-
-
-
 }

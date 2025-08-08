@@ -42,9 +42,6 @@ public class ScoreServiceImpl implements ScoreService {
     @Autowired
     private ScoreMapper scoreMapper;
 
-    private final String SCORE_TYPE_MIDDLE_TEST = "1";
-    private final String SCORE_TYPE_FINAL_TEST = "2";
-
     @Override
     public void addOrUpdateScore(ScoreRequest scoreRequest, String teacherId) {
         String scoreTypeId = scoreRequest.getScoreTypeId();
@@ -53,19 +50,6 @@ public class ScoreServiceImpl implements ScoreService {
 
         Score score = scoreRepository.getScoreByClassDetailIdAndStudentAndScoreType(classDetail, studentId, scoreTypeId);
 
-//        if (score != null) {
-//            if (scoreTypeId.equals(SCORE_TYPE_MIDDLE_TEST) || scoreTypeId.equals(SCORE_TYPE_FINAL_TEST)) {
-//                boolean alreadyHasTest = scoreRepository.checkTestExisted(classDetail, scoreTypeId, studentId);
-//                if (alreadyHasTest) {
-//                    throw new AppException(ErrorCode.ONLY_1_COLLUM);
-//                }
-//            } else {
-//                boolean canAddMore = scoreRepository.checkOver5TestExisted(classDetail, scoreTypeId, studentId);
-//                if (!canAddMore) {
-//                    throw new AppException(ErrorCode.OVER_5_TEST);
-//                }
-//            }
-//        }
         Score s = scoreMapper.toScore(scoreRequest);
         if (score != null) {
             score.setScore(s.getScore());
@@ -75,18 +59,6 @@ public class ScoreServiceImpl implements ScoreService {
         }
     }
 
-    @Override
-    public List<ScoreResponse> getScoresByClassSubjectId(Integer classSubjectId) {
-        List<Score> grades = this.scoreRepository.getScoresByClassSubjectId(classSubjectId);
-        List<ScoreResponse> responses = new ArrayList<>();
-
-        for (Score grade : grades) {
-            grade.setClassDetails(grade.getClassDetails());
-            ScoreResponse response = scoreMapper.toScoreResponse(grade);
-            responses.add(response);
-        }
-        return responses;
-    }
 
     @Override
     public void blockScore(String teacherId, String classDetailId) {
@@ -136,6 +108,9 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     public void addListScoreAllStudents(List<ListScoreStudentRequest> requests, String teacherId) {
         for (ListScoreStudentRequest studentRequest : requests) {
+            for(ListScoreStudentRequest studentRequest1 : requests) {
+                log.info(studentRequest1.getStudentId() +" " + studentRequest1.getScores());
+            }
             this.addListScore(studentRequest, teacherId);
         }
     }

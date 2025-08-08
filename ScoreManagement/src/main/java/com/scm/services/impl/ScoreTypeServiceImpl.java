@@ -4,15 +4,22 @@
  */
 package com.scm.services.impl;
 
+import com.scm.dto.requests.ScoreTypeRequest;
 import com.scm.dto.responses.ScoreTypeResponse;
 import com.scm.exceptions.AppException;
 import com.scm.exceptions.ErrorCode;
 import com.scm.mapper.ScoreTypeMapper;
+import com.scm.pojo.ClassDetailsScoreType;
 import com.scm.pojo.ScoreType;
+import com.scm.pojo.Teacher;
+import com.scm.repositories.ClassDetailsRepository;
 import com.scm.repositories.ScoreTypeRepository;
+import com.scm.repositories.TeacherRepository;
 import com.scm.services.ScoreTypeService;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +28,7 @@ import org.springframework.stereotype.Service;
  * @author admin
  */
 @Service
+@Slf4j
 public class ScoreTypeServiceImpl implements ScoreTypeService {
     @Autowired
     private ScoreTypeRepository scoreTypeRepo;
@@ -28,9 +36,8 @@ public class ScoreTypeServiceImpl implements ScoreTypeService {
     @Autowired
     private ScoreTypeMapper scoreTypeMapper;
 
-
-    private static final int MAX_GRADE_TYPES = 5;
-
+    @Autowired
+    private TeacherRepository teacherRepository;
 
     @Override
     public List<ScoreTypeResponse> getScoreTypes() {
@@ -56,11 +63,17 @@ public class ScoreTypeServiceImpl implements ScoreTypeService {
     }
 
     @Override
-    public void addScoreType(String classDetailId, String scoreTypeId) {
-        if(scoreTypeId.equals("1") || scoreTypeId.equals("2") ) {
+    public void addScoreType(String classDetailId, ScoreTypeRequest request, String teacherId) {
+        if(request.getScoreTypeId().equals("1") || request.getScoreTypeId().equals("2") ) {
             throw new AppException(ErrorCode.SCORE_TYPE_INCORRECT);
         }
-        this.scoreTypeRepo.addScoreType(classDetailId, scoreTypeId);
+        Teacher teacher = this.teacherRepository.getTeacherByClassDetailId(classDetailId);
+        if(!teacher.getId().toString().equals(teacherId)) {
+            throw new AppException(ErrorCode.UNAUTHORIZED);
+        }
+
+
+        this.scoreTypeRepo.addScoreType(classDetailId, request.getScoreTypeId());
     }
 
 

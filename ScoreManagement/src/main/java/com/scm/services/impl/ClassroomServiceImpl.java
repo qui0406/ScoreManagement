@@ -31,10 +31,6 @@ public class ClassroomServiceImpl implements ClassroomService {
     @Autowired
     private ClassroomMapper classroomMapper;
 
-    @Autowired
-    private ClassDetailsRepository classDetailsRepo;
-
-
 
     @Override
     public ClassResponse create(ClassroomRequest request) {

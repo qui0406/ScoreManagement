@@ -15,7 +15,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/secure")
+@RequestMapping("/api/secure/common")
 @Slf4j
 public class ApiConversationController {
     @Autowired
@@ -42,6 +42,4 @@ public class ApiConversationController {
         this.conversationService.delete(conversationId, user.getId().toString());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
-
 }

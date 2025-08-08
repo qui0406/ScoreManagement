@@ -13,7 +13,6 @@ import java.util.List;
  */
 public interface ScoreTypeRepository {
     List<ScoreType> getScoreTypesByClassDetails(String classSubjectId);
-    List<ScoreType> getDefaultScoreTypes();
     ScoreType findById(String id);
 
     List<ScoreType> getScoreTypes();

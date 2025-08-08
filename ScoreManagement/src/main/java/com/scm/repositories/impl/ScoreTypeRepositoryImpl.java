@@ -30,38 +30,37 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class ScoreTypeRepositoryImpl implements ScoreTypeRepository {
-
     @Autowired
     private LocalSessionFactoryBean factory;
-
-    @Autowired
-    private ClassDetailsRepository classDetailsRepository;
 
     @Override
     public List<ScoreType> getScoreTypesByClassDetails(String classDetailId) {
         Session session = factory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<ScoreType> query = builder.createQuery(ScoreType.class);
+
         Root<ClassDetailsScoreType> root = query.from(ClassDetailsScoreType.class);
         Join<ClassDetailsScoreType, ScoreType> scoreTypeJoin = root.join("scoreType");
-        query.select(scoreTypeJoin).distinct(true)
+        query.select(scoreTypeJoin)
                 .where(builder.equal(root.get("classDetails").get("id"), classDetailId));
-        List<ScoreType> scoreTypes = session.createQuery(query).getResultList();
-        return scoreTypes;
+
+        return session.createQuery(query).getResultList();
     }
 
     @Override
     public void addScoreType(String classDetailId, String scoreTypeId) {
         Session session = factory.getObject().getCurrentSession();
 
+        if(!checkOver5TestExisted(classDetailId)){
+            throw new AppException(ErrorCode.OVER_5_TEST);
+        }
+
         if (!checkScoreTypeExistedClassSubject(classDetailId, scoreTypeId)) {
             ClassDetails classDetails = session.get(ClassDetails.class, classDetailId);
             ScoreType scoreType = session.get(ScoreType.class, scoreTypeId);
-
             ClassDetailsScoreType classDetailsScoreType = new ClassDetailsScoreType();
             classDetailsScoreType.setClassDetails(classDetails);
             classDetailsScoreType.setScoreType(scoreType);
-
             session.persist(classDetailsScoreType);
         } else {
             throw new AppException(ErrorCode.SCORE_TYPE_EXISTED);
@@ -102,6 +101,19 @@ public class ScoreTypeRepositoryImpl implements ScoreTypeRepository {
         }
     }
 
+    private boolean checkOver5TestExisted(String classDetailId) {
+        Session session = factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        Root<ClassDetailsScoreType> root = query.from(ClassDetailsScoreType.class);
+
+        query.select(builder.count(root));
+        query.where(builder.and(builder.equal(root.get("classDetails").get("id"), classDetailId),
+                root.get("scoreType").get("id").in(1, 2).not()));
+        Long count = session.createQuery(query).getSingleResult();
+        return count < 5;
+    }
+
     @Override
     public List<ScoreType> getScoreTypes() {
         Session session = factory.getObject().getCurrentSession();
@@ -111,18 +123,8 @@ public class ScoreTypeRepositoryImpl implements ScoreTypeRepository {
         query.select(root).where(
                 builder.not(root.get("id").in("1", "2"))
         );
-
         return session.createQuery(query).getResultList();
     }
-
-    @Override
-    public List<ScoreType> getDefaultScoreTypes() {
-        Session s = this.factory.getObject().getCurrentSession();
-        String hql = "FROM ScoreType gt WHERE gt.scoreTypeName IN ('Điểm giữa kỳ', 'Điểm cuối kỳ') ORDER BY gt.id";
-        Query query = s.createQuery(hql, ScoreType.class);
-        return query.getResultList();
-    }
-
 
     @Override
     public ScoreType findById(String id) {

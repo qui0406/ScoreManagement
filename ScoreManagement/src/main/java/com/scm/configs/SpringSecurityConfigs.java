@@ -64,15 +64,15 @@ public class SpringSecurityConfigs {
     };
 
     private static final String[] TEACHER_ENDPOINTS = {
-        "/api/secure/teacher/**",
+        "/api/secure/teacher/**", "/api/secure/common/**"
     };
 
     private static final String[] TEACHER_SUPER_ENDPOINTS = {
-        "/api/secure/teacher-super/**"
+        "/api/secure/teacher-super/**", "/api/secure/common/**"
     };
 
     private static final String[] USER_ENDPOINTS = {
-        "/api/secure/user/**",
+        "/api/secure/user/**", "/api/secure/common/**"
     };
 
     @Bean
@@ -99,7 +99,7 @@ public class SpringSecurityConfigs {
                         .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers("/login", "/logout").permitAll()
                         .requestMatchers(STAFF_ENDPOINTS).hasAnyRole("STAFF")
-                        .requestMatchers(TEACHER_SUPER_ENDPOINTS).hasAnyRole("TEACHER")
+                        .requestMatchers(TEACHER_SUPER_ENDPOINTS).hasAnyRole("TEACHER_SUPER")
                         .requestMatchers(TEACHER_ENDPOINTS).hasAnyRole("TEACHER")
                         .requestMatchers(USER_ENDPOINTS).hasAnyRole("USER", "TEACHER")
                         .anyRequest().authenticated())

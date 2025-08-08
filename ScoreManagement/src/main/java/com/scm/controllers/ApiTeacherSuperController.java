@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/secure/teacher")
+@RequestMapping("/api/secure/teacher-super")
 @Slf4j
 public class ApiTeacherSuperController {
     @Value("${spring.send_grid.from_email}")
@@ -43,12 +43,6 @@ public class ApiTeacherSuperController {
     private SendGridMailService sendGridMailService;
 
     @Autowired
-    private ScoreTypeService scoreTypeService;
-
-    @Autowired
-    private ScoreStudentService scoreStudentService;
-
-    @Autowired
     private WriteAndReadFileService  writeAndReadFileService;
 
     @PostMapping(path = "/upload-scores/{classDetailId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
@@ -62,6 +56,7 @@ public class ApiTeacherSuperController {
             String teacherName = principal.getName();
             User teacher = userDetailsService.getUserByUsername(teacherName);
             List<ReadFileCSVRequest> r = CSVHelper.parseScoreCSV(file);
+
             List<String> listMssv = new ArrayList<>();
 
             if (r == null) {
@@ -71,8 +66,13 @@ public class ApiTeacherSuperController {
                 listMssv.add(x.getMssv());
             }
 
-            if(!studentService.getAllMssvByClass(classDetailId).equals(listMssv)){
-                throw new AppException(ErrorCode.LIST_STUDENT_NOT_SUITABLE);
+            List<String> allStudentInClassDetails = studentService.getAllMssvByClass(classDetailId);
+
+            for (String mssv : listMssv) {
+                if(!allStudentInClassDetails.contains(mssv)){
+                    log.info("Ma so sinh vien: {}", mssv , " khong ton tai trong lop");
+                    throw new AppException(ErrorCode.LIST_STUDENT_NOT_SUITABLE);
+                }
             }
 
             List<ListScoreStudentRequest> request = new ArrayList<>();
@@ -88,6 +88,8 @@ public class ApiTeacherSuperController {
         }
         catch (AppException ex){
             throw new AppException(ErrorCode.READ_FILE_ERROR);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return ResponseEntity.ok("value: Successfully");
     }
@@ -127,8 +129,8 @@ public class ApiTeacherSuperController {
 
             EmailRequest emailRequest = new EmailRequest();
             List<Recipient> listRecipients= studentService.getAllRecipientStudentsByClass(classDetailId);
-            emailRequest.setSubject("Blocked Students");
-            emailRequest.setContent("This student has been blocked.");
+            emailRequest.setSubject("Thông báo về điểm số");
+            emailRequest.setContent("Đã có điểm của sinh viên trên hệ thống");
             emailRequest.setSender(new Sender(
                     teacherName, sendGridFromEmail
             ));

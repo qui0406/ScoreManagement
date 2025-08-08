@@ -41,12 +41,7 @@ public class EnrollDetailsRepositoryImpl implements EnrollDetailsRepository {
     @Override
     public void create(EnrollDetails enrollDetails) {
         Session s = this.factory.getObject().getCurrentSession();
-        try{
-            s.persist(enrollDetails);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+        s.persist(enrollDetails);
     }
 
     @Override
@@ -58,14 +53,14 @@ public class EnrollDetailsRepositoryImpl implements EnrollDetailsRepository {
     @Override
     public boolean checkExist(String enrollId, String studentId) {
         Session session = factory.getObject().getCurrentSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaBuilder b = session.getCriteriaBuilder();
 
-        CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        CriteriaQuery<Long> query = b.createQuery(Long.class);
         Root<EnrollDetails> root = query.from(EnrollDetails.class);
 
-        query.select(cb.count(root)).where(
-                cb.equal(root.get("student").get("id"), studentId),
-                cb.equal(root.get("classDetails").get("id"), enrollId)
+        query.select(b.count(root)).where(
+                b.equal(root.get("student").get("id"), studentId),
+                b.equal(root.get("classDetails").get("id"), enrollId)
         );
 
         return session.createQuery(query).getSingleResult() > 0;

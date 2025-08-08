@@ -2,8 +2,6 @@ package com.scm.controllers.admin;
 
 import com.scm.dto.requests.SubjectRequest;
 import com.scm.dto.responses.SubjectResponse;
-import com.scm.pojo.Faculty;
-import com.scm.pojo.Semester;
 import com.scm.pojo.Subject;
 import com.scm.services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
