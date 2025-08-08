@@ -31,7 +31,7 @@ export const endpoints = {
     // Loại điểm
     'allScoreTypes': '/api/secure/teacher/class-subject/score-types',
     'getScoreTypes': classDetailId => `/api/secure/teacher/class-subject/score-types/${classDetailId}`,
-    'addScoreType': (classDetailId, scoreTypeId) => `/api/secure/teacher/class-subject/score-type/${classDetailId}/add?scoreTypeId=${scoreTypeId}`,
+    'addScoreType': (classDetailId) =>`/api/secure/teacher/class-subject/score-type/${classDetailId}/add`,
     'deleteScoreType': (classDetailId, scoreTypeId) => `/api/secure/teacher/class-subject/score-type/${classDetailId}/delete?scoreTypeId=${scoreTypeId}`,
 
     //Doc diem tu file
@@ -63,7 +63,7 @@ export const endpoints = {
     'get-message': conversationId => `/get-message/${conversationId}`,
 
     // Tao forum
-    'get-all-forum':classDetailId => `api/secure/get-all-forum/${classDetailId}`,
+    'get-all-forum': classDetailId => `api/secure/get-all-forum/${classDetailId}`,
     'createForum': '/create-forum',
     'deleteForum': forumId => `/delete-forum/${forumId}`,
     'replyForum': forumId => `/forum-reply/${forumId}`,

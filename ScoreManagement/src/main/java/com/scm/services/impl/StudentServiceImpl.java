@@ -37,11 +37,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentResponse> getAllStudentsByClass(String classDetailId) {
-        String cacheKey = "classDetailsAllStudents:" + classDetailId;
-        Object cached = redisService.getValue(cacheKey);
-        if (cached != null) {
-            return (List<StudentResponse>) cached;
-        }
+//        String cacheKey = "classDetailsAllStudents:" + classDetailId;
+//        Object cached = redisService.getValue(cacheKey);
+//        if (cached != null) {
+//            return (List<StudentResponse>) cached;
+//        }
 
         List<Student> students = this.studentRepo.getAllStudentsByClass(classDetailId);
         List<StudentResponse> studentResponses = new ArrayList<>();
@@ -50,7 +50,7 @@ public class StudentServiceImpl implements StudentService {
             studentResponses.add(response);
         }
 
-        redisService.setValue(cacheKey, studentResponses);
+//        redisService.setValue(cacheKey, studentResponses);
         return studentResponses;
     }
 

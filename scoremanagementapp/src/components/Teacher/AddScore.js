@@ -97,7 +97,10 @@ const AddScore = () => {
 
         setLoading(true);
         try {
-            await authApis().post(endpoints['addScoreType'](classSubjectId, selectedScoreTypeId));
+            await authApis().post(
+                endpoints['addScoreType'](classSubjectId),
+                { scoreTypeId: selectedScoreTypeId }
+            ); 
             setSelectedScoreTypeId("");
             setShowAddCol(false);
 
