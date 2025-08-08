@@ -23,8 +23,8 @@ export const endpoints = {
     // Điểm
     'getScores': classSubjectId => `/api/secure/teacher/class-subject/${classSubjectId}/scores`,
     'addScore': '/api/secure/teacher/add-list-scores-all-student',
-    'blockScore': classDetailId => `/api/secure/teacher/score/block-score/${classDetailId}`,
-    'statusScore': classDetailId => `/api/secure/teacher/score/get-status/${classDetailId}`,
+    'blockScore': classDetailId => `/api/secure/teacher-super/score/block-score/${classDetailId}`,
+    'statusScore': classDetailId => `/api/secure/teacher-super/score/get-status/${classDetailId}`,
 
     'getExportScores': classDetailId => `/api/secure/teacher/export-list-score/${classDetailId}`,
 
@@ -35,8 +35,8 @@ export const endpoints = {
     'deleteScoreType': (classDetailId, scoreTypeId) => `/api/secure/teacher/class-subject/score-type/${classDetailId}/delete?scoreTypeId=${scoreTypeId}`,
 
     //Doc diem tu file
-    'importScore': classDetailId => `/api/secure/teacher/upload-scores/${classDetailId}`,
-    'exportScore': classDetailId => `/api/secure/teacher/export-scores/${classDetailId}`,
+    'importScore': classDetailId => `/api/secure/teacher-super/upload-scores/${classDetailId}`,
+    'exportScore': classDetailId => `/api/secure/teacher-super/export-scores/${classDetailId}`,
 
     //Tim kiem sinh vien
     'findExportListScoreBase': classDetailId => `/api/secure/teacher/find-export-list-score/${classDetailId}`,
@@ -64,12 +64,12 @@ export const endpoints = {
 
     // Tao forum
     'get-all-forum': classDetailId => `api/secure/get-all-forum/${classDetailId}`,
-    'createForum': '/create-forum',
-    'deleteForum': forumId => `/delete-forum/${forumId}`,
-    'replyForum': forumId => `/forum-reply/${forumId}`,
-    'replyForumUpdate': forumDetailId => `/forum-reply/update/${forumDetailId}`,
-    'replyForumDelete': forumDetailId => `/forum-reply/delete/${forumDetailId}`,
-    'getAllForums': forumId => `/get-all-reply-forum/${forumId}`,
+    'createForum': '/api/secure/create-forum',
+    'deleteForum': forumId => `/api/secure/delete-forum/${forumId}`,
+    'replyForum': forumId => `/api/secure/forum-reply/${forumId}`,
+    'replyForumUpdate': forumDetailId => `/api/secure/forum-reply/update/${forumDetailId}`,
+    'replyForumDelete': forumDetailId => `/api/secure/forum-reply/delete/${forumDetailId}`,
+    'getAllForums': forumId => `/api/secure/get-all-reply-forum/${forumId}`,
 
 
 };

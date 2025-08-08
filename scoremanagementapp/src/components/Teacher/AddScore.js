@@ -55,9 +55,11 @@ const AddScore = () => {
                 setStudents(studentsData);
                 setScores(scoresData);
 
+                const getScoreTypes = await authApis().get(endpoints['getScoreTypes'](classSubjectId));
+
                 let scoreTypeArr = [];
-                if (res.data.length > 0) {
-                    scoreTypeArr = res.data[0].scores.map(type => ({
+                if (getScoreTypes.data.length > 0) {
+                    scoreTypeArr = getScoreTypes.data.map(type => ({
                         id: type.id,
                         scoreTypeName: type.scoreTypeName
                     }));
@@ -255,7 +257,7 @@ const AddScore = () => {
         const showStatus = async () => {
             try {
                 const res = await authApis().get(endpoints['statusScore'](classSubjectId));
-                setIsClose(res.data === true);
+                setIsClose(res.data === false);
             } catch {
                 setIsClose(false);
             }
