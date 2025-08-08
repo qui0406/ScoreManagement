@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("api/secure/common")
+@RequestMapping("api/secure")
 public class ApiForumController {
     @Autowired
     private UserService userDetailsService;

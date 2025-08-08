@@ -4,8 +4,11 @@
  */
 package com.scm.repositories.impl;
 
+import com.scm.exceptions.AppException;
+import com.scm.exceptions.ErrorCode;
 import com.scm.pojo.*;
 import com.scm.repositories.StudentRepository;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.criteria.*;
 
 import java.util.List;
@@ -64,17 +67,20 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public String getIdByMssv(String mssv) {
-        try{
-            Session s = factory.getObject().getCurrentSession();
-            CriteriaBuilder b = s.getCriteriaBuilder();
-
-            CriteriaQuery<String> query = b.createQuery(String.class);
+    public Student getIdByMssv(String mssv) {
+        if (mssv == null || mssv.trim().isEmpty()) {
+            return null;
+        }
+        try {
+            Session session = factory.getObject().getCurrentSession();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Student> query = builder.createQuery(Student.class);
             Root<Student> root = query.from(Student.class);
-            query.select(root.get("id"))
-                    .where(b.equal(root.get("mssv"), mssv));
-            return s.createQuery(query).uniqueResult();
-        }catch(Exception e){
+            query.select(root)
+                    .where(builder.equal(root.get("mssv"), mssv));
+
+            return session.createQuery(query).getSingleResult();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

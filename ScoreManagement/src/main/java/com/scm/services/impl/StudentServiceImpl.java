@@ -16,6 +16,7 @@ import com.scm.services.StudentService;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
  *
  * @author admin
  */
+@Slf4j
 @Service
 public class StudentServiceImpl implements StudentService {
     @Autowired
@@ -74,7 +76,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public String getIdByMssv(String mssv) {
-        return this.studentRepo.getIdByMssv(mssv);
+        Student student = studentRepo.getIdByMssv(mssv);
+        return student.getId().toString();
     }
 
     @Override

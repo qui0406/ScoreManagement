@@ -37,7 +37,6 @@ public class ApiClassController {
     private RedisTemplate<String, Object> redisTemplate;
 
 
-    // Đăng ký môn học, lớp học
     @PostMapping("/register-class")
     public ResponseEntity<?> registerClass(@RequestBody EnrollClassRequest request, Principal principal) {
         String name = principal.getName();
@@ -76,6 +75,4 @@ public class ApiClassController {
     public ResponseEntity<List<ClassDetailsResponse>> getAllClassDetails() {
         return ResponseEntity.ok(this.classroomDetailsService.getAllClassDetails());
     }
-
-
 }
