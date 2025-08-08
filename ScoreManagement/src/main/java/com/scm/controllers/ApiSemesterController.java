@@ -24,11 +24,6 @@ public class ApiSemesterController {
 
     @GetMapping("/semesters")
     public ResponseEntity<?> getAllSemester(Principal principal) {
-        try{
-            List<SemesterResponse> semesterResponse = semesterService.getAllSemesters();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
         return ResponseEntity.ok(semesterService.getAllSemesters());
     }
 }

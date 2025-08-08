@@ -1,5 +1,6 @@
 package com.scm.controllers;
 
+import com.scm.dto.requests.ScoreTypeRequest;
 import com.scm.dto.responses.ScoreTypeResponse;
 import com.scm.pojo.User;
 import com.scm.services.ScoreTypeService;
@@ -47,11 +48,11 @@ public class ScoreTypeController {
     @PostMapping("/class-subject/score-type/{classDetailId}/add")
     public ResponseEntity<?> addScoreType(
             @PathVariable(value = "classDetailId") String classDetailId,
-            @RequestParam(value = "scoreTypeId") String scoreTypeId,
+            @RequestBody ScoreTypeRequest scoreTypeRequest,
             Principal principal) {
         String teacherName = principal.getName();
         User teacherId = userDetailsService.getUserByUsername(teacherName);
-        this.scoreTypeService.addScoreType(classDetailId, scoreTypeId);
+        this.scoreTypeService.addScoreType(classDetailId, scoreTypeRequest, teacherId.getId().toString());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

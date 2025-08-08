@@ -38,65 +38,62 @@ public class StudentRepositoryImpl implements StudentRepository {
     @Override
     public String findIdByUsername(String username) {
         Session s = factory.getObject().getCurrentSession();
-        CriteriaBuilder cb = s.getCriteriaBuilder();
+        CriteriaBuilder b = s.getCriteriaBuilder();
 
-        CriteriaQuery<String> cq = cb.createQuery(String.class);
-        Root<Student> root = cq.from(Student.class);
+        CriteriaQuery<String> query = b.createQuery(String.class);
+        Root<Student> root = query.from(Student.class);
 
-        cq.select(root.get("id"))
-                .where(cb.equal(root.get("username"), username));
+        query.select(root.get("id"))
+                .where(b.equal(root.get("username"), username));
 
-        return s.createQuery(cq).uniqueResult();
+        return s.createQuery(query).uniqueResult();
     }
 
     @Override
     public List<Student> getAllStudentsByClass(String classDetailId) {
         Session session = factory.getObject().getCurrentSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        log.info("Truy vấn database");
 
-        CriteriaQuery<Student> cq = cb.createQuery(Student.class);
-        Root<EnrollDetails> root = cq.from(EnrollDetails.class);
+        CriteriaQuery<Student> query = b.createQuery(Student.class);
+        Root<EnrollDetails> root = query.from(EnrollDetails.class);
         Join<EnrollDetails, Student> studentJoin = root.join("student");
-        cq.select(studentJoin)
-                .where(cb.equal(root.get("classDetails").get("id"), classDetailId));
-
-        List<Student> students = session.createQuery(cq).list();
-        for (Student student : students) {
-            log.info(student.getUsername());
-        }
-        return session.createQuery(cq).getResultList();
+        query.select(studentJoin)
+                .where(b.equal(root.get("classDetails").get("id"), classDetailId));
+        return session.createQuery(query).getResultList();
     }
 
     @Override
     public String getIdByMssv(String mssv) {
-        Session s = factory.getObject().getCurrentSession();
-        CriteriaBuilder b = s.getCriteriaBuilder();
+        try{
+            Session s = factory.getObject().getCurrentSession();
+            CriteriaBuilder b = s.getCriteriaBuilder();
 
-        CriteriaQuery<Integer> c = b.createQuery(Integer.class);
-        Root<Student> root = c.from(Student.class);
-        c.select(root.get("id"))
-                .where(b.equal(root.get("mssv"), mssv));
-
-        Integer result = s.createQuery(c).uniqueResult();
-        return result != null ? result.toString() : null;
+            CriteriaQuery<String> query = b.createQuery(String.class);
+            Root<Student> root = query.from(Student.class);
+            query.select(root.get("id"))
+                    .where(b.equal(root.get("mssv"), mssv));
+            return s.createQuery(query).uniqueResult();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
     public List<String> getAllMssvByClass(String classDetailId) {
         Session session = factory.getObject().getCurrentSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaBuilder b = session.getCriteriaBuilder();
 
-        CriteriaQuery<String> cq = cb.createQuery(String.class);
-        Root<EnrollDetails> root = cq.from(EnrollDetails.class);
+        CriteriaQuery<String> query = b.createQuery(String.class);
+        Root<EnrollDetails> root = query.from(EnrollDetails.class);
 
         Join<EnrollDetails, Student> studentJoin = root.join("student");
         Join<EnrollDetails, ClassDetails> classJoin = root.join("classDetails");
 
-        cq.select(studentJoin.get("mssv"))
-                .where(cb.equal(classJoin.get("id"), classDetailId));
+        query.select(studentJoin.get("mssv"))
+                .where(b.equal(classJoin.get("id"), classDetailId));
 
-        log.info("jiuhygvuhub: {}", session.createQuery(cq).getResultList().toString());
-
-        return session.createQuery(cq).getResultList();
+        return session.createQuery(query).getResultList();
     }
 }

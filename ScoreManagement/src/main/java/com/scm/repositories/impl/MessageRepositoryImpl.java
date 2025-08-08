@@ -74,18 +74,9 @@ public class MessageRepositoryImpl implements MessageRepository {
         CriteriaBuilder cb = s.getCriteriaBuilder();
         CriteriaQuery<Message> cq = cb.createQuery(Message.class);
         Root<Message> root = cq.from(Message.class);
-
-        // Add where clause for conversation
-        Predicate conversationPredicate = cb.equal(root.get("conversationId"), conversation);
-
-        // Create query with ordering
         cq.select(root)
-                .where(conversationPredicate)
-                .orderBy(cb.asc(root.get("createdDate")));
-
-        // Execute query and return results
+                .where(cb.equal(root.get("conversationId"), conversation))
+                .orderBy(cb.asc(root.get("createdAt")));
         return s.createQuery(cq).getResultList();
     }
-
-
 }

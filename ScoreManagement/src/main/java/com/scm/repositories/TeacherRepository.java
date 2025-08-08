@@ -17,4 +17,6 @@ public interface TeacherRepository {
     List<Teacher> getAllTeachersByRole(String role, String page);
 
     void delete(Teacher teacher);
+
+    Teacher getTeacherByClassDetailId(String classDetailId);
 }

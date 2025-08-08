@@ -35,9 +35,6 @@ public class ClassDetailsRepositoryImpl implements ClassDetailsRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
 
-    @Autowired
-    private ScoreTypeRepository scoreTypeRepository;
-
     @Override
     public List<ClassDetails> getClassroomSubjectsByTeacherId(String teacherId) {
         Session s = this.factory.getObject().getCurrentSession();
@@ -88,7 +85,6 @@ public class ClassDetailsRepositoryImpl implements ClassDetailsRepository {
 
         query.select(cb.count(root))
                 .where(cb.equal(root.get("classDetails"), classDetails));
-
         Long count = session.createQuery(query).uniqueResult();
         return count != null ? count.intValue() : 0;
     }
@@ -144,15 +140,10 @@ public class ClassDetailsRepositoryImpl implements ClassDetailsRepository {
     @Override
     public void delete(String classDetailId) {
         Session session = factory.getObject().getCurrentSession();
-
-
         ClassDetails cs = findById(classDetailId);
-        log.info("Delete ClassroomSubject by id " + classDetailId);
         if (cs == null) {
             throw new AppException(ErrorCode.INVALID_DATA);
         }
-
-        log.info("loio");
         session.remove(cs);
     }
 
@@ -169,9 +160,7 @@ public class ClassDetailsRepositoryImpl implements ClassDetailsRepository {
                 builder.equal(root.get("teacher").get("id"), teacherId),
                 builder.equal(root.get("semester").get("id"), semesterId)
         );
-
-        ClassDetails result = session.createQuery(query).getSingleResult();
-        return result;
+        return session.createQuery(query).getSingleResult();
     }
 
     @Override
@@ -186,7 +175,7 @@ public class ClassDetailsRepositoryImpl implements ClassDetailsRepository {
                 builder.equal(root.get("teacher").get("id"), teacherId),
                 builder.equal(root.get("semester").get("id"), semesterId)
         );
-        return  session.createQuery(query).getResultList();
+        return session.createQuery(query).getResultList();
     }
 
     @Override

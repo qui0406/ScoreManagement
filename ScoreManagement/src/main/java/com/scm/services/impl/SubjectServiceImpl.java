@@ -35,12 +35,6 @@ public class SubjectServiceImpl implements SubjectService {
         this.subjectRepository.delete(this.subjectRepository.findById(id));
     }
 
-//    @Override
-//    public List<ClassDetailsResponse> getAllSubjectsByStudent(String studentId, Map<String, String> params) {
-//        List<ClassDetails> classDetailsList =
-//    }
-
-
     @Override
     public List<ClassDetailsResponse> getAllSubjectsByStudent(String studentId, Map<String, String> params) {
         return List.of();

@@ -41,7 +41,7 @@ public class ClassroomRepositoryImpl implements ClassroomRepository {
         c.select(root.get("id"))
                 .where(b.equal(root.get("name"), className));
 
-        Integer result = s.createQuery(c).uniqueResult(); // chạy query
+        Integer result = s.createQuery(c).uniqueResult();
         return result != null ? result.toString() : null;
     }
 

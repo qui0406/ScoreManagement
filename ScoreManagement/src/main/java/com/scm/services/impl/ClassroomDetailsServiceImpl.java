@@ -34,9 +34,6 @@ public class ClassroomDetailsServiceImpl implements ClassroomDetailsService {
     private ClassDetailsRepository classDetailsRepository;
     @Autowired
     private ClassDetailMapper classDetailMapper;
-    @Autowired
-    private EnrollDetailsRepository enrollDetailsRepository;
-
 
     @Override
     public List<ClassResponse> getClassroomsByTeacherId(String teacherId) {
@@ -67,12 +64,7 @@ public class ClassroomDetailsServiceImpl implements ClassroomDetailsService {
 
     @Override
     public ClassDetailsResponse getClassDetailsById(String classDetailsId, String studentId) {
-        //List<ClassDetails> e = this.enrollDetailsRepository.findAllClassDetailRegisterSemester(studentId);
         ClassDetails classDetails = this.classDetailsRepository.findById(classDetailsId);
-//        if(!e.contains(classDetails)) {
-//            throw new AppException(ErrorCode.UNAUTHORIZED);
-//        }
-
         ClassDetailsResponse response = classDetailMapper.toClassDetailsResponse(classDetails);
         response.setTotalStudents(this.classDetailsRepository.countStudent(classDetails));
         return response;

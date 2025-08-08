@@ -11,5 +11,5 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScoreTypeRequest {
-    private String gradeTypeName;
+    private String scoreTypeId;
 }

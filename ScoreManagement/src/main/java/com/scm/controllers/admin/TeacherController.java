@@ -30,14 +30,16 @@ public class TeacherController {
     @PostMapping("/register-teacher")
     public String registerTeacher(@ModelAttribute("teacher") @Valid TeacherRegisterRequest request,
                                   BindingResult result,
-                                  @RequestParam(value = "avatar", required = false) MultipartFile avatar,
+                                  @RequestParam(value = "avatar") MultipartFile avatar,
                                   Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("err", "Đăng kí thất bại");
             return "register-teacher";
         }
         TeacherResponse teacher = userDetailsService.registerTeacher(request, avatar);
         model.addAttribute("teacher", teacher);
-        return "dashboard";
+        model.addAttribute("successMessage", "Đăng kí thành công");
+        return "redirect:/admin/dashboard";
     }
 
     @PostMapping("/update-role-teacher/{teacherId}")

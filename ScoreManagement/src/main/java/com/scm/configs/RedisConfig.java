@@ -39,7 +39,7 @@ public class RedisConfig {
         config.setPassword(RedisPassword.of(redisPassword));
 
         LettuceConnectionFactory factory = new LettuceConnectionFactory(config);
-        factory.afterPropertiesSet(); // Validate connection
+        factory.afterPropertiesSet();
         return factory;
     }
 
@@ -47,16 +47,10 @@ public class RedisConfig {
     public RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory());
-
-        // Key serializer
         template.setKeySerializer(new StringRedisSerializer());
-        // Value serializer (using JSON)
         template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        // Hash key serializer
         template.setHashKeySerializer(new StringRedisSerializer());
-        // Hash value serializer
         template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-
         template.afterPropertiesSet();
         return template;
     }
@@ -64,7 +58,7 @@ public class RedisConfig {
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
         RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofMinutes(30)) // Cache expiry time
+                .entryTtl(Duration.ofMinutes(30))
                 .disableCachingNullValues()
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));

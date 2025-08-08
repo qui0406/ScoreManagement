@@ -17,7 +17,7 @@ import java.util.List;
 public interface ScoreTypeService {
     List<ScoreTypeResponse> getScoreTypes();
     List<ScoreTypeResponse> getScoreTypesByClassDetails(String classDetailId);
-    void addScoreType(String classDetailId, String scoreTypeId);
+    void addScoreType(String classDetailId, ScoreTypeRequest scoreTypeRequest, String teacherId);
     void deleteScoreType(String classDetailId, String scoreTypeId);
     ScoreType getScoreTypeById(String id);
 }

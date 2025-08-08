@@ -72,7 +72,8 @@ public class SubjectRepositoryImpl implements SubjectRepository {
 
         Predicate subjectMatch = builder.equal(subject.get("subject"), root);
         Predicate semesterMatch = builder.equal(subject.get("semester").get("id"), semesterId);
-        subquery.select(subject).where(builder.and(subjectMatch, semesterMatch));
+        subquery.select(subject)
+                .where(builder.and(subjectMatch, semesterMatch));
 
         Predicate facultyMatch = builder.equal(facultyJoin.get("id"), facultyId);
         Predicate existsSubquery = builder.exists(subquery);
@@ -123,12 +124,10 @@ public class SubjectRepositoryImpl implements SubjectRepository {
         if (page != null && !page.isEmpty()) {
             int p = Integer.parseInt(page);
             int start = (p - 1) * PAGE_SIZE;
-
             q.setMaxResults(PAGE_SIZE);
             q.setFirstResult(start);
         }
 
         return q.getResultList();
-
     }
 }

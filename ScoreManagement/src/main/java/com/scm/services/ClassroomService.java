@@ -13,9 +13,6 @@ import com.scm.dto.responses.ClassResponse;
  */
 public interface ClassroomService {
 
-//    List<Classroom> getListClassRoom();
-//    ClassroomResponse getClassRoomById(String classDetailId);
-
     ClassResponse create(ClassroomRequest request);
     void delete(String classroomId);
 

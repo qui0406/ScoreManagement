@@ -4,6 +4,8 @@
  */
 package com.scm.repositories.impl;
 
+import com.scm.exceptions.AppException;
+import com.scm.exceptions.ErrorCode;
 import com.scm.pojo.*;
 import com.scm.repositories.ScoreRepository;
 import jakarta.persistence.NoResultException;
@@ -47,13 +49,13 @@ public class ScoreRepositoryImpl implements ScoreRepository {
     }
 
     @Override
-    public List<Score> getScoresByClassSubjectId(Integer classSubjectId) {
+    public List<Score> getScoresByClassSubjectId(Integer classDetailId) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Score> q = b.createQuery(Score.class);
         Root<Score> root = q.from(Score.class);
         q.select(root);
-        q.where(b.equal(root.get("classSubject").get("id"), classSubjectId));
+        q.where(b.equal(root.get("classDetails").get("id"), classDetailId));
         Query query = s.createQuery(q);
         return query.getResultList();
     }
@@ -82,31 +84,16 @@ public class ScoreRepositoryImpl implements ScoreRepository {
     @Override
     public boolean checkOver5TestExisted(String classDetailId, String scoreTypeId, String studentId) {
         Session session = factory.getObject().getCurrentSession();
-
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
         Root<Score> root = query.from(Score.class);
 
-        Predicate classSubjectPredicate = builder.equal(root.get("classDetails").get("id"), classDetailId);
-        Predicate studentPredicate = builder.equal(root.get("student").get("id"), studentId);
-        Predicate scoreTypeNotInPredicate = root.get("scoreType").get("id").in(1, 2).not();
-
         query.select(builder.count(root));
-        query.where(builder.and(classSubjectPredicate, studentPredicate, scoreTypeNotInPredicate));
+        query.where(builder.and(builder.equal(root.get("classDetails").get("id"), classDetailId),
+                builder.equal(root.get("student").get("id"), studentId),
+                root.get("scoreType").get("id").in(1, 2).not()));
         Long count = session.createQuery(query).getSingleResult();
         return count < 5;
-    }
-
-    @Override
-    public List<Score> getScoreSubjectByStudentId(Integer studentId, Integer classSubjectId ) {
-        Session s = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Score> q = b.createQuery(Score.class);
-        Root<Score> root = q.from(Score.class);
-
-        q.where(b.equal(root.get("student").get("id"), studentId),
-                b.equal(root.get("classSubject").get("id"), classSubjectId));
-        return  s.createQuery(q).getResultList();
     }
 
     @Override
@@ -131,36 +118,6 @@ public class ScoreRepositoryImpl implements ScoreRepository {
         }
     }
 
-    @Override
-    public void saveAll(Set<Score> scores) {
-        Session session = factory.getObject().getCurrentSession();
-        for (Score score : scores) {
-            session.persist(score);
-        }
-    }
-
-    @Override
-    public void save(Score score){
-        Session session = factory.getObject().getCurrentSession();
-        session.persist(score);
-    }
-
-    @Override
-    public List<Score> findScoreByStudentIdAndClassSubjectId(Integer studentId, Integer classSubjectId) {
-        Session session = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-
-        CriteriaQuery<Score> query = builder.createQuery(Score.class);
-        Root<Score> root = query.from(Score.class);
-        query.select(root).where(
-                builder.equal(root.get("student").get("id"), studentId),
-                builder.equal(root.get("classSubject").get("id"), classSubjectId)
-        );
-
-        List<Score> scores = session.createQuery(query).getResultList();
-        return scores;
-    }
-
 
     @Override
     public Score getScoreByClassDetailIdAndStudentAndScoreType(String classDetailId, String studentId, String scoreTypeId) {
@@ -171,14 +128,14 @@ public class ScoreRepositoryImpl implements ScoreRepository {
         query.select(root).where(
                 builder.equal(root.get("student").get("id"), studentId),
                 builder.equal(root.get("classDetails").get("id"), classDetailId),
-                builder.equal(root.get("scoreType").get("id"), scoreTypeId)
+                builder.equal(root.get("scoreType").get("id"), scoreTypeId),
+                builder.equal(root.get("active"), false)
         );
         try {
             return session.createQuery(query).getSingleResult();
         } catch (NoResultException e) {
-            return null;
+            throw new AppException(ErrorCode.INVALID_DATA);
         }
-
     }
 
     @Override

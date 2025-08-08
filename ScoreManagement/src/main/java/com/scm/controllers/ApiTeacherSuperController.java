@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/secure/teacher")
+@RequestMapping("/api/secure/teacher-super")
 @Slf4j
 public class ApiTeacherSuperController {
     @Value("${spring.send_grid.from_email}")
@@ -129,8 +129,8 @@ public class ApiTeacherSuperController {
 
             EmailRequest emailRequest = new EmailRequest();
             List<Recipient> listRecipients= studentService.getAllRecipientStudentsByClass(classDetailId);
-            emailRequest.setSubject("Blocked Students");
-            emailRequest.setContent("This student has been blocked.");
+            emailRequest.setSubject("Thông báo về điểm số");
+            emailRequest.setContent("Đã có điểm của sinh viên trên hệ thống");
             emailRequest.setSender(new Sender(
                     teacherName, sendGridFromEmail
             ));
