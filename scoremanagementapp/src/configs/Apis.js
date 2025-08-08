@@ -17,7 +17,7 @@ export const endpoints = {
     'semesters': '/api/secure/user/semesters',
     // Lớp học của giáo viên
     'my-classes': '/api/secure/teacher/my-classrooms',
-    'classDetails': classId => `/api/secure/teacher/class-subject/${classId}/details`,
+    'classDetails': classDetailId => `/api/secure/user/get-my-classes/${classDetailId}`,
     'studentList': classDetailId => `/api/secure/user/list-student-enrollment/${classDetailId}`,
 
     // Điểm

@@ -1,8 +1,8 @@
-import { Container, Table, Alert, Button, Spinner } from "react-bootstrap";
+import { Container, Table, Alert, Button } from "react-bootstrap";
 import { authApis, endpoints } from "../../configs/Apis";
 import { useEffect, useState, useContext } from "react";
 import { MyUserContext } from "../../configs/MyContexts";
-
+import MySpinner from "../layout/MySpinner";
 const RegisterClass = () => {
     const [loading, setLoading] = useState(false);
     const [allClasses, setAllClasses] = useState([]);
@@ -63,7 +63,7 @@ const RegisterClass = () => {
         <Container className="mt-5">
             <h2>Đăng ký lớp học</h2>
             {msg && <Alert variant="info">{msg}</Alert>}
-            {loading ? <Spinner animation="border" /> : (
+            {loading ? <MySpinner animation="border" /> : (
                 <Table striped bordered hover>
                     <thead>
                         <tr>
