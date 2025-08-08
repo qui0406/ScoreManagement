@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { authApis, endpoints } from "../../configs/Apis";
 import { Card, Spinner, Alert, ListGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import MySpinner from "../layout/MySpinner";
 
 const ChatBox = () => {
     const { classDetailId } = useParams();
@@ -35,7 +36,7 @@ const ChatBox = () => {
                 <Card.Header>
                     <b>Diễn đàn lớp {classDetailId}</b>
                 </Card.Header>
-                {loading && <Spinner animation="border" />}
+                {loading && <MySpinner animation="border" />}
                 {msg && <Alert variant="danger">{msg}</Alert>}
                 <ListGroup>
                     {forumList.map(forum => (

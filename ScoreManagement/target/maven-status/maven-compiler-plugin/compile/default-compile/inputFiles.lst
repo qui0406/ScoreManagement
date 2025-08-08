@@ -10,17 +10,16 @@ D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SocketIOCo
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\SpringSecurityConfigs.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\ThymeleafConfigs.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\configs\WebAppContextConfigs.java
+D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\admin\ApiAdminController.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\admin\FacultyController.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\admin\SemesterController.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\admin\SubjectController.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\admin\TeacherController.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\admin\UserAdminController.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiAddScoreController.java
-D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiAdminController.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiClassController.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiConversationController.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiForumController.java
-D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiMessageController.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiSemesterController.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiSendGridController.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\controllers\ApiStudentController.java
@@ -95,11 +94,9 @@ D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\exceptions\GlobalE
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\filters\JwtFilter.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\helpers\CSVHelper.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\helpers\PDFHelper.java
-D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\ChatMessageMapper.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\ClassDetailMapper.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\ClassroomMapper.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\ConversationMapper.java
-D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\decorator\ChatMessageMapperDecorator.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\decorator\ClassDetailMapperDecorator.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\decorator\ConversationMapperDecorator.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\mapper\decorator\EnrollDetailsMapperDecorator.java
@@ -180,7 +177,6 @@ D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\repositories\WebSo
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\responses\ApiResponse.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\scoremanagement\JakartaRestConfiguration.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\scoremanagement\resources\JakartaEE11Resource.java
-D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\AdminService.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ClassroomDetailsService.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ClassroomService.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ConversationService.java
@@ -188,7 +184,6 @@ D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\EnrollDet
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\FacultyService.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ForumDetailsService.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\ForumService.java
-D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\AdminServiceImpl.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\ClassroomDetailsServiceImpl.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\ClassroomServiceImpl.java
 D:\K3N3\ScoreManagement\ScoreManagement\src\main\java\com\scm\services\impl\ConversationServiceImpl.java

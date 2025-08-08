@@ -8,7 +8,7 @@ function deleteTeacher(endpoint, id, token) {
             }
         }).then(res => {
             console.log(res.status)
-            if (res.status === 204) {
+            if (res.status<300 && res.status>=200) {
                 alert("Xóa thành công!");
                 location.reload();
             } else
@@ -24,7 +24,7 @@ function updateRoleTeacher(endpoint, id, token){
             'Authorization': `Bearer ${token}`
         }
     }).then(res => {
-        if (res.status === 200) {
+        if (res.status<300 && res.status>=200) {
             alert("Nâng cấp thành công")
             location.reload();
         } else
@@ -39,7 +39,7 @@ function downRoleTeacher(endpoint, id, token){
             'Authorization': `Bearer ${token}`
         }
     }).then(res => {
-        if (res.status === 200) {
+        if (res.status<300 && res.status>=200) {
             alert("Hạ role thành công")
             location.reload();
         } else
@@ -55,7 +55,7 @@ function deleteSubject(endpoint, id, token){
             'Authorization': `Bearer ${token}`
         }
     }).then(res => {
-        if (res.status === 204) {
+        if (res.status<300 && res.status>=200) {
             alert("Hạ role thành công")
             location.reload();
         } else

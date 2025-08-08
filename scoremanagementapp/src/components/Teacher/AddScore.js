@@ -2,11 +2,17 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Modal, Button, Form, Container } from "react-bootstrap";
 import { authApis, endpoints } from "../../configs/Apis";
-import { Table, Alert, Spinner } from "react-bootstrap";
+import { Table, Alert } from "react-bootstrap";
+import MySpinner from "../layout/MySpinner";
 import cookie from "react-cookies";
 
 const AddScore = () => {
     const [loading, setLoading] = useState(false);
+    const [loadingSave, setLoadingSave] = useState(false);
+    const [loadingExport, setLoadingExport] = useState(false);
+    const [loadingBlock, setLoadingBlock] = useState(false);
+    const [loadingAddCol, setLoadingAddCol] = useState(false);
+
     const [msg, setMsg] = useState("");
     const { classSubjectId } = useParams();
 
@@ -91,7 +97,10 @@ const AddScore = () => {
 
         setLoading(true);
         try {
-            await authApis().post(endpoints['addScoreType'](classSubjectId, selectedScoreTypeId));
+            await authApis().post(
+                endpoints['addScoreType'](classSubjectId),
+                { scoreTypeId: selectedScoreTypeId }
+            ); 
             setSelectedScoreTypeId("");
             setShowAddCol(false);
 
@@ -118,7 +127,7 @@ const AddScore = () => {
 
 
     const saveScore = async () => {
-        setLoading(true);
+        setLoadingSave(true);
         console.log("Dữ liệu điểm trước khi lưu:", students);
         try {
             const payload = students.map(stu => ({
@@ -132,13 +141,13 @@ const AddScore = () => {
         } catch (err) {
             alert("Lỗi khi lưu điểm!");
         } finally {
-            setLoading(false);
+            setLoadingSave(false);
         }
     };
 
 
     const exportScore = async () => {
-        setLoading(true);
+        setLoadingExport(true);
         try {
             const res = await authApis().post(
                 endpoints['exportScore'](classSubjectId),
@@ -157,7 +166,7 @@ const AddScore = () => {
         } catch (err) {
             alert("Lỗi khi xuất điểm!");
         } finally {
-            setLoading(false);
+            setLoadingExport(false);
         }
     };
 
@@ -166,7 +175,7 @@ const AddScore = () => {
     const blockScore = async () => {
         if (!window.confirm("Bạn có chắc chắn muốn đóng điểm? Sau khi đóng, không thể chỉnh sửa nữa!"))
             return;
-        setLoading(true);
+        setLoadingBlock(true);
         try {
             const res = await authApis().post(endpoints['blockScore'](classSubjectId));
 
@@ -179,7 +188,7 @@ const AddScore = () => {
         } catch (err) {
             alert("Lỗi khi đóng điểm!");
         } finally {
-            setLoading(false);
+            setLoadingBlock(false);
         }
     };
 
@@ -242,49 +251,50 @@ const AddScore = () => {
         }
     };
 
-    // useEffect(() => {
-    //     const showStatus = async () => {
-    //         try {
-    //             const res = await authApis().get(endpoints['statusScore'](classSubjectId));
-    //             setIsClose(res.data === true); 
-    //         } catch {
-    //             setIsClose(false);
-    //         }
-    //     };
-    //     if (classSubjectId) showStatus();
-    // }, [classSubjectId]);
+    useEffect(() => {
+        const showStatus = async () => {
+            try {
+                const res = await authApis().get(endpoints['statusScore'](classSubjectId));
+                setIsClose(res.data === true);
+            } catch {
+                setIsClose(false);
+            }
+        };
+        if (classSubjectId) showStatus();
+    }, [classSubjectId]);
 
     return (
         < Container className="mt-5">
 
-            <h2 className="text-center">Nhập điểm lớp học</h2>
-            {msg && <Alert variant="danger">{msg}</Alert>}
+            <h2 className="text-center" style={{ color: "#3387c7", letterSpacing: 0.5, marginBottom: "50px" }} >Nhập điểm lớp học</h2>
+            {msg && (
+                <Alert
+                    variant={msg.includes("Xuất điểm thành công") ? "success" : "danger"}
+                >
+                    {msg}
+                </Alert>
+            )}
 
 
-            <div className="mb-3 d-flex align-items-center">
+            <div className="mb-3 d-flex align-items-center flex-wrap">
                 <Button variant="success" className="me-2" onClick={saveScore} disabled={loading || isClose}>
-                    {loading ? <Spinner size="sm" /> : null} Lưu nháp
+                    {loadingSave ? <MySpinner size="sm" /> : null} Lưu nháp
                 </Button>
-
                 <Button variant="danger" onClick={blockScore} disabled={loading || isClose} className="me-2">
-                    {loading ? <Spinner size="sm" /> : null} Khóa điểm
+                    {loadingBlock ? <MySpinner size="sm" /> : null} Khóa điểm
                 </Button>
-
                 <Button variant="primary" onClick={exportScore} disabled={loading}>
-                    {loading ? <Spinner size="sm" /> : null} Xuất điểm
+                    {loadingExport ? <MySpinner size="sm" /> : null} Xuất điểm
                 </Button>
-
                 <Button variant="info" onClick={() => setShowAddCol(!showAddCol)} className="ms-2" disabled={isClose}>
                     Thêm cột loại điểm
                 </Button>
-
                 {showAddCol && (
                     <Form onSubmit={addScoreTypes} className="d-flex align-items-center ms-2">
                         <Form.Select
                             className="me-2"
                             value={selectedScoreTypeId}
                             onChange={e => setSelectedScoreTypeId(e.target.value)}
-                            // disabled={isClose}
                         >
                             <option value="">-- Chọn loại điểm --</option>
                             {allScoreTypes.map(type => (
@@ -293,26 +303,24 @@ const AddScore = () => {
                                 </option>
                             ))}
                         </Form.Select>
-
                         <Button variant="primary" type="submit" disabled={loading || isClose || !selectedScoreTypeId}>
-                            {loading ? <Spinner size="sm" /> : "Thêm"}
+                            {loading ? <MySpinner size="sm" /> : "Thêm"}
                         </Button>
                     </Form>
-
                 )}
-
-
-            </div>
-            <Form onSubmit={e => {
-                e.preventDefault();
-                searchStudentScores(q);
-            }}>
-                <Form.Group className="mb-3 mt-2 d-flex" style={{ maxWidth: 475 }}>
+                <Form
+                    onSubmit={e => {
+                        e.preventDefault();
+                        searchStudentScores(q);
+                    }}
+                    className="d-flex align-items-center ms-auto"
+                >
                     <Form.Control
                         value={q}
                         onChange={e => setQ(e.target.value)}
                         type="text"
                         placeholder="Nhập MSSV hoặc họ tên sinh viên..."
+                        style={{ width: 475, minWidth: 150, maxWidth: 475 }}
                     />
                     <Button
                         variant="primary"
@@ -320,8 +328,9 @@ const AddScore = () => {
                         onClick={() => searchStudentScores(q)}
                         disabled={loading || !q.trim()}
                     >Tìm</Button>
-                </Form.Group>
-            </Form>
+                </Form>
+            </div>
+
 
             <Table striped bordered hover>
                 <thead>
@@ -361,7 +370,7 @@ const AddScore = () => {
                                             min={0}
                                             max={10}
                                             step={0.01}
-                                            // disabled={isClose}
+                                            disabled={isClose}
                                         />
                                     </td>
                                 ))}

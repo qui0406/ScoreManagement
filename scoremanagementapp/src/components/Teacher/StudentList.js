@@ -43,7 +43,7 @@ const StudentList = () => {
                         <Row>
                             <Col md={4}><b>Môn học:</b> {classDetails.subject?.subjectName}</Col>
                             <Col md={4}><b>Lớp:</b> {classDetails.classroom?.name}</Col>
-                            <Col md={4}><b>Học kỳ:</b> {classDetails.semester?.name}</Col>
+                            <Col md={4}><b>Số lượng sinh viên:</b> {classDetails.totalStudents}</Col>
                         </Row>
                     </Card.Body>
                 </Card>

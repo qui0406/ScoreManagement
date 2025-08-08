@@ -30,15 +30,15 @@ public class EnrollDetailsServiceImpl implements EnrollDetailsService {
         }
         this.enrollDetailsRepository.create(this.enrollDetailsMapper.toEnrollDetails(request));
 
-        String cacheKey = "classDetailsAllStudents:" + request.getClassDetailId();
-        redisService.deleteKey(cacheKey);
+//        String cacheKey = "classDetailsAllStudents:" + request.getClassDetailId();
+//        redisService.deleteKey(cacheKey);
     }
 
     @Override
     public void delete(String enrollId) {
         this.enrollDetailsRepository.delete(this.enrollDetailsRepository.findById(enrollId));
         EnrollDetails enrollDetails = this.enrollDetailsRepository.findById(enrollId);
-        String cacheKey = "classDetailsAllStudents:" + enrollDetails.getClassDetails().getId();
-        redisService.deleteKey(cacheKey);
+//        String cacheKey = "classDetailsAllStudents:" + enrollDetails.getClassDetails().getId();
+//        redisService.deleteKey(cacheKey);
     }
 }
