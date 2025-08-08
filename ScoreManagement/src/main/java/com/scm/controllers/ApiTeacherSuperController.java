@@ -126,7 +126,6 @@ public class ApiTeacherSuperController {
             User teacher = userDetailsService.getUserByUsername(teacherName);
             this.scoreService.blockScore(teacher.getId().toString(), classDetailId);
 
-
             EmailRequest emailRequest = new EmailRequest();
             List<Recipient> listRecipients= studentService.getAllRecipientStudentsByClass(classDetailId);
             emailRequest.setSubject("Thông báo về điểm số");

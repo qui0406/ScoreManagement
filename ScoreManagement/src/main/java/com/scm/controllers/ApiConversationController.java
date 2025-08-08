@@ -15,7 +15,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/secure/common")
+@RequestMapping("/api/secure")
 @Slf4j
 public class ApiConversationController {
     @Autowired

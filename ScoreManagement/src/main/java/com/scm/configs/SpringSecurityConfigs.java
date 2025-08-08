@@ -64,15 +64,15 @@ public class SpringSecurityConfigs {
     };
 
     private static final String[] TEACHER_ENDPOINTS = {
-        "/api/secure/teacher/**", "/api/secure/common/**"
+        "/api/secure/teacher/**"
     };
 
     private static final String[] TEACHER_SUPER_ENDPOINTS = {
-        "/api/secure/teacher-super/**", "/api/secure/common/**"
+        "/api/secure/teacher-super/**"
     };
 
     private static final String[] USER_ENDPOINTS = {
-        "/api/secure/user/**", "/api/secure/common/**"
+        "/api/secure/user/**"
     };
 
     @Bean
