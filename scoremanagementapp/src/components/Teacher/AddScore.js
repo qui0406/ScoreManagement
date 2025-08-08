@@ -237,16 +237,19 @@ const AddScore = () => {
             setSearchResults([]);
             return;
         }
+
         let url;
         if (/^\d+$/.test(keyword.trim())) {
             url = endpoints['findExportListScoreBase'](classSubjectId) + `?mssv=${encodeURIComponent(keyword)}`;
         } else {
             url = endpoints['findExportListScoreBase'](classSubjectId) + `?fullName=${encodeURIComponent(keyword)}`;
-        } setSearching(true);
+        }
+        setSearching(true);
         try {
             let res = await authApis().get(url);
             setSearchResults(res.data || []);
         } catch (err) {
+            console.error("Lỗi tìm kiếm sinh viên:", err);
             setSearchResults([]);
         } finally {
             setSearching(false);
@@ -352,32 +355,31 @@ const AddScore = () => {
                             </td>
                         </tr>
                     ) : (
-                        (q && searchResults.length > 0 ? searchResults : students).map(stu => (
-                            <tr key={stu.student ? stu.student.mssv : stu.id}>
-                                <td>{stu.student ? stu.student.mssv : stu.mssv}</td>
-                                <td>{stu.student ? stu.student.name : stu.name}</td>
-                                {scoreTypes.map(col => (
-                                    <td key={col.id}>
-                                        <input
-                                            type="number"
-                                            value={
-                                                scores[stu.student ? stu.student.mssv : stu.id]?.[col.id] ?? ""
-                                            }
-                                            onChange={e => addScore(
-                                                stu.student ? stu.student.mssv : stu.id,
-                                                col.id,
-                                                e.target.value
-                                            )}
-                                            style={{ width: 60 }}
-                                            min={0}
-                                            max={10}
-                                            step={0.01}
-                                            disabled={isClose}
-                                        />
-                                    </td>
-                                ))}
-                            </tr>
-                        ))
+                        (q && searchResults.length > 0 ? searchResults : students).map(stu => {
+                            const student = stu.student || stu;
+                            const studentId = student.id;
+
+                            return (
+                                <tr key={studentId}>
+                                    <td>{student.mssv}</td>
+                                    <td>{student.name}</td>
+                                    {scoreTypes.map(col => (
+                                        <td key={col.id}>
+                                            <input
+                                                type="number"
+                                                value={scores[studentId]?.[col.id] ?? ""}
+                                                onChange={e => addScore(studentId, col.id, e.target.value)}
+                                                style={{ width: 60 }}
+                                                min={0}
+                                                max={10}
+                                                step={0.01}
+                                                disabled={isClose}
+                                            />
+                                        </td>
+                                    ))}
+                                </tr>
+                            );
+                        })
                     )}
                 </tbody>
 

@@ -10,6 +10,8 @@ import java.util.Map;
 public interface ScoreStudentService {
     ScoreStudentResponse getScoreByStudentAndClass(String studentId, String classDetailId);
 
+    ScoreStudentResponse getScoreByStudentAndClassWhenBlockScore(String studentId, String classDetailId);
+
     List<ScoreStudentResponse> getScoreByClassDetails(String classDetailId, String teacherId);
 
     List<ScoreStudentResponse> findScoreByStudentId(Map<String, String> params, String classDetailId);

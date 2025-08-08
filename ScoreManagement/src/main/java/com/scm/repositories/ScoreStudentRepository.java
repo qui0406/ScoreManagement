@@ -9,5 +9,6 @@ import java.util.Map;
 
 public interface ScoreStudentRepository {
     List<Score> getScoresByStudentAndClass(String studentId, String classDetailId);
+    List<Score> getScoresByStudentAndClassWhenBlockScore(String studentId, String classDetailId);
     List<Student> findScoreStudentByMSSVOrName(Map<String,String> params, String classDetailId);
 }

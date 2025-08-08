@@ -33,6 +33,7 @@ public class ForumMapperDecorator implements ForumMapper {
 
         ClassDetails classDetails = classDetailsRepository.findById(forum.getClassDetails().getId().toString());
 
+        forumResponse.setId(forum.getId());
         forumResponse.setContent(forum.getContent());
         forumResponse.setCreatedAt(forum.getCreatedAt());
         forumResponse.setClassDetailId(forum.getClassDetails().getId().toString());

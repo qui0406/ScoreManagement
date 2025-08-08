@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ForumResponse {
+    private Integer id;
     private String classDetailId;
     private StudentDTO studentCreatedId;
     private TeacherDTO teacherCreatedId;

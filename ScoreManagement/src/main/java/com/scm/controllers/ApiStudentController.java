@@ -1,9 +1,6 @@
 package com.scm.controllers;
 
 import com.scm.dto.requests.UpdateUserRequest;
-import com.scm.dto.responses.UserResponse;
-import com.scm.exceptions.AppException;
-import com.scm.exceptions.ErrorCode;
 import com.scm.mapper.UserMapper;
 import com.scm.pojo.User;
 import com.scm.services.ScoreStudentService;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/secure/user")
@@ -68,7 +64,7 @@ public class ApiStudentController {
                                         @PathVariable(value="classDetailId") String classDetailId) {
         String name = principal.getName();
         User user = this.userDetailsService.getUserByUsername(name);
-        return ResponseEntity.ok(this.scoreStudentService.getScoreByStudentAndClass(user.getId().toString(), classDetailId));
+        return ResponseEntity.ok(this.scoreStudentService.getScoreByStudentAndClassWhenBlockScore(user.getId().toString(), classDetailId));
     }
 
     @GetMapping("/list-subject/semester/{semesterId}")
