@@ -55,8 +55,8 @@ const App = () => {
             <Route path="/myscore/:classSubjectId" element={<MyScore />} />
             <Route path="/myclasses" element={<MyClasses />} />
             <Route path="/registerclass" element={<RegisterClass />} />
-            <Route path="/forumlist/:forumId" element={<ForumList />} />
-            <Route path="/chatforum/:classDetailId/:forumId" element={<ChatForum />} />
+            <Route path="/forumlist/:classDetailId" element={<ForumList />} />
+            <Route path="/chatforum/:forumId" element={<ChatForum />} />
             <Route path="/subjectlist" element={<SubjectList />} />
           </Routes>
           <Footer />

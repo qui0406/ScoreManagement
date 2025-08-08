@@ -31,7 +31,7 @@ const Header = () => {
                                 <Link to="/register" className="nav-link">Đăng ký</Link>
                             </> :
                                 <>
-                                    {user.role === "ROLE_TEACHER" ?
+                                    {(user.role === "ROLE_TEACHER" || user.role === "ROLE_TEACHER_SUPER") ?
                                         <>
                                             <Link to="/home" className="nav-link">Trang chủ</Link>
                                         </>
