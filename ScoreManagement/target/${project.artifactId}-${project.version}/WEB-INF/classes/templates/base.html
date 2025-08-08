@@ -24,12 +24,6 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/admin/subject}">Quản lý môn học</a>
                     </li>
-<!--                    <li class="nav-item" th:each="c: ${categories}" sec:authorize="isAuthenticated()">-->
-<!--                        <a class="nav-link" th:href="@{'/?categoryId=' + ${c.id}}" th:text="${c.name}"></a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item" sec:authorize="isAuthenticated()">-->
-<!--                        <a class="nav-link text-danger" th:href="@{/stats}">Thống kê</a>-->
-<!--                    </li>-->
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="nav-link" th:href="@{/logout}">Đăng xuất</a>
                     </li>
@@ -40,9 +34,9 @@
 </header>
 
 <footer th:fragment="footer">
-    <div class="mt-4 p-5 bg-primary text-white rounded">
-        <h1>eCommerce App</h1>
-        <p>Duong Huu Thanh &copy; 2025</p>
+    <div class="mt-4 p-5 bg-primary text-white rounded text-center">
+        <h1>Website quản lý điểm sinh viên</h1>
+        <p>OU education</p>
     </div>
 </footer>
 </body>

@@ -50,7 +50,6 @@ com\scm\mapper\decorator\ScoreMapperDecorator.class
 com\scm\repositories\impl\ScoreTypeRepositoryImpl.class
 com\scm\controllers\SocketHandler.class
 com\scm\dto\TeacherDTO.class
-com\scm\controllers\ApiAdminController.class
 com\scm\services\impl\TeacherServiceImpl.class
 com\scm\configs\DispatcherSerlvetInit.class
 com\scm\services\impl\ClassroomServiceImpl.class
@@ -132,6 +131,7 @@ com\scm\dto\SenderDTO.class
 com\scm\repositories\ForumRepository.class
 com\scm\services\SemesterService.class
 com\scm\pojo\ScoreType.class
+com\scm\services\impl\MessageServiceImpl.class
 com\scm\services\impl\ScoreTypeServiceImpl.class
 com\scm\dto\responses\PDFRequest.class
 com\scm\repositories\ScoreTableRepository.class
@@ -199,7 +199,6 @@ com\scm\services\impl\ScoreStudentServiceImpl.class
 com\scm\controllers\ApiSemesterController.class
 com\scm\mapper\EnrollDetailsMapper.class
 com\scm\repositories\impl\ScoreRepositoryImpl.class
-com\scm\services\AdminService.class
 com\scm\dto\requests\LoginRequest.class
 com\scm\repositories\ScoreStudentRepository.class
 com\scm\controllers\admin\SemesterController.class
@@ -211,9 +210,9 @@ com\scm\dto\requests\EmailRequest.class
 com\scm\repositories\impl\FacultyRepositoryImpl.class
 com\scm\services\TeacherService.class
 com\scm\repositories\SemesterRepository.class
+com\scm\controllers\admin\ApiAdminController.class
 com\scm\mapper\ScoreStudentMapperImpl.class
 com\scm\services\ForumService.class
-com\scm\services\impl\AdminServiceImpl.class
 com\scm\repositories\TeacherRepository.class
 com\scm\services\SubjectService.class
 com\scm\controllers\ApiClassController.class

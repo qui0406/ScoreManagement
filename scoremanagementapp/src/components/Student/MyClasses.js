@@ -44,7 +44,7 @@ const MyClasses = () => {
 
     return (
         <Container className="mt-5">
-            <h2 className="text-center">Danh sách lớp học</h2>
+            <h2 className="text-center" style={{ color: "#3387c7", letterSpacing: 0.5, marginBottom:"50px"}}>Danh sách lớp học</h2>
 
             <Form.Group className="mb-4" style={{ maxWidth: 250 }}>
                 <Form.Label>Chọn học kỳ</Form.Label>
@@ -59,7 +59,7 @@ const MyClasses = () => {
                 </Form.Select>
             </Form.Group>
 
-            {loading ? <Spinner animation="border" /> : null}
+            {/* {loading ? <Spinner animation="border" /> : null} */}
             {msg && <Alert variant="danger">{msg}</Alert>}
             {(!classes || classes.length === 0) && !loading && (
                 <Alert variant="info">Không có lớp học nào!</Alert>
@@ -69,8 +69,12 @@ const MyClasses = () => {
                 {classes.map(classItem => (
                     <Col key={classItem.id} md={4} xs={12} className="mb-3">
                         <Card
-                            style={{ cursor: "pointer" }}
                             onClick={() => nav(`/myscore/${classItem.id}`)}
+                            className="w-80"
+                            style={{
+                                border: "1.5px solid #c9d7e7ff",borderRadius: 16,boxShadow: "0 2px 10px #a3c8eb22",
+                                background: "#fafdff",minHeight: 100,transition: "box-shadow 0.15s, border 0.15s",
+                            }}
                         >
                             <Card.Body>
                                 <Card.Title>

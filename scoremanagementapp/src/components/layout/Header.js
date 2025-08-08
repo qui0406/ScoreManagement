@@ -1,11 +1,17 @@
 import { useContext } from "react";
 import { Navbar, Container, Nav, NavDropdown, Form, Button } from "react-bootstrap";
 import { MyUserContext, MyDispatchContext } from "../../configs/MyContexts";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { type } from "@testing-library/user-event/dist/type";
 
 const Header = () => {
     const user = useContext(MyUserContext);
     const dispatch = useContext(MyDispatchContext);
+    const nav = useNavigate();
+    const logout = () => {
+        dispatch({type:"logout"});
+        nav("/login");
+    }
     return (
         <>
             <Navbar expand="lg" className="bg-body-tertiary">
@@ -28,19 +34,15 @@ const Header = () => {
                                     {user.role === "ROLE_TEACHER" ?
                                         <>
                                             <Link to="/home" className="nav-link">Trang chủ</Link>
-                                            {/* <Link to="" className="nav-link"></Link> */}
-                                            {/* <Link to="" className="nav-link"></Link> */}
                                         </>
                                         : user.role === "ROLE_USER" ?
                                             <>
                                                 <Link to="/student/home" className="nav-link">Trang chủ</Link>
                                                 <Link to="/myclasses" className="nav-link">Xem Điểm</Link>
-
                                                 <Link to="/registerclass" className="nav-link">Đăng kí môn học</Link>
-
                                                 <Link to="/student/chat" className="nav-link">Chat</Link>
                                                 <Link to="/subjectlist" className="nav-link">Lớp học</Link>
-                                                <Link to="/student/profile" className="nav-link">Hồ sơ</Link>
+                                                {/* <Link to="/student/profile" className="nav-link">Hồ sơ</Link> */}
 
 
                                             </>
@@ -51,7 +53,7 @@ const Header = () => {
                                         <img src={user.avatar} width={30} className="rounded" />
                                         <span className="ms-2">{user.username}!</span>
                                     </Link>
-                                    <Button className="btn btn-danger ms-2" onClick={() => dispatch({ type: "logout" })}>
+                                    <Button className="btn btn-danger ms-2" onClick={logout}>
                                         Đăng xuất
                                     </Button>
                                 </>}
