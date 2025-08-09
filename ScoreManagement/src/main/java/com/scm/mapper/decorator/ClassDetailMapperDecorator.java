@@ -16,12 +16,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class ClassDetailMapperDecorator implements ClassDetailMapper {
-    @Autowired
-    @Qualifier("delegate")
-    private ClassDetailMapper delegate;
-
-    @Autowired
-    private ClassDetailsRepository classDetailsRepository;
 
     @Autowired
     private TeacherRepository teacherRepo;

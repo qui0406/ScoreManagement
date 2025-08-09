@@ -14,7 +14,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 @DecoratedWith(ScoreMapperDecorator.class)
 public interface ScoreMapper {
-    ScoreMapper INSTANCE = Mappers.getMapper(ScoreMapper.class);
     Score toScore(ScoreRequest request);
 
     List<Score> toListScore(List<ScoreRequest> dto);

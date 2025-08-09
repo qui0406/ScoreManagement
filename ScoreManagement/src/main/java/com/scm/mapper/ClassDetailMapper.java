@@ -14,7 +14,6 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 @DecoratedWith(ClassDetailMapperDecorator.class)
 public interface ClassDetailMapper {
-    ClassDetails INSTANCE = Mappers.getMapper(ClassDetails.class);
 
     ClassDetails toClassDetails(CreateClassDetailsRequest dto);
 

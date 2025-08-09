@@ -20,8 +20,6 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 @DecoratedWith(UserMapperDecorator.class)
 public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-
     UserResponse toUserResponse(User user);
 
     TeacherResponse toTeacherResponse(Teacher teacher);

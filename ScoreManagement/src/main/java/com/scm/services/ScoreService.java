@@ -23,9 +23,11 @@ import java.util.Set;
  */
 public interface ScoreService {
     void addOrUpdateScore(ScoreRequest scoreRequest, String teacherId);
+
     void blockScore(String teacherId,  String classDetailId);
 
-    Map<Integer, ScoreByTypeDTO> getGroupedScores(List<Score> scores);
+    Map<Integer, ScoreByTypeDTO> filterScoreByStudent(List<Score> scores);
+
     void addListScore(ListScoreStudentRequest request, String teacherId);
 
     void addListScoreAllStudents(List<ListScoreStudentRequest> request, String teacherId);

@@ -1,16 +1,15 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { io } from "socket.io-client";
+import cookie from "react-cookies";
 
-
-const Chat = ({ classDetailId = "1" }) => { 
+const Chat = () => { 
   const socketRef = useRef(null);
 
-  
   useEffect(() => {
     if (!socketRef.current) {
       console.log("Initializing socket connection...");
-      const token = Cookies.get("token");
+      const token = cookie.load("token");
       socketRef.current = io(`http://localhost:8099?token=${token}`);
 
       socketRef.current.on("connect", () => {
@@ -29,7 +28,10 @@ const Chat = ({ classDetailId = "1" }) => {
 
 
   return (
-    <></>
+    <div>
+      <div>Chat Component</div>
+    </div>
   )
 };
 
+export default Chat;

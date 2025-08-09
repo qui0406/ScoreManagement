@@ -91,9 +91,7 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
             scoreStudentResponse.add(response);
         }
 
-
-
-//        redisService.setValue(cacheKey, scoreStudentResponse);
+        //redisService.setValue(cacheKey, scoreStudentResponse);
         return scoreStudentResponse;
     }
 
@@ -122,11 +120,6 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
         return scoreStudentResponse;
     }
 
-    @Override
-    public List<ScoreType> getScoreTypes() {
-        return null;
-    }
-
     private ScoreStudentResponse toScoreResponseList(List<Score> scores, Student student) {
         if (scores == null || scores.isEmpty()) {
             ScoreStudentResponse emptyResponse = new ScoreStudentResponse();
@@ -142,7 +135,7 @@ public class ScoreStudentServiceImpl implements ScoreStudentService {
         Score score = scores.get(0);
         ClassDetails classDetails = score.getClassDetails();
         TeacherDTO teacherDTO = teacherService.getTeacherDTOById(score.getClassDetails().getTeacher().getId().toString());
-        Map<Integer, ScoreByTypeDTO> scoresMap = scoreService.getGroupedScores(scores);
+        Map<Integer, ScoreByTypeDTO> scoresMap = scoreService.filterScoreByStudent(scores);
 
         ScoreStudentResponse response = new ScoreStudentResponse();
         response.setStudent(new StudentDTO(
