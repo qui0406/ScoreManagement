@@ -51,7 +51,7 @@ The project consists of **Backend** (Spring MVC + Thymeleaf) and **Frontend** (R
 ## ⚙️ Installation & Run
 
 ### Requirements
-- **Java 17**
+- **Java 21**
 - **Node.js >= 18**
 - **Docker & Docker Compose**
 - **MySQL** (if not running via Docker)
