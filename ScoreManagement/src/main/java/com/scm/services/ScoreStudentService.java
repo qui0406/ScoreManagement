@@ -16,7 +16,5 @@ public interface ScoreStudentService {
 
     List<ScoreStudentResponse> findScoreByStudentId(Map<String, String> params, String classDetailId);
 
-    List<ScoreType> getScoreTypes();
-
     List<WriteScoreStudentPDFResponse> listScorePDF(String classDetailId, String teacherId);
 }

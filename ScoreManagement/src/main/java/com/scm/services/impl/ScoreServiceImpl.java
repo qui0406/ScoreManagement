@@ -67,17 +67,14 @@ public class ScoreServiceImpl implements ScoreService {
 
 
     @Override
-    public Map<Integer, ScoreByTypeDTO> getGroupedScores(List<Score> scores) {
+    public Map<Integer, ScoreByTypeDTO> filterScoreByStudent(List<Score> scores) {
         Map<Integer, ScoreByTypeDTO> scoresMap = new HashMap<>();
         for (Score sc : scores) {
             int typeId = sc.getScoreType().getId();
             float scoreValue = sc.getScore().floatValue();
 
-            ScoreByTypeDTO dto = scoresMap.getOrDefault(typeId, new ScoreByTypeDTO(
-                    typeId,
-                    sc.getScoreType().getScoreTypeName(),
-                    new ArrayList<>()
-            ));
+            ScoreByTypeDTO dto = scoresMap.getOrDefault(typeId, new ScoreByTypeDTO(typeId,
+                    sc.getScoreType().getScoreTypeName(), new ArrayList<>()));
 
             if (!dto.getScores().contains(scoreValue)) {
                 dto.getScores().add(BigDecimal.valueOf(scoreValue));

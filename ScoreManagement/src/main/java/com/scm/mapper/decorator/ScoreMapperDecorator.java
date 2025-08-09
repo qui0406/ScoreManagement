@@ -25,14 +25,14 @@ public class ScoreMapperDecorator implements ScoreMapper {
     @Autowired
     @Qualifier("delegate")
     private ScoreMapper delegate;
+
     @Autowired
     private StudentRepository studentRepo;
     @Autowired
     private ClassDetailsRepository classDetailsRepo;
     @Autowired
     private ScoreTypeRepository scoreTypeRepo;
-    @Autowired
-    private TeacherRepository teacherRepo;
+
 
     @Override
     public Score toScore(ScoreRequest request) {

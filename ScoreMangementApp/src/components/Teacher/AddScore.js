@@ -220,17 +220,6 @@ const AddScore = () => {
         }
     };
 
-    //tìm kiếm sinh viên
-    // useEffect(() => {
-    //     if (!q || q.trim() === "") {
-    //         setSearchResults([]);
-    //         return;
-    //     }
-    //     const timer = setTimeout(() => {
-    //         searchStudentScores(q);
-    //     }, 500);
-    //     return () => clearTimeout(timer);
-    // }, [q]);
 
     const searchStudentScores = async (keyword) => {
         if (!keyword || !keyword.trim()) {

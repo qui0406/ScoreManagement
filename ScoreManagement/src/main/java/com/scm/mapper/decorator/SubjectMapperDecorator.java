@@ -21,10 +21,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public abstract class SubjectMapperDecorator implements SubjectMapper {
     @Autowired
-    @Qualifier("delegate")
-    private SubjectMapper delegate;
-
-    @Autowired
     private SemesterRepository semesterRepository;
 
     @Autowired

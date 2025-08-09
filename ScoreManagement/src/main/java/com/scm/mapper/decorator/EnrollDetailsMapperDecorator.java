@@ -18,9 +18,6 @@ import org.springframework.stereotype.Component;
 @Component
 @NoArgsConstructor
 public class EnrollDetailsMapperDecorator implements EnrollDetailsMapper {
-    @Autowired
-    @Qualifier("delegate")
-    private EnrollDetailsMapper delegate;
 
     @Autowired
     private StudentRepository studentRepository;

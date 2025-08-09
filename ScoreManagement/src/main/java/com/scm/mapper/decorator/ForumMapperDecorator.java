@@ -18,10 +18,6 @@ import java.time.LocalDateTime;
 @Component
 public class ForumMapperDecorator implements ForumMapper {
     @Autowired
-    @Qualifier("delegate")
-    private ForumMapper delegate;
-
-    @Autowired
     private UserRepository userRepository;
 
     @Autowired

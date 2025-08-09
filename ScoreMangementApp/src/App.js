@@ -21,6 +21,7 @@ import { Navigate } from "react-router-dom";
 import RegisterClass from "./components/Student/RegisterClass";
 import ChatForum from "./components/Student/ChatForum";
 import ForumList from "./components/Student/ForumList"
+import Chat from "./components/Student/Chat";
 const App = () => {
   const [user, dispatch] = useReducer(MyUserReducer, null);
   useEffect(() => {
@@ -56,6 +57,8 @@ const App = () => {
             <Route path="/myclasses" element={<MyClasses />} />
             <Route path="/registerclass" element={<RegisterClass />} />
             <Route path="/forumlist/:classDetailId" element={<ForumList />} />
+            <Route path="/chat/:classDetailId" element={<Chat />} />
+
             <Route path="/chatforum/:forumId" element={<ChatForum />} />
             <Route path="/subjectlist" element={<SubjectList />} />
           </Routes>

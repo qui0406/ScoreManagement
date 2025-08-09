@@ -26,19 +26,18 @@ import java.time.LocalDateTime;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SocketHandler {
-    @Autowired
-    private SocketIOServer socketIOServer;
-
-    @Autowired
-    private WebSocketSessionService webSocketSessionService;
-
-    @Autowired
-    private UserService userService;
+    SocketIOServer socketIOServer;
+    WebSocketSessionService webSocketSessionService;
+    UserService userService;
+//
 
     @OnConnect
     public void clientConnected(SocketIOClient socketIOClient) throws Exception {
         String token = socketIOClient.getHandshakeData().getSingleUrlParam("token");
+
+        log.info(socketIOClient.getSessionId().toString());
 
         log.info("Client connected with token {}", token);
         try{
