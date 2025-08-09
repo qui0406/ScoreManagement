@@ -63,10 +63,12 @@ git clone https://github.com/qui0406/ScoreManagement.git
 
 cd ScoreManagement
 
-## Backend setup
-- Run docker
+## Docker setup
   
 docker-compose up -d
+
+
+## Backend setup
 
 ./mvnw clean install
 
