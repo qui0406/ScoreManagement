@@ -1,7 +1,8 @@
 # 📚 ScoreManagement
 
 A **Student Score Management System** with features for administration, score entry, PDF report export, CSV data import, email notifications, and real-time communication.  
-The project consists of **Backend** (Spring MVC) and **Frontend** (ReactJS) as separate applications, communicating via REST APIs.
+The project consists of **Backend** (Spring MVC + Thymeleaf) and **Frontend** (ReactJS) as separate applications, communicating via REST APIs.
+
 
 ---
 
@@ -16,7 +17,7 @@ The project consists of **Backend** (Spring MVC) and **Frontend** (ReactJS) as s
 - **Image Storage**: Integrated **Cloudinary**
 - **Caching**: Redis for faster data access
 - **Realtime Communication**: Send/receive score updates via Socket.IO
-- **Deployment**: Docker + MySQL container
+- **Server-side Rendering**: Thymeleaf templates for admin interface
 
 ### Frontend
 - **Score Management UI**: Input and view scores
@@ -32,6 +33,7 @@ The project consists of **Backend** (Spring MVC) and **Frontend** (ReactJS) as s
 - **Spring MVC 6**
 - **Spring Security** + **JWT**
 - **Hibernate**
+- **Thymeleaf**
 - **MySQL**
 - **Redis**
 - **Docker**
