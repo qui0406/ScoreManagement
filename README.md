@@ -60,6 +60,7 @@ The project consists of **Backend** (Spring MVC + Thymeleaf) and **Frontend** (R
 ### 1. Clone the repository
 
 git clone https://github.com/qui0406/ScoreManagement.git
+
 cd ScoreManagement
 
 ## Backend setup
