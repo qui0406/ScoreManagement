@@ -29,7 +29,7 @@ The project consists of **Backend** (Spring MVC + Thymeleaf) and **Frontend** (R
 ## 🛠 Technologies
 
 ### Backend
-- **Java 17**
+- **Java 21**
 - **Spring MVC 6**
 - **Spring Security** + **JWT**
 - **Hibernate**
