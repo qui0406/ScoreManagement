@@ -64,6 +64,7 @@ cd ScoreManagement
 
 ## Backend setup
 - Run docker
+  
 docker-compose up -d
 
 ./mvnw clean install
