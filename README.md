@@ -65,10 +65,13 @@ cd ScoreManagement
 docker-compose up -d
 
 ./mvnw clean install
+
 ./mvnw spring-boot:run
 
 ## Front-end setup
 
 cd ScoreManagementApp
+
 npm install
+
 npm start
